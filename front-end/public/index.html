@@ -1,43 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/reset.css">
+</head>
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+<header class="header">
+    <div class="logo">
+        <img src="/img/logo.svg" alt="logo">
+        <img src="/img/Medicare.svg" alt="Medicare">
+    </div>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+    <ul class="list-services">
+        <li>Home</li>
+        <li>Our Service</li>
+        <li>Find Doctor</li>
+        <li>Reviews</li>
+    </ul>
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+    <div class="phonecall">
+        <img src="/img/call.svg" alt="phone">
+        <div>
+            <p class="phoneNumber">+233554205473</p>
+            <p class="timeOnline">Mon-Sat 9am - 6pm</p>
+        </div>
+    </div>
+</header>
+
+<body class="body">
+    <div class="frame introduce">
+        <div class="introduce__statement">
+            <h1>Your Health Comes First.</h1>
+            <img src="/img/decor1.svg" alt="decor">
+            <p>With Medicare services you will receive the best medical
+                treatment in your home. Our team of skilled medical professionals 
+                and aids ensure that you get the care you need and deserve.</p>
+            <button class="introduce__btnBook">Book Appointment</button>
+        </div>
+        <div class="introduce__doctor">
+            <img class="img_doctor" src="/img/default_doctor.svg" alt="doctor">
+            <div class="doctor__review">
+                <div class="visitors">
+                    <img src="/img/ava1.jpg" alt="patient1">
+                    <img src="/img/ava2.jpg" alt="patient2">
+                    <img src="/img/ava3.jpg" alt="patient3">
+                    <img src="/img/ava4.jpg" alt="patient4">
+                    <div class="more-visitors">
+                        <p>+70</p>
+                    </div>
+                </div>
+
+                <p class="number_reviews">120+ patients</p>
+
+                <div class="rate">
+                    <img src="/img/star_rate.svg" alt="star">
+                    <p>5.0(450k reviews)</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="introduce__arc">
+            <img class="take_img" src="/img/Arc.svg" alt="Arc">
+            <img class="decor_img" src="/img/decor2.svg" alt="decor">
+            <p><span>“</span> A trusted assistance companion for your health needs. <span>”</span></p>
+        </div>
+    </div>
+
+    <div class="moreInfo">
+        <div class="detail">
+            <div class="detail__frame">
+                <img src="/img/clock.svg" alt="clock">
+            </div>
+            <div class="des">
+                <h2>24 hours services</h2>
+                <p>orem ipsum dolor sit amet,connector adicipafg</p>
+            </div>
+        </div>
+
+        <div class="detail">
+            <div class="detail__frame">
+                <img src="/img/exp.svg" alt="clock">
+            </div>
+            <div class="des">
+                <h2>10 years of experience</h2>
+                <p>lorem ipsum dolor sit amet,connector adicipafg</p>
+            </div>
+        </div>
+
+        <div class="detail">
+            <div class="detail__frame">
+                <img src="/img/healthcare.svg" alt="clock">
+            </div>
+            <div class="des">
+                <h2>High quality care</h2>
+                <p>lorem ipsum dolor sit amet,connector adicipafg</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="frame onlineServices">
+        <div class="desc">
+            <h2>Your health requirements are our first focus.</h2>
+            <p> Our team of skilled medical professionals and aids 
+                ensure that you get the care you need and deserve.</p>
+        </div>
+        
+        <div class="list-services">
+            <div class="service_option --bgsupport">
+                <img src="/img/customer_support.svg" alt="support">
+                <p>Customer Support</p>
+            </div>
+
+            <div class="service_option --bgchamber">
+                <img src="/img/chamber_service.svg" alt="chamber">
+                <p>Chamber Services</p>
+            </div>
+
+            <div class="service_option --bgspecialist">
+                <img src="/img/online_specialist.svg" alt="specialist">
+                <p>Online Specialist</p>
+            </div>
+
+            <div class="service_option --bgsecurity">
+                <img src="/img/security.svg" alt="security">
+                <p>Privacy and Security</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="department">
+        <div class="department-form frame">
+            <p>Our Department</p>
+            <div class="department-list">
+                <div class="department-items">
+                    <div class="image_name-items m-20">
+                        <img src="/img/neurology.svg" alt="neurology">
+                        <p>Neurology</p>
+                    </div>
+                    <p class="m-20">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Adipiscing commodo nunc mi ut consequat pretium........</p>
+                    <p class="m-20 more">READ MORE</p>
+                </div>
+
+                <div class="department-items">
+                    <div class="image_name-items m-20">
+                        <img src="/img/cardiology.svg" alt="cardiology">
+                        <p>Neurology</p>
+                    </div>
+                    <p class="m-20">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Adipiscing commodo nunc mi ut consequat pretium........</p>
+                    <p class="m-20 more">READ MORE</p>
+                </div>
+
+                <div class="department-items">
+                    <div class="image_name-items m-20">
+                        <img src="/img/surgery.svg" alt="surgery">
+                        <p>Neurology</p>
+                    </div>
+                    <p class="m-20">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Adipiscing commodo nunc mi ut consequat pretium........</p>
+                    <p class="m-20 more">READ MORE</p>
+                </div>
+
+                <div class="department-items">
+                    <div class="image_name-items m-20">
+                        <img src="/img/gastroenterology.svg" alt="gastroenterology">
+                        <p>Neurology</p>
+                    </div>
+                    <p class="m-20">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Adipiscing commodo nunc mi ut consequat pretium........</p>
+                    <p class="m-20 more">READ MORE</p>
+                </div>
+
+                <div class="department-items">
+                    <div class="image_name-items m-20">
+                        <img src="/img/tooth.svg" alt="dentis">
+                        <p>Neurology</p>
+                    </div>
+                    <p class="m-20">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Adipiscing commodo nunc mi ut consequat pretium........</p>
+                    <p class="m-20 more">READ MORE</p>
+                </div>
+
+                <div class="department-items">
+                    <div class="image_name-items m-20">
+                        <img src="/img/opthalmology.svg" alt="opthalmology">
+                        <p>Neurology</p>
+                    </div>
+                    <p class="m-20">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Adipiscing commodo nunc mi ut consequat pretium........</p>
+                    <p class="m-20 more">READ MORE</p>
+                </div>
+
+                <div class="department-items">
+                    <div class="image_name-items m-20">
+                        <img src="/img/pediatry.svg" alt="pediatry">
+                        <p>Neurology</p>
+                    </div>
+                    <p class="m-20">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Adipiscing commodo nunc mi ut consequat pretium........</p>
+                    <p class="m-20 more">READ MORE</p>
+                </div>
+
+                <div class="department-items">
+                    <div class="image_name-items m-20">
+                        <img src="/img/orthopaedics.svg" alt="orthopaedics">
+                        <p>Neurology</p>
+                    </div>
+                    <p class="m-20">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Adipiscing commodo nunc mi ut consequat pretium........</p>
+                    <p class="m-20 more">READ MORE</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="frame specialist">
+        <p>Top Specialist</p>
+        <div class="list-doctor">
+            <div class="doctor-items">
+                <img src="/img/doctors/doctor1.svg" alt="doctor1">
+                <h2>Dr. Travis Oman</h2>
+                <p>Opthalmologist</p>
+                <button class="btnBook_doctor" type="button">
+                    <p>Book Now</p>
+                </button>
+                <p>120 reviews</p>
+            </div>
+
+            <div class="doctor-items">
+                <img src="/img/doctors/doctor2.svg" alt="doctor1">
+                <h2>Dr. Annah Ray</h2>
+                <p>Opthalmologist</p>
+                <button class="btnBook_doctor" type="button">
+                    <p>Book Now</p>
+                </button>
+                <p>120 reviews</p>
+            </div>
+
+            <div class="doctor-items">
+                <img src="/img/doctors/doctor3.svg" alt="doctor1">
+                <h2>Dr. Richard Brook</h2>
+                <p>Opthalmologist</p>
+                <button class="btnBook_doctor" type="button">
+                    <p>Book Now</p>
+                </button>
+                <p>120 reviews</p>
+            </div>
+
+            <div class="doctor-items">
+                <img src="/img/doctors/doctor4.svg" alt="doctor1">
+                <h2>Dr. Vivian Monroe</h2>
+                <p>Opthalmologist</p>
+                <button class="btnBook_doctor" type="button">
+                    <p>Book Now</p>
+                </button>
+                <p>120 reviews</p>
+            </div>
+        </div>
+    </div>
+    
+            
+</body>
 </html>

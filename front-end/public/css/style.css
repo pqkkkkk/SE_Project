@@ -1,0 +1,460 @@
+.m-20{
+    margin: 20px !important;
+}
+
+
+.frame{
+    margin: 80px !important;
+}
+
+.header{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 120px;
+}
+
+.header .logo{
+    display: flex;
+}
+
+.header img{
+    padding-right: 10px;
+}
+
+.header .list-services{
+    display: flex;
+    justify-content: space-around;
+    width: 40%;
+}
+
+.header .list-services li{
+    font-size: 20px;
+    color: #bbbbbb;
+    cursor: pointer;
+}
+
+.phonecall{
+    display: flex;
+    height: 40px;
+    align-items: center;
+}
+
+.phonecall .phoneNumber{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.phonecall .timeOnline{
+    opacity: 0.5;
+}
+
+.phonecall img{
+    height: 32px;
+    width: 32px;
+}
+
+.introduce{
+    display: flex;
+    justify-content: space-around;
+}
+
+.introduce .introduce__statement{
+    flex: 1;
+}
+
+.introduce .introduce__statement h1{
+    padding: 80px 4px 0 80px;
+    font-size: 52px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 20px;
+}
+
+.introduce .introduce__statement p{
+    padding: 6px 4px 0 80px;
+    font-size: 20px;
+    line-height: 1.5;
+    color: #787878;
+}
+
+.introduce .introduce__statement img{
+    width: 100%;
+}
+
+.introduce .introduce__statement .introduce__btnBook{
+    margin-top: 32px;
+    width: 300px;
+    height: 66px;
+    font-size: 24px;
+    margin-left: 80px;
+    background-color: #1CB5BD;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.introduce .introduce__statement .introduce__btnBook:hover{
+    background-color: #1CB5BD80;
+    color: black;
+}
+
+.introduce .introduce__doctor{
+    position: relative;
+    flex: 1;
+    margin-top: 28px;
+}
+
+.introduce .introduce__doctor img {
+    position: relative;
+    z-index: 1;
+}
+
+.introduce .introduce__doctor::before {
+    content: "";
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url(../../public/img/bgdoctor.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 0;
+}
+
+.introduce .introduce__doctor .doctor__review{
+    position: absolute;
+    width: 180px;
+    height: 140px;
+    background-color: #fff;
+    top: 420px;
+    right: -60px;
+    border-radius: 5px;
+    border: 2px solid #1CB5BD80;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    box-shadow: 0 0 10px 0 #1CB5BD80;
+    z-index: 2;
+}
+
+.introduce .introduce__doctor .visitors{
+    display: flex;
+    margin-left: 40px;
+}
+
+.introduce .introduce__doctor .visitors img{
+    width: 37px;
+    height: 32px;
+    object-fit: cover;
+    margin-left: -20px;
+    border-radius: 50%;
+}
+
+.introduce .introduce__doctor .visitors div{
+    margin-left: -24px;
+    width: 37px;
+    height: 32px;
+    background-color: #1CB5BD;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 32px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.introduce .introduce__doctor .number_reviews{
+    font-size: 20px;
+    font-weight: 600;
+    margin-left: 20px;
+}
+
+.introduce .introduce__doctor .rate{
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.introduce .introduce__doctor .rate p{
+    color: #000;
+    opacity: 50%;
+    font-weight: 600;
+    margin-left: 6px;
+}
+
+
+.introduce .introduce__arc{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.introduce .introduce__arc .take_img{
+    width: 120px;
+    align-self: center;
+}
+
+
+.introduce .introduce__arc .decor_img{
+    width: 100%;
+    margin-top: 90px;
+}
+
+.introduce .introduce__arc p {
+    margin-bottom: 16px;
+    margin-top: auto;
+    margin-left: 100px;
+    line-height: 1.5;
+    color: #787878;
+    font-size: 20px;
+}
+
+.introduce .introduce__arc span{
+    font-weight: 500;
+    font-size: 24px;
+    color: #1CB5BD;
+}
+
+
+.moreInfo{
+    margin-left: 80px;
+    margin-right: 80px;
+    background-color: #1CB5BD;
+    display: flex;
+    justify-content: space-around;
+    height: 240px;
+    align-items: center;
+    gap: 20px;
+    margin-top: -82px;
+}
+
+.moreInfo .detail{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 320px;
+}
+
+.moreInfo .detail .detail__frame{
+    height: 120px;
+    min-width: 70px;
+    background-color: #fff;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.detail .des h2{
+    color: #fff;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.detail .des p{
+    color: #E9F7F8;
+    font-size: 20px;
+    line-height: 1.3;
+}
+
+.onlineServices{
+    margin: 0 80px 0 80px;
+}
+
+.onlineServices .desc{
+    display: flex;
+    justify-content: space-between;
+}
+
+.onlineServices .desc h2{
+    font-size: 32px;
+    font-weight: 600;
+    width: 450px;
+}
+
+.onlineServices .desc p{
+    font-size: 24px;
+    color: #787878;
+    width: 600px;
+}
+
+.onlineServices .list-services{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 80px;
+    align-items: center;
+}
+
+
+.onlineServices .list-services .service_option{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 320px;
+    height: 312px;
+    cursor: pointer;
+}
+
+.onlineServices .list-services .service_option:hover{
+    opacity: 0.6;
+}
+
+.onlineServices .list-services .service_option p{
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.onlineServices .list-services .service_option img{
+    width: 90px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.--bgsupport{
+    background-color: #FEEFEB;
+}
+
+.--bgchamber{
+    background-color: #FAF2E9;
+}
+
+.--bgspecialist{
+    background-color: #F1F5E9;
+}
+
+.--bgsecurity{
+    background-color: #E9F7F8;
+}
+
+
+.department{
+    background-color: #1CB5BD;
+}
+
+
+.department .department-form{
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.department .department-form > p{
+    font-size: 36px;
+    font-weight: 600;
+    color: #E9F7F8;
+}
+
+.department .department-list{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 60px;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+
+.department .department-list .department-items{
+    width: 320px;
+    height: 320px;
+    border: 1px solid #E9F7F880;
+    border-radius: 5px;
+}
+
+.department .department-list .image_name-items{
+    display: flex;
+    align-items: center;
+}
+
+.department .department-list .image_name-items p{
+    font-size: 24px;
+    font-weight: 600;
+    color: #E9F7F8;
+    margin-left: 12px;
+}
+
+.department .department-list .department-items > p{
+    color: #E9F7F8D9;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.department .department-list .department-items .more{
+    font-size: 16px;
+    font-weight: 700;
+    color: #E9F7F8;
+    cursor: pointer;
+}
+
+.department .department-list .department-items .more:hover{
+    color: #E9F7F8D9;
+}
+
+.specialist{
+    
+}
+
+.specialist > p{
+    font-size: 36px;
+    font-weight: 600;
+}
+
+.specialist .list-doctor{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 60px;
+}
+
+.specialist .list-doctor .doctor-items{
+    width: 320px;
+    height: 320px;
+    border: 1px solid #1CB5BDD9;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.specialist .list-doctor .doctor-items img{
+    width: 300px;
+}
+
+.specialist .list-doctor .doctor-items h2{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.specialist .list-doctor .doctor-items > p:first-of-type {
+    font-size: 18px;
+    opacity: 0.5;
+    font-weight: 400;
+}
+
+.specialist .list-doctor .doctor-items > p:last-of-type{
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+    opacity: 0.5;
+}
+
+.specialist .list-doctor .doctor-items button{
+    border: none;
+    background-color: #1CB5BD;
+    border-radius: 5px;
+    height: 48px;
+    width: 150px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.specialist .list-doctor .doctor-items button:hover{
+    background-color: #1CB5BD80;
+    color: #000;
+    cursor: pointer;
+}
