@@ -1,5 +1,5 @@
 .vscode/
-
+.env/
 target/
 pom.xml.tag
 pom.xml.releaseBackup
