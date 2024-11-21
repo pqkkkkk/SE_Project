@@ -37,7 +37,6 @@ function Header(){
                         <p className={cx('timeOnline')}>Mon-Sat 9am - 6pm</p>
                     </div>
                 </div>
-
             </div>
         </header>
     )
