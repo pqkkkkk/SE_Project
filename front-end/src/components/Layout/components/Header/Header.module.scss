@@ -1,0 +1,57 @@
+.wrapper{
+    height: 120px;
+    box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
+}
+
+
+.inner{
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    .logo{
+        display: flex;
+    }
+
+    img{
+        padding-right: 10px;
+    }
+
+    .list-services{
+        display: flex;
+        justify-content: space-around;
+        width: 40%;
+    }
+
+    .list-services li{
+        font-size: 20px;
+        cursor: pointer;
+
+        a{
+            text-decoration: none;
+            color: #bbbbbb;
+        }
+
+    }
+}
+
+.phonecall{
+    display: flex;
+    height: 40px;
+    align-items: center;
+
+    .phoneNumber{
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .timeOnline{
+        opacity: 0.5;
+    }
+
+    img{
+        height: 32px;
+        width: 32px;
+    }
+}
