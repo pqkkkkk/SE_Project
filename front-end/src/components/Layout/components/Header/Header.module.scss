@@ -1,56 +1,62 @@
-.wrapper{
+.wrapper {
     height: 120px;
+    font-family: "Poppins", serif;
 }
 
-
-.inner{
+.inner {
+    max-width: calc(100% - 200px);
     height: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
 
-    .logo{
+    margin: auto;
+
+    .logo {
         display: flex;
     }
 
-    img{
+    img {
         padding-right: 10px;
     }
 
-    .list-services{
+    .list-services {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         width: 40%;
     }
 
-    .list-services li{
+    .list-services li {
         font-size: 20px;
         cursor: pointer;
 
-        a{
+        a {
             text-decoration: none;
             color: #bbbbbb;
         }
-
-    }
-}
-
-.phonecall{
-    display: flex;
-    height: 40px;
-    align-items: center;
-
-    .phoneNumber{
-        font-size: 20px;
-        font-weight: bold;
     }
 
-    .timeOnline{
-        opacity: 0.5;
+    .action .action-link {
+        font-size: 16px;
+        font-weight: 600;
+
+        text-decoration: none;
+
+        color: #1cb5bd;
     }
 
-    img{
-        height: 32px;
-        width: 32px;
+    .action .action-btn {
+        padding: 13px 16px;
+        margin-left: 18px;
+
+        border-radius: 8px;
+
+        font-size: 16px;
+        font-weight: 600;
+
+        text-decoration: none;
+
+        color: #fff;
+        background: #1cb5bd;
     }
 }

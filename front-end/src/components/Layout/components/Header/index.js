@@ -1,23 +1,22 @@
-import {Link} from 'react-router-dom';
-import classNames from 'classnames/bind';
-import styles from './Header.module.scss';
-import images from '../../../../assets/images';
-
+import { Link } from "react-router-dom";
+import classNames from "classnames/bind";
+import styles from "./Header.module.scss";
+import images from "../../../../assets/images";
 
 const cx = classNames.bind(styles);
 
-function Header(){
+function Header() {
     return (
-        <header className={cx('wrapper')}>
-            <div className={cx('inner')}>
-                <div className={cx('logo')}>
+        <header className={cx("wrapper")}>
+            <div className={cx("inner")}>
+                <div className={cx("logo")}>
                     <img src={images.logo} alt="logo" />
-                    <img src={images.medicare} alt="Medicare"/>
+                    <img src={images.medicare} alt="Medicare" />
                 </div>
 
-                <ul className={cx('list-services')}>
+                <ul className={cx("list-services")}>
                     <li>
-                        <Link to='/'>Home</Link>
+                        <Link to="/">Home</Link>
                     </li>
                     <li>
                         <Link to="/our-service">Our Service</Link>
@@ -30,17 +29,18 @@ function Header(){
                     </li>
                 </ul>
 
-                <div className={cx('phonecall')}>
-                    <img src={images.call} alt="phone"/>
-                    <div>
-                        <p className={cx('phoneNumber')}>+233554205473</p>
-                        <p className={cx('timeOnline')}>Mon-Sat 9am - 6pm</p>
-                    </div>
+                <div className={cx("action")}>
+                    <a href="#!" className={cx("action-link")}>
+                        Sign in
+                    </a>
+
+                    <a href="#!" className={cx("action-btn")}>
+                        Sign up
+                    </a>
                 </div>
             </div>
         </header>
-    )
+    );
 }
-
 
 export default Header;
