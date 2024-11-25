@@ -1,0 +1,200 @@
+.content{
+    margin-top: 80px;
+
+    .element {
+        border-left: 1px solid #BBBBBB; 
+        border-right: 1px solid #BBBBBB; 
+        border-bottom: 1px solid #BBBBBB; 
+        border-top: none;
+    }
+
+    .select-options{
+        margin-top: 16px;
+        border: 1px solid #1CB5BD;
+        height: 50px;
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #E9F7F8;
+    }
+
+    .desc{
+        font-size: 50px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .border{
+        border: 1px solid #BBBBBB;
+        margin-top: 40px;
+    }
+
+    .page{
+        display: flex;
+        
+        .sidebar {
+            .field-text{
+                margin-top: 36px;
+                font-size: 24px;
+                font-weight: 600;
+                display: block;
+            }
+
+            .search{
+                padding: 30px;
+    
+                .decor-input{
+                    display: flex;
+                    margin-top: 16px;
+    
+                    .input{
+                        border: 1px solid #1CB5BD;
+                        height: 30px;
+                        width: 200px;
+                        padding: 10px;
+                        border-radius: 5px;
+                        background-color: #E9F7F8;
+                    }
+    
+                    .search-btn{
+                        background-color: #1CB5BD;
+                        cursor: pointer;
+                        border: none;
+                        color: white;
+                        border-radius: 5px;
+                    }
+                } 
+            }
+            
+            .filter{
+                padding: 30px;
+                display: flex;
+                flex-direction: column;
+                height: auto;
+                .gender-options{
+                    margin-top: 10px;
+
+                    .decor-gender{
+                        margin-top: 20px;
+                        display: flex;
+                        justify-content: space-between;
+
+                        /* Cải tiến kiểu cho radio button */
+                        input[type="radio"] {
+                            appearance: none; /* Tắt hiển thị mặc định của radio button */
+                            width: 21px;
+                            height: 21px;
+                            border-radius: 50%;
+                            border: 2px solid #1CB5BD; /* Màu border radio button */
+                            outline: none;
+                            position: relative;
+                            cursor: pointer;
+                            margin-right: 10px;
+                        }
+
+                        /* Đổi màu khi radio button được chọn */
+                        input[type="radio"]:checked {
+                            background-color: #fff; /* Màu nền khi chọn */
+                            border-color: #1CB5BD; /* Đổi màu viền khi chọn */
+                        }
+
+                        /* Tạo vòng tròn nhỏ bên trong radio button khi được chọn */
+                        input[type="radio"]:checked::after {
+                            content: '';
+                            position: absolute;
+                            top: 4px;
+                            left: 4px;
+                            width: 10px;
+                            height: 10px;
+                            border-radius: 50%;
+                            background-color: #1CB5BD; /* Màu vòng tròn nhỏ */
+                        }
+
+                        /* Kiểu cho chữ trong label */
+                        label {
+                            display: flex;
+                            font-weight: bold; /* Đặt chữ trong label đậm */
+                            font-size: 16px;
+                            color: #333;
+                            cursor: pointer;
+                            align-items: center;
+                        }
+
+                    }
+                }
+
+                .submit-btn{
+                    margin: 50px auto 0;
+                    width: 80%;
+                    height: 50px;
+                    color: #fff;
+                    font-size: 20px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    border: none;
+                    background-color: #1CB5BD;
+                }
+
+                .submit-btn:hover{
+                    opacity: 0.7;
+                }
+
+            }
+
+        }
+
+        .main-content{
+            padding: 40px;
+            .list-doctors{
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+                line-height: 1.5;
+                
+        
+                .doctor{
+                    width: 350px;
+                    height: 400px;
+                    border: 1px solid #BBBBBB;
+                    border-radius: 5px;
+                    margin-top: 20px;
+                    text-align: center;
+                    cursor: pointer;
+                }
+
+                .doctor:hover{
+                    background-color: #7deaf0;
+                }
+        
+                img {
+                    width: 177px; 
+                    height: 177px; 
+                    object-fit: cover; 
+                    border-radius: 50%;
+                    margin-top: 60px;
+                }
+        
+                h3{
+                    margin-top: 10px;
+                    font-size: 20px;
+                    font-weight: 600;
+                }
+        
+                .speciality{
+                    font-size: 20px;
+                    opacity: 0.5;
+                }
+        
+                .review{
+                    font-size: 16px;
+                    font-weight: 600;
+                    opacity: 0.5;
+                    margin-top: 40px;
+                }
+        
+            }
+        }
+    }
+
+    
+}
