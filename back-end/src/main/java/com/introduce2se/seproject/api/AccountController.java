@@ -1,11 +1,15 @@
 package com.introduce2se.seproject.api;
 
 import com.introduce2se.seproject.account.AccountService;
+import com.introduce2se.seproject.account.model.Doctor;
+import com.introduce2se.seproject.account.model.Patient;
+import com.introduce2se.seproject.account.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/api/account")
@@ -17,8 +21,38 @@ public class AccountController {
         this.accountService = accountService;
     }
     @GetMapping("/allDoctors")
-    public ResponseEntity<String> getAllDoctors()
+    public ResponseEntity<ArrayList<User>> GetAllDoctors()
     {
-        return ResponseEntity.ok(accountService.getAllUsers("doctor").toString());
+        return ResponseEntity.ok().body(accountService.getAllUsers("doctor"));
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<User> GetProfile(@PathVariable int id)
+    {
+        return ResponseEntity.ok().body(accountService.getUserById(id));
+    }
+    @PostMapping("/doctor")
+    public ResponseEntity<Integer> CreatDoctor(@RequestBody Doctor doctor)
+    {
+        if(accountService.createDoctor(doctor))
+        {
+            return ResponseEntity.ok().body(1);
+        }
+        else
+        {
+            return ResponseEntity.badRequest().body(0);
+        }
+    }
+    @PostMapping("/patient")
+    public ResponseEntity<Integer> CreatPatient(@RequestBody Patient patient)
+    {
+        if(accountService.createPatient(patient))
+        {
+            return ResponseEntity.ok().body(1);
+        }
+        else
+        {
+            return ResponseEntity.badRequest().body(0);
+        }
+    }
+
 }

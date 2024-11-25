@@ -5,13 +5,20 @@ import lombok.Data;
 @Data
 public class Doctor extends User{
     private int experienceYear;
-    private int price;
+    private int consultationPrice;
+    private double rating;
     private String speciality;
 
-    public Doctor(User user, int experienceYear, int price, String speciality){
-        super(user.getId(), user.getUserName(), user.getPassWord(), user.getUserRole());
-        this.experienceYear = experienceYear;
-        this.price = price;
-        this.speciality = speciality;
+    public Doctor(){
+        super();
     }
+    public Doctor(User user, int experienceYear, int price, String speciality, double rating){
+        super(user.getId(),user.getUserName(),user.getPassWord(),user.getEmail(),user.getFullName(),user.getPhoneNumber(),user.getAddress(),user.getBirthDay(),user.getUserRole(),user.getGender());
+        this.experienceYear = experienceYear;
+        this.consultationPrice = price;
+        this.speciality = speciality;
+        this.rating = rating;
+    }
+
 }
+

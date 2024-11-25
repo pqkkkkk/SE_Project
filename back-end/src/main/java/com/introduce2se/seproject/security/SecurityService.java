@@ -35,7 +35,7 @@ public class SecurityService {
         {
             if(user.getUserRole().equals("doctor"))
             {
-                Doctor doctor = new Doctor(user,5,100,"General");
+                Doctor doctor = new Doctor(user,5,100,"General",4.5);
                 setCurrentUser(request,doctor);
             }
             else if(user.getUserRole().equals("patient"))

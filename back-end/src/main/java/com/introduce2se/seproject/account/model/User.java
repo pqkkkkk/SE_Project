@@ -1,10 +1,12 @@
 package com.introduce2se.seproject.account.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
+@AllArgsConstructor
 public class User {
     private int id;
     private String userName;
@@ -15,18 +17,6 @@ public class User {
     private String address;
     private Date birthDay;
     private String userRole;
-    public User(){
-        id = 0;
-        userName = "";
-        passWord = "";
-        email = "";
-        userRole = "";
-    }
-    public User(int id, String username, String password, String userRole){
-        this.id = id;
-        this.userName = username;
-        this.passWord = password;
-        this.userRole = userRole;
-    }
-
+    private String gender;
+    public User(){}
 }
