@@ -1,0 +1,62 @@
+.wrapper {
+    height: 120px;
+    font-family: "Poppins", serif;
+}
+
+.inner {
+    max-width: calc(100% - 200px);
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: auto;
+
+    .logo {
+        display: flex;
+    }
+
+    img {
+        padding-right: 10px;
+    }
+
+    .list-services {
+        display: flex;
+        justify-content: space-between;
+        width: 40%;
+    }
+
+    .list-services li {
+        font-size: 20px;
+        cursor: pointer;
+
+        a {
+            text-decoration: none;
+            color: #bbbbbb;
+        }
+    }
+
+    .action .action-link {
+        font-size: 16px;
+        font-weight: 600;
+
+        text-decoration: none;
+
+        color: #1cb5bd;
+    }
+
+    .action .action-btn {
+        padding: 13px 16px;
+        margin-left: 18px;
+
+        border-radius: 8px;
+
+        font-size: 16px;
+        font-weight: 600;
+
+        text-decoration: none;
+
+        color: #fff;
+        background: #1cb5bd;
+    }
+}
