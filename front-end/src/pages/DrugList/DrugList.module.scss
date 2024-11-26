@@ -1,0 +1,115 @@
+
+.container{
+    margin: 50px 100px 0 100px;
+
+    .heading{
+        background-color: #1CB5BD;
+        padding: 20px;
+        font-size: 32px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .filter{
+        margin-top: 20px;
+        background-color: #e9f7f8;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+
+        .label{
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 30px;
+        }
+
+        .select-options{
+            margin-top: 16px;
+            border: 1px solid #1CB5BD;
+            height: 50px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #E9F7F8;
+        }
+
+        .label-type{
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        .label-search{
+            text-align: center;
+            margin-left: 30px;
+            margin-right: 10px;
+        }
+        
+        .input{
+            border: 1px solid #1CB5BD;
+            height: 30px;
+            width: 400px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #E9F7F8;
+        }
+
+        .search-btn{
+            background-color: #1CB5BD;
+            cursor: pointer;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            padding: 18px;
+        }
+    }
+
+    .medicine-list{
+        background-color: #ccc;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 20px;
+        justify-content: center;
+        padding: 10px;
+
+        .medicine{
+            border-radius: 5px;
+            padding: 8px;
+            background-color: #fff;
+            line-height: 1.5;
+            text-align: center;
+
+            .medicine-img{
+                width: 175px;
+                height: 175px;
+            }
+
+            .desc{
+                text-align: start;
+                margin-bottom: 20px;
+            }
+
+            .price-desc{
+                .price{
+                    font-size: 20px;
+                    font-weight: 600;
+                    color: #ff0000;
+                }
+            }    
+
+            .btn-buy{
+                margin-top: 30px;
+                border: none;
+                width: 100%;
+                padding: 10px;
+                background-color: #1CB5BD;
+                color: #fff;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+            }
+
+            .btn-buy:hover{
+                background-color: #0e7c80;
+            }
+        }
+    }
+}

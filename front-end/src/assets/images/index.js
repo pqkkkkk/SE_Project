@@ -35,6 +35,7 @@ const images = {
     medilabGlobal: require("./mlb.svg").default,
     healthNet: require("./hn.svg").default,
     healthCare: require("./hc.svg").default,
+    medicine: require("./medicine.jpg"),
 };
 
 export default images;
