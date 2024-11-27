@@ -11,7 +11,6 @@ function DrugList() {
             <div className={cx('filter')}>
                 <h2 className={cx('label')}>Tìm kiếm thuốc</h2>
                 
-                
                 <label className={cx('label-type')} htmlFor="category">Loại thuốc</label>
                 <select className={cx('select-options')} id="category">
                     <option value="0">Tất cả</option>
@@ -23,10 +22,8 @@ function DrugList() {
                 <label className={cx('label-search')} htmlFor="search">Nhập tên thuốc</label>
                 <input className={cx('input')} id="search" type="text" placeholder="Nhập tên thuốc"/>
                 <button className={cx("search-btn")}>Lọc</button>
-               
-                
-
             </div>
+            <div className={cx('break')}></div>
             <div className={cx('medicine-list')}>
                 <div className={cx('medicine')}>
                     <img src={images.medicine} alt="medicine" className={cx('medicine-img')}/>
