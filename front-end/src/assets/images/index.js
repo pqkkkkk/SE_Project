@@ -36,6 +36,11 @@ const images = {
     healthNet: require("./hn.svg").default,
     healthCare: require("./hc.svg").default,
     medicine: require("./medicine.jpg"),
+    medicineBg: require("./MedicineBg.png"),
+    feature1: require("./feature1.png"),
+    feature2: require("./feature2.png"),
+    feature3: require("./feature3.png"),
+    feature4: require("./feature4.png"),
 };
 
 export default images;

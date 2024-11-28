@@ -8,6 +8,21 @@ function DrugList() {
     return(
         <div className={cx('container')}>
             <h1 className={cx('heading')}>Hệ thống mua thuốc bệnh viện</h1>
+            <div className={cx('background')}>
+                <div className={cx('title')}>
+                    <h2 className={cx('strong-title')}>WELLNESS</h2>
+                    <h3 className={cx('soft-title')}>DELIVERED DAILY</h3>
+                    <p className={cx('desc')}>Trang bán thuốc trực tuyến của bệnh viện chúng tôi mang đến sự tiện 
+                        lợi và chăm sóc sức khỏe toàn diện ngay tại nhà.</p>
+                </div>
+                <img src={images.medicineBg} alt="medicineBg" className={cx('medicine-bg')}/>
+            </div>
+            <div className={cx('feature')}>
+                <img src={images.feature1} alt="feature1" className={cx('feature-img')}/>
+                <img src={images.feature2} alt="feature2" className={cx('feature-img')}/>
+                <img src={images.feature3} alt="feature3" className={cx('feature-img')}/>
+                <img src={images.feature4} alt="feature4" className={cx('feature-img')}/>
+            </div>
             <div className={cx('filter')}>
                 <h2 className={cx('label')}>Tìm kiếm thuốc</h2>
                 

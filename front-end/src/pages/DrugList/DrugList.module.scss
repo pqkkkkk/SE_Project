@@ -2,6 +2,57 @@
 .container{
     margin: 50px 100px 0 100px;
 
+    .background{
+        background-color: #e9f7f8;
+        display: flex;
+        justify-content: flex-end;
+        line-height: 1.2;
+        .medicine-bg{
+            width: 700px;
+            height: 400px;
+        }
+
+        .title{
+            margin-left: 30px;
+
+            .strong-title{
+                font-size: 70px;
+                font-weight: 700;
+                margin-top: 100px;
+                margin-right: 100px;
+                color: #0A5EB0;
+            }
+    
+            .soft-title{
+                font-size: 50px;
+                font-weight: 600;
+                margin-top: 20px;
+                margin-right: 100px;
+                color: #0A5EB0;
+            }
+
+            .desc{
+                font-size: 18px;
+                font-weight: 500;
+                margin-top: 10px;
+                margin-right: 100px;
+                color: #A6AEBF;
+            }
+        }
+    }
+
+    .feature{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+        .feature-img{
+            width: 300px;
+            height: 300px;
+            border-radius: 15px;
+        }
+    }
+    
+
     .heading{
         background-color: #1CB5BD;
         padding: 20px;
@@ -23,7 +74,8 @@
 
         .label{
             text-align: center;
-            font-size: 30px;
+            font-size: 40px;
+            font-weight: 600;
             margin-bottom: 30px;
         }
 
