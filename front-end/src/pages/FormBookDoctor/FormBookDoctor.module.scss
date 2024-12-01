@@ -1,0 +1,338 @@
+.content {
+  margin-top: 50px;
+
+  .doctor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .doctor-info {
+      border-radius: 5px;
+      border: 1px solid var(--text-color1);
+      background-color: var(--text-color2);
+      width: 70%;
+      display: flex;
+
+      .image-doctor {
+        flex: 1;
+
+        img {
+          margin-top: 20px;
+          margin-left: 50px;
+        }
+
+        .rate {
+          background-color: var(--text-color1);
+          display: flex;
+          padding: 2px 4px 2px 4px;
+          border-radius: 2.5px;
+          width: 45px;
+          align-items: center;
+          justify-content: center;
+          margin-left: 160px;
+          margin-top: 10px;
+          margin-bottom: 10px;
+
+          img {
+            margin: 0;
+            width: 18px;
+            height: 18px;
+          }
+
+          span {
+            font-size: 16px;
+            text-align: left;
+            color: #ffffff;
+            margin-left: 4px;
+          }
+        }
+      }
+
+      .doctor-detail {
+        flex: 1;
+
+        .name {
+          h1 {
+            font-size: 35px;
+            line-height: 80.45px;
+            font-weight: 600;
+            text-align: left;
+          }
+          p {
+            font-size: 20px;
+            font-weight: 600;
+            text-align: left;
+            color: #979797;
+          }
+        }
+
+        .location {
+          margin-top: 50px;
+          .info {
+            display: flex;
+            align-items: center;
+            h1 {
+              font-size: 28px;
+              font-weight: 600;
+              line-height: 45.25px;
+              text-align: left;
+              margin-left: 20px;
+            }
+          }
+          .detail {
+            max-width: 400px;
+            text-wrap: wrap;
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 30.17px;
+            text-align: left;
+            color: #979797;
+          }
+        }
+      }
+    }
+  }
+
+  .form-booking {
+    margin-top: 30px;
+
+    .price-booking {
+      border-radius: 5px;
+      border: 1px solid var(--text-color1);
+      background-color: var(--text-color2);
+      width: 200px;
+      height: 40px;
+      margin-left: 230px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* Cải tiến kiểu cho radio button */
+      input[type="radio"] {
+        appearance: none; /* Tắt hiển thị mặc định của radio button */
+        width: 21px;
+        height: 21px;
+        border-radius: 50%;
+        border: 2px solid #1cb5bd; /* Màu border radio button */
+        outline: none;
+        position: relative;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+
+      /* Đổi màu khi radio button được chọn */
+      input[type="radio"]:checked {
+        background-color: #fff; /* Màu nền khi chọn */
+        border-color: #1cb5bd; /* Đổi màu viền khi chọn */
+      }
+
+      /* Tạo vòng tròn nhỏ bên trong radio button khi được chọn */
+      input[type="radio"]:checked::after {
+        content: "";
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #1cb5bd; /* Màu vòng tròn nhỏ */
+      }
+
+      /* Kiểu cho chữ trong label */
+      label {
+        display: flex;
+        font-weight: bold; /* Đặt chữ trong label đậm */
+        font-size: 16px;
+        color: #1cb5bd;
+        cursor: pointer;
+        align-items: center;
+      }
+    }
+
+    .container {
+      display: flex;
+      width: 80%;
+
+      .city-options {
+        flex: 1;
+      }
+      .district-options {
+        flex: 1;
+      }
+    }
+
+    .input-fullname,
+    .input-phone,
+    .input-email,
+    .input-birthday,
+    .city-options,
+    .district-options,
+    .input-address,
+    .input-reason {
+      margin-left: 230px;
+
+      .select-options {
+        margin-top: 16px;
+        border: 1px solid #1cb5bd;
+        width: 80%;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #e9f7f8;
+      }
+
+      .field-text {
+        margin-top: 30px;
+        font-size: 24px;
+        font-weight: 600;
+        display: block;
+      }
+
+      .decor-input {
+        display: flex;
+        margin-top: 16px;
+
+        .input {
+          border: 1px solid #1cb5bd;
+          height: 25px;
+          width: 80%;
+          padding: 10px;
+          border-radius: 5px;
+          background-color: #e9f7f8;
+        }
+      }
+
+      .note {
+        margin-top: 10px;
+        font-size: 16px;
+        color: #979797;
+      }
+    }
+
+    .gender-options {
+      margin-top: 20px;
+      border-radius: 5px;
+      border: 1px solid var(--text-color1);
+      background-color: var(--text-color2);
+      width: 200px;
+      margin-left: 230px;
+      padding: 10px;
+
+      .field-text {
+        font-size: 20px;
+        font-weight: 600;
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      .decor-gender {
+        display: flex;
+        justify-content: space-between;
+
+        /* Cải tiến kiểu cho radio button */
+        input[type="radio"] {
+          appearance: none; /* Tắt hiển thị mặc định của radio button */
+          width: 21px;
+          height: 21px;
+          border-radius: 50%;
+          border: 2px solid #1cb5bd; /* Màu border radio button */
+          outline: none;
+          position: relative;
+          cursor: pointer;
+          margin-right: 10px;
+        }
+
+        /* Đổi màu khi radio button được chọn */
+        input[type="radio"]:checked {
+          background-color: #fff; /* Màu nền khi chọn */
+          border-color: #1cb5bd; /* Đổi màu viền khi chọn */
+        }
+
+        /* Tạo vòng tròn nhỏ bên trong radio button khi được chọn */
+        input[type="radio"]:checked::after {
+          content: "";
+          position: absolute;
+          top: 4px;
+          left: 4px;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background-color: #1cb5bd; /* Màu vòng tròn nhỏ */
+        }
+
+        /* Kiểu cho chữ trong label */
+        label {
+          display: flex;
+          font-weight: bold; /* Đặt chữ trong label đậm */
+          font-size: 16px;
+          color: #333;
+          cursor: pointer;
+          align-items: center;
+        }
+      }
+    }
+  }
+
+  .total-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .total-payment {
+      background-color: #dbeaeb;
+      margin-top: 30px;
+      width: 67%;
+      padding: 20px;
+
+      .booking-fee {
+        margin-top: 5px;
+      }
+
+      .examination-price,
+      .booking-fee,
+      .total {
+        display: flex;
+
+        h1 {
+          flex: 1;
+          margin-left: 20px;
+          font-size: 20px;
+          font-weight: 600;
+        }
+
+        p {
+          flex: 1;
+          text-align: right;
+          margin-right: 20px;
+        }
+      }
+    }
+  }
+
+  .request,
+  .confirm-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      margin-top: 10px;
+      color: #979797;
+    }
+
+    button {
+      margin-top: 32px;
+      margin-bottom: 50px;
+      width: 270px;
+      height: 45px;
+      font-size: 20px;
+      background-color: #1cb5bd;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #fff;
+      color: black;
+    }
+  }
+}
