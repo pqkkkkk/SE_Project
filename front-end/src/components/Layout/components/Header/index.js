@@ -30,11 +30,11 @@ function Header() {
                 </ul>
 
                 <div className={cx("action")}>
-                    <a href="#!" className={cx("action-link")}>
+                    <a href="/login" className={cx("action-link")}>
                         Sign in
                     </a>
 
-                    <a href="#!" className={cx("action-btn")}>
+                    <a href="/register" className={cx("action-btn")}>
                         Sign up
                     </a>
                 </div>

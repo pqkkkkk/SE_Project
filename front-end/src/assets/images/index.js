@@ -35,6 +35,10 @@ const images = {
     medilabGlobal: require("./mlb.svg").default,
     healthNet: require("./hn.svg").default,
     healthCare: require("./hc.svg").default,
+    telemedicine: require("./telemedicine.svg").default,
+    google: require("./google.svg").default,
+    facebook: require("./facebook.svg").default,
+    onlineDoctor: require("./online_doctor.svg").default,
 };
 
 export default images;

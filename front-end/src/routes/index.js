@@ -3,15 +3,17 @@ import FindDoctor from "../pages/FindDoctor";
 import OurService from "../pages/OurService";
 import Review from "../pages/Review";
 import Login from "../pages/Login";
+import Register from "../pages/Register";
 import DetailDOctor from "../pages/DetailDoctor";
 
 const publicRoutes = [
-  { path: "/", component: Home },
-  { path: "/find-doctor", component: FindDoctor },
-  { path: "/our-service", component: OurService },
-  { path: "/review", component: Review },
-  { path: "/login", component: Login, layout: null },
-  { path: "/doctor/:id", component: DetailDOctor },
+    { path: "/", component: Home },
+    { path: "/find-doctor", component: FindDoctor },
+    { path: "/our-service", component: OurService },
+    { path: "/review", component: Review },
+    { path: "/login", component: Login, layout: null },
+    { path: "/register", component: Register, layout: null },
+    { path: "/doctor/:id", component: DetailDOctor },
 ];
 
 const privateRoutes = [];
