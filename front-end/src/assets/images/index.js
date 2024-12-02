@@ -41,6 +41,11 @@ const images = {
     feature2: require("./feature2.png"),
     feature3: require("./feature3.png"),
     feature4: require("./feature4.png"),
+    telemedicine: require("./telemedicine.svg").default,
+    google: require("./google.svg").default,
+    facebook: require("./facebook.svg").default,
+    onlineDoctor: require("./online_doctor.svg").default,
+
 };
 
 export default images;
