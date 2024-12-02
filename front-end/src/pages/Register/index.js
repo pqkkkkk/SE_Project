@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import styles from "./Login.module.scss";
+import styles from "./Register.module.scss";
 import images from "../../assets/images";
 import { useNavigate } from "react-router-dom";
 import InputField from "../../components/InputField";
@@ -7,16 +7,16 @@ import SocialLogin from "../../components/Social";
 
 const cx = classNames.bind(styles);
 
-function Login() {
+function Register() {
     return (
-        <main id={cx("login")}>
+        <main id={cx("register")}>
             <div className={cx("content")}>
-                <img src={images.telemedicine} />
+                <img src={images.onlineDoctor} />
 
-                <div className={cx("login-container")}>
-                    <h1 className={cx("form-title")}>Welcome Back</h1>
+                <div className={cx("register-container")}>
+                    <h1 className={cx("form-title")}>Welcome User</h1>
 
-                    <form action="#!" className={cx("login-form")}>
+                    <form action="#!" className={cx("register-form")}>
                         <InputField
                             type="email"
                             placeholder="Enter email"
@@ -25,26 +25,30 @@ function Login() {
 
                         <InputField
                             type="password"
-                            placeholder="Enter password"
+                            placeholder="Create Password"
                             icon="fa-solid fa-lock"
                         />
 
-                        <a href="#!" className={cx("forgot-pass-link")}>
-                            Forgot Password?
-                        </a>
+                        <InputField
+                            type="password"
+                            placeholder="Confirm Password"
+                            icon="fa-solid fa-lock"
+                        />
 
-                        <button className={cx("login-button")}>Sign In</button>
+                        <button className={cx("register-button")}>
+                            Sign Up
+                        </button>
                     </form>
 
                     <p className={cx("separator")}>
                         <span>Or continue with</span>
                     </p>
 
-                    <SocialLogin social_type="social-login" />
+                    <SocialLogin social_type="social-register" />
 
                     <p className={cx("signup-text")}>
-                        Don't have an account?
-                        <a href="/register">Sign up</a>
+                        Already have an account?
+                        <a href="/login">Sign in</a>
                     </p>
                 </div>
             </div>
@@ -52,4 +56,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default Register;

@@ -94,20 +94,18 @@ function FindDoctor() {
           </form>
         </div>
         <div className={cx("main-content")}>
-          <div className={cx("list-doctors")}>
-            {doctors.map((doctor) => (
-              <div
-                key={doctor.id}
-                className={cx("doctor")}
-                onClick={() => handleDoctorClick(doctor.id)}
-              >
-                <img src={images.doctorDefault} alt="doctor" />
-                <h3>{doctor.name}</h3>
-                <p className={cx("speciality")}>{doctor.speciality}</p>
-                <p className={cx("review")}>{doctor.reviews} reviews</p>
-              </div>
-            ))}
-          </div>
+          {doctors.map((doctor) => (
+            <div
+              key={doctor.id}
+              className={cx("doctor")}
+              onClick={() => handleDoctorClick(doctor.id)}
+            >
+              <img src={images.doctorDefault} alt="doctor" />
+              <h3>{doctor.name}</h3>
+              <p className={cx("speciality")}>{doctor.speciality}</p>
+              <p className={cx("review")}>{doctor.reviews} reviews</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
