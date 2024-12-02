@@ -15,9 +15,7 @@
       width: 600px;
       top: 200px;
       left: 90px;
-      gap: 0px;
       border-radius: 5px;
-      opacity: 0px;
       border: 1px solid var(--text-color1);
       background-color: var(--text-color2);
       display: flex;
@@ -44,7 +42,6 @@
         }
 
         span {
-          font-family: Source Sans Pro;
           font-size: 16px;
           line-height: 20.11px;
           text-align: left;
@@ -84,14 +81,12 @@
       .price {
         margin-top: 20px;
         span {
-          font-family: Source Sans Pro;
           font-size: 28px;
           font-weight: 600;
           line-height: 50.28px;
           text-align: center;
         }
         p {
-          font-family: Source Sans Pro;
           font-size: 15px;
           font-weight: 600;
           line-height: 30.17px;
@@ -136,7 +131,6 @@
           }
           span {
             margin-left: 10px;
-            font-family: Source Sans Pro;
             font-size: 15px;
             line-height: 25.14px;
             color: var(--text-color1);
@@ -166,7 +160,6 @@
         }
         span {
           margin-left: 10px;
-          font-family: Source Sans Pro;
           font-size: 15px;
           line-height: 25.14px;
           color: var(--text-color1);
@@ -182,14 +175,12 @@
       left: 800px;
       .name {
         h1 {
-          font-family: Source Sans Pro;
           font-size: 54px;
           line-height: 80.45px;
           font-weight: 600;
           text-align: left;
         }
         p {
-          font-family: Source Sans Pro;
           font-size: 28px;
           font-weight: 600;
           text-align: left;
@@ -202,7 +193,6 @@
           display: flex;
           align-items: center;
           h1 {
-            font-family: Source Sans Pro;
             font-size: 28px;
             font-weight: 600;
             line-height: 45.25px;
@@ -211,7 +201,6 @@
           }
         }
         .detail {
-          font-family: Source Sans Pro;
           max-width: 400px;
           text-wrap: wrap;
           font-size: 20px;
@@ -226,7 +215,6 @@
       .issues {
         margin-top: 50px;
         .title {
-          font-family: Source Sans Pro;
           font-size: 28px;
           font-weight: 600;
           line-height: 45.25px;
@@ -244,7 +232,6 @@
             border-radius: 5px;
             border: 1px 0px 0px 0px;
             color: var(--text-color1);
-            font-family: Source Sans Pro;
             font-size: 18px;
             display: flex;
             align-items: center;
@@ -258,7 +245,6 @@
       .experience {
         margin-top: 50px;
         .title {
-          font-family: Source Sans Pro;
           font-size: 28px;
           font-weight: 600;
           line-height: 45.25px;
@@ -302,12 +288,10 @@
         align-items: center;
         padding: 25px 13px 0px 13px;
         .t1 {
-          font-family: Source Sans Pro;
           font-size: 20px;
           font-weight: 600;
         }
         .t2 {
-          font-family: Source Sans Pro;
           font-size: 15px;
           color: #979797;
         }
@@ -323,14 +307,12 @@
       top: 1120px;
       left: 800px;
       h1 {
-        font-family: Source Sans Pro;
         font-size: 28px;
         font-weight: 600;
         text-align: left;
       }
       p {
         margin-top: 20px;
-        font-family: Source Sans Pro;
         font-size: 16px;
         line-height: 20px;
         text-align: left;
@@ -343,7 +325,6 @@
         margin-top: 20px;
         cursor: pointer;
         a {
-          font-family: Source Sans Pro;
           font-size: 16px;
           text-align: left;
           color: var(--text-color1);
