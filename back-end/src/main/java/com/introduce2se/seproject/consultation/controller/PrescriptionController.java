@@ -28,25 +28,18 @@ public class PrescriptionController {
     public ResponseEntity<String> createPrescription(
             @RequestParam int consultationId,
             @RequestBody List<PrescriptionDetail> details
-    ) {
-        // Tính total_price (cái này cần interface của drug để lấy giá 1 loại thuốc trong prescription_detail, sẽ viết sau
+    )
+    {
         try {
-        // Tạo đơn thuốc
-        Prescription prescription = new Prescription();
-        prescription.setConsultationId(consultationId);
-        prescription.setTotalPrice(100); // giả định total price
-        prescription.setCreatedDay(new Date());
-        int prescriptionId = prescriptionService.createPrescription(prescription);
+            // Tạo đơn thuốc mới
+            Prescription prescription = new Prescription();
+            prescription.setConsultationId(consultationId);
 
-        // Thêm chi tiết kê đơn
-        for (PrescriptionDetail detail : details) {
-            detail.setPrescriptionId(prescriptionId);
-            prescriptionService.addPrescriptionDetail(detail);
-        }
+            // Gọi service để tạo đơn thuốc và tính totalPrice
+            int prescriptionId = prescriptionService.createPrescription(prescription, details);
 
-        return ResponseEntity.ok("Prescription created with ID: " + prescriptionId);
-        }
-        catch (Exception e) {
+            return ResponseEntity.ok("Prescription created with ID: " + prescriptionId);
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
         }
