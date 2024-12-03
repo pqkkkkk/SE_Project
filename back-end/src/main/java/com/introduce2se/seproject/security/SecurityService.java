@@ -6,6 +6,8 @@ import com.introduce2se.seproject.account.model.Doctor;
 import com.introduce2se.seproject.account.model.Patient;
 import com.introduce2se.seproject.account.model.User;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,8 @@ public class SecurityService {
     }
 
     public boolean login(HttpServletRequest request, String actualUsername, String actualPassword){
+        HttpSession httpSession = request.getSession();
+
         User user = accountService.getUserByUsername(actualUsername);
 
         if(user != null && user.getPassWord().equals(actualPassword))
@@ -56,9 +60,4 @@ public class SecurityService {
     public boolean logout(){
         return true;
     }
-    public boolean register(String username, String password){
-        return true;
-    }
-
-
 }
