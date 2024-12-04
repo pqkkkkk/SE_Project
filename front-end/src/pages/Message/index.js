@@ -43,18 +43,14 @@ function Messages() {
             <div className={cx('side-bar')}>
                 <h2>Messages</h2>
                 <div className={cx("search")}>
-                    <label className={cx("field-text")}>
-                        <div className={cx("decor-input")}>
-                            <input
-                                className={cx("input")}
-                                type="text"
-                                placeholder="Search doctor"
-                                value={searchValue} // Liên kết giá trị với state
-                                onChange={handleSearchChange} // Xử lý khi người dùng nhập
-                            />
-                            <button className={cx("search-btn")}>Search</button>
-                        </div>
-                    </label>
+                    <input
+                        className={cx("search-input")}
+                        type="text"
+                        placeholder="Search doctor"
+                        value={searchValue} // Liên kết giá trị với state
+                        onChange={handleSearchChange} // Xử lý khi người dùng nhập
+                    />
+                    {/* <button className={cx("search-btn")}>Search</button>  */}
                 </div>
 
                 <div className={cx("list-doctors")}>
