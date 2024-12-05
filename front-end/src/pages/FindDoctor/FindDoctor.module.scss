@@ -1,8 +1,9 @@
 .content{
     margin-top: 80px;
-
+    margin-left: 100px;
+    margin-right: 100px;
     .element {
-        border-left: 1px solid #BBBBBB; 
+        
         border-right: 1px solid #BBBBBB; 
         border-bottom: 1px solid #BBBBBB; 
         border-top: none;
@@ -31,6 +32,7 @@
 
     .page{
         display: flex;
+        border: 1px solid #BBBBBB;
         
         .sidebar {
             .field-text{
@@ -145,54 +147,54 @@
 
         .main-content{
             padding: 40px;
-            .list-doctors{
-                display: flex;
-                flex-wrap: wrap;
-                gap: 20px;
-                line-height: 1.5;
-                
-        
-                .doctor{
-                    width: 350px;
-                    height: 400px;
-                    border: 1px solid #BBBBBB;
-                    border-radius: 5px;
-                    margin-top: 20px;
-                    text-align: center;
-                    cursor: pointer;
-                }
+            flex-grow: 1;
+            display: grid;
+            justify-content: center;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            place-items: center;
+            line-height: 1.5;
 
-                .doctor:hover{
-                    background-color: #7deaf0;
-                }
-        
-                img {
-                    width: 177px; 
-                    height: 177px; 
-                    object-fit: cover; 
-                    border-radius: 50%;
-                    margin-top: 60px;
-                }
-        
-                h3{
-                    margin-top: 10px;
-                    font-size: 20px;
-                    font-weight: 600;
-                }
-        
-                .speciality{
-                    font-size: 20px;
-                    opacity: 0.5;
-                }
-        
-                .review{
-                    font-size: 16px;
-                    font-weight: 600;
-                    opacity: 0.5;
-                    margin-top: 40px;
-                }
-        
+            .doctor{
+                width: 350px;
+                height: 400px;
+                border: 1px solid #BBBBBB;
+                border-radius: 5px;
+                margin-top: 20px;
+                text-align: center;
+                cursor: pointer;
             }
+
+            .doctor:hover{
+                background-color: #7deaf0;
+            }
+    
+            img {
+                width: 177px; 
+                height: 177px; 
+                object-fit: cover; 
+                border-radius: 50%;
+                margin-top: 60px;
+            }
+    
+            h3{
+                margin-top: 10px;
+                font-size: 20px;
+                font-weight: 600;
+            }
+    
+            .speciality{
+                font-size: 20px;
+                opacity: 0.5;
+            }
+    
+            .review{
+                font-size: 16px;
+                font-weight: 600;
+                opacity: 0.5;
+                margin-top: 40px;
+            }
+        
+            
         }
     }
 

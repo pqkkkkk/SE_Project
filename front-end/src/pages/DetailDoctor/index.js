@@ -1,10 +1,15 @@
 import classNames from "classnames/bind";
 import styles from "./DetailDoctor.module.scss";
 import images from "../../assets/images";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
 function DetailDoctor() {
+  const navigate = useNavigate();
+  const handleBookAppointment = () => {
+    navigate("/book-appointment");
+  };
   return (
     <div className={cx("content")}>
       <div className={cx("doctor")}>
@@ -29,7 +34,9 @@ function DetailDoctor() {
             <span>$100 - $350</span>
             <p>Online / Offline</p>
           </div>
-          <button className={cx("submit-btn")}>Book Appointment</button>
+          <button className={cx("submit-btn")} onClick={handleBookAppointment}>
+            Book Appointment
+          </button>
           <div className={cx("tags")}>
             <div className={cx("icon-friendly")}>
               <img src={images.smile} alt="icon smile" />
