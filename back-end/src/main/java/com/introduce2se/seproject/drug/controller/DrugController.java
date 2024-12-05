@@ -1,7 +1,6 @@
 package com.introduce2se.seproject.drug.controller;
 
 import com.introduce2se.seproject.drug.model.Drug;
-import com.introduce2se.seproject.drug.model.DrugType;
 import com.introduce2se.seproject.drug.service.DrugService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,9 +34,10 @@ public class DrugController {
         }
     }
 
-    @GetMapping("search")
-    public ResponseEntity<List<Drug>> findDrugByKeyword(@RequestParam String keyword) {
-        List<Drug> drugs = drugService.findDrugsByKeyword(keyword);
+    // oke
+    @GetMapping("/find")
+    public ResponseEntity<List<Drug>> findDrugs(@RequestParam String keyword, @RequestParam String type) {
+        List<Drug> drugs = drugService.findDrugs(keyword, type);
         if(drugs!=null) {
             return ResponseEntity.ok(drugs);
         }
@@ -47,17 +47,13 @@ public class DrugController {
     }
 
     // get all the drug type
-    @GetMapping("DrugType")
-    public ResponseEntity<List<DrugType>> getAllDrugType(){
-        List<DrugType> drugTypes = drugService.getAllDrugType();
-        return ResponseEntity.ok(drugTypes);
-    }
 
-    @GetMapping("/DrugType/{drugTypeName}")
-    public ResponseEntity<List<Drug>> findDrugsByType(@PathVariable String drugTypeName){
-        List<Drug> drugsByType = drugService.getDrugByType(drugTypeName);
-        if(drugsByType!=null) {
-            return ResponseEntity.ok(drugsByType);
+    //OKE
+    @GetMapping("/DrugType")
+    public ResponseEntity<List<String>> findDrugsByType(){
+        List<String> drugsType = drugService.getALLDrugTypes();
+        if(drugsType!=null) {
+            return ResponseEntity.ok(drugsType);
         }
         else {
             return ResponseEntity.notFound().build();

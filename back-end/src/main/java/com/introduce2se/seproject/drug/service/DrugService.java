@@ -2,7 +2,6 @@ package com.introduce2se.seproject.drug.service;
 
 import com.introduce2se.seproject.drug.dao.IDrugDao;
 import com.introduce2se.seproject.drug.model.Drug;
-import com.introduce2se.seproject.drug.model.DrugType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,19 +23,15 @@ public class DrugService {
         return drugdao.getDrugById(id);
     }
 
-    public List<Drug> findDrugsByKeyword(String keyword){
-        return drugdao.findDrugByKeyword(keyword);
-    }
-
-    public List<DrugType> getAllDrugType(){
-        return drugdao.getAllDrugType();
-    }
-
-    public List<Drug> getDrugByType(String DrugTypeName){
-        return drugdao.getDrugByType(DrugTypeName);
+    public List<Drug> findDrugs(String keyword, String type){
+        return drugdao.findDrugs(keyword, type);
     }
 
     public int getPriceByDrugId(int drugId) {
         return drugdao.getPriceByDrugId(drugId);
+    }
+
+    public List<String> getALLDrugTypes(){
+        return drugdao.getAllDrugtypes();
     }
 }

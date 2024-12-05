@@ -2,6 +2,7 @@ package com.introduce2se.seproject.consultation.controller;
 
 import com.introduce2se.seproject.consultation.model.*;
 import com.introduce2se.seproject.consultation.service.PrescriptionService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/prescriptions")
 public class PrescriptionController {
@@ -26,19 +28,25 @@ public class PrescriptionController {
     // create a prescription
     @PostMapping("/create_prescription")
     public ResponseEntity<String> createPrescription(
-            @RequestParam int consultationId,
-            @RequestBody List<PrescriptionDetail> details
+            @RequestParam int consultationId, // Tham số từ query string (URL)
+            @RequestBody List<PrescriptionDetail> details // Tham số từ body
     )
     {
         try {
-            // Tạo đơn thuốc mới
+            System.out.println("Consultation ID: " + consultationId);
+            details.forEach(detail -> {
+                System.out.println("DrugId: " + detail.getDrugId() +
+                        ", Quantity: " + detail.getQuantity() +
+                        ", Usage: " + detail.getUsage());
+            });
+
+            // Tiến hành tạo prescription và lưu vào DB
             Prescription prescription = new Prescription();
             prescription.setConsultationId(consultationId);
-
-            // Gọi service để tạo đơn thuốc và tính totalPrice
             int prescriptionId = prescriptionService.createPrescription(prescription, details);
 
-            return ResponseEntity.ok("Prescription created with ID: " + prescriptionId);
+
+            return ResponseEntity.ok("Prescription created");
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());

@@ -1,7 +1,6 @@
 package com.introduce2se.seproject.drug.dao;
 
 import com.introduce2se.seproject.drug.model.Drug;
-import com.introduce2se.seproject.drug.model.DrugType;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -34,22 +33,34 @@ public class DrugSqlDao implements IDrugDao {
         return jdbcTemplate.queryForObject(sql, new DrugRowMapper(),drugId);
     }
 
-    // find drug by keyword
+    // find drug by keyword and type
     @Override
-    public List<Drug> findDrugByKeyword(String keyword){
-        String sql = "SELECT * from drug where name like ?";
-        return jdbcTemplate.query(sql, new DrugRowMapper(),"%" + keyword + "%" );
+    public List<Drug> findDrugs(String keyword, String drugTypeName) {
+        String sql = "SELECT * FROM drug WHERE 1=1";  // Điều kiện mặc định là luôn đúng
+
+        // Thêm điều kiện tìm theo keyword nếu có
+        if (keyword != null && !keyword.isEmpty()) {
+            sql += " AND name LIKE ?";
+        }
+
+        // Thêm điều kiện tìm theo loại thuốc nếu có
+        if (drugTypeName != null && !drugTypeName.isEmpty()) {
+            sql += " AND drug_type = ?";
+        }
+
+        // Thực thi truy vấn với các tham số tương ứng
+        if ((keyword != null && !keyword.isEmpty()) && (drugTypeName != null && !drugTypeName.isEmpty())) {
+            return jdbcTemplate.query(sql, new DrugRowMapper(), "%" + keyword + "%", drugTypeName);
+        }
+        else if (keyword != null && !keyword.isEmpty()) {
+            return jdbcTemplate.query(sql, new DrugRowMapper(), "%" + keyword + "%");
+        }
+        else if (drugTypeName != null && !drugTypeName.isEmpty()) {
+            return jdbcTemplate.query(sql, new DrugRowMapper(), drugTypeName);
+        }
+        else return jdbcTemplate.query(sql, new DrugRowMapper());  // Lấy toàn bộ danh sách nếu cả keyword và drugTypeName đều null hoặc rỗng
     }
-    @Override
-    public List<DrugType> getAllDrugType(){
-        String sql = "SELECT * FROM drugtype";
-        return jdbcTemplate.query(sql, new DrugTypeRowMapper());
-    }
-    @Override
-    public List<Drug> getDrugByType(String DrugTypeName){
-        String sql = "SELECT * FROM drug where drug_type = ?";
-        return jdbcTemplate.query(sql,new DrugRowMapper(), DrugTypeName);
-    }
+
 
     @Override
     public int getPriceByDrugId(int drugId) {
@@ -62,6 +73,11 @@ public class DrugSqlDao implements IDrugDao {
         } catch (EmptyResultDataAccessException e) {
             throw new IllegalArgumentException("Drug not found for ID: " + drugId);
         }
+    }
+
+    public List<String> getAllDrugtypes(){
+        String sql = "SELECT distinct drug_type FROM drug";
+        return jdbcTemplate.queryForList(sql, String.class);
     }
 
     // row mapper cho Drug
@@ -82,12 +98,4 @@ public class DrugSqlDao implements IDrugDao {
     }
 
     // row mapper cho drug type
-    public static class DrugTypeRowMapper implements RowMapper<DrugType> {
-        @Override
-        public DrugType mapRow(ResultSet rs, int rowNum) throws SQLException {
-            DrugType drugType = new DrugType();
-            drugType.setDrugTypeName(rs.getString("DrugTypeName"));
-            return drugType;
-        }
-    }
 }
