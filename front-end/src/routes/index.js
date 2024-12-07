@@ -5,6 +5,7 @@ import Review from "../pages/Review";
 import Login from "../pages/Login";
 import DetailDOctor from "../pages/DetailDoctor";
 import FormBookDoctor from "../pages/FormBookDoctor";
+import VideoCall from "../pages/VideoCall";
 
 const publicRoutes = [
   { path: "/", component: Home },
@@ -14,6 +15,7 @@ const publicRoutes = [
   { path: "/login", component: Login, layout: null },
   { path: "/doctor/:id", component: DetailDOctor },
   { path: "/book-appointment", component: FormBookDoctor },
+  { path: "/video-call", component: VideoCall, layout: null },
 ];
 
 const privateRoutes = [];

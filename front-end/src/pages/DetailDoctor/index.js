@@ -10,6 +10,13 @@ function DetailDoctor() {
   const handleBookAppointment = () => {
     navigate("/book-appointment");
   };
+  const handleCallDoctor = () => {
+    window.open(
+      "/video-call",
+      "VideoCallWindow",
+      "width=800,height=600,scrollbars=no,resizable=no"
+    );
+  };
   return (
     <div className={cx("content")}>
       <div className={cx("doctor")}>
@@ -23,7 +30,7 @@ function DetailDoctor() {
             <button className={cx("calendar")}>
               <img src={images.calendar} alt="calendar" />
             </button>
-            <button className={cx("phone")}>
+            <button className={cx("phone")} onClick={handleCallDoctor}>
               <img src={images.phone} alt="calendar" />
             </button>
             <button className={cx("message")}>
