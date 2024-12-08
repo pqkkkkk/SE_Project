@@ -38,6 +38,7 @@ const images = {
   endcall: require("./endcall.svg").default,
   microphone: require("./microphone.svg").default,
   video: require("./video.svg").default,
+  avatar: require("./avt-default.svg").default,
 };
 
 export default images;
