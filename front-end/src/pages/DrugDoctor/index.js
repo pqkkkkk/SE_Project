@@ -9,6 +9,7 @@ const cx = classNames.bind(styles);
 function DrugDoctor() {
 
     const [prescription, setPrescription] = useState([]);
+    const [searchValue, setSearchValue] = useState("");
 
 
     const drugs = [
@@ -23,6 +24,15 @@ function DrugDoctor() {
         { id: 9, name: "Panadol 9", image: images.medicine, Unit: "vỉ", Price: 100000, QuantityInStock: 10 },
         { id: 10, name: "Panadol 10", image: images.medicine, Unit: "vỉ", Price: 100000, QuantityInStock: 10 },
     ]
+
+
+    const handleSearchChange = (e) => {
+        setSearchValue(e.target.value);
+    }
+
+    const filteredDrugs = drugs.filter((drug) => 
+        drug.name.toLowerCase().includes(searchValue.toLowerCase())
+    );
 
 
     const handleAddDrug = (drug) => {
@@ -73,10 +83,10 @@ function DrugDoctor() {
                         className={cx("search-input")}
                         type="text"
                         placeholder="Search"
-                        //value={searchValue} // Liên kết giá trị với state
-                        //onChange={handleSearchChange} // Xử lý khi người dùng nhập
+                        value={searchValue} 
+                        onChange={handleSearchChange} 
                     />
-                    {drugs.map((drug) => (
+                    {filteredDrugs.map((drug) => (
                         <div key={drug.id} className={cx("drug-item")}>
                             <img src={images.medicine} alt={drug.name} className={cx("drug-img")} />
                             <div className={cx("drug-info")}>
