@@ -20,16 +20,19 @@ public class AccountController {
     {
         this.accountService = accountService;
     }
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/allDoctors")
     public ResponseEntity<ArrayList<User>> GetAllDoctors()
     {
         return ResponseEntity.ok().body(accountService.getAllUsers("doctor"));
     }
     @GetMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<User> GetProfile(@PathVariable int id)
     {
         return ResponseEntity.ok().body(accountService.getUserById(id));
     }
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/doctor")
     public ResponseEntity<Integer> CreatDoctor(@RequestBody Doctor doctor)
     {
@@ -42,6 +45,7 @@ public class AccountController {
             return ResponseEntity.badRequest().body(0);
         }
     }
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/patient")
     public ResponseEntity<Integer> CreatPatient(@RequestBody Patient patient)
     {

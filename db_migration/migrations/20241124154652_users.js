@@ -13,7 +13,8 @@ exports.up = async function(knex) {
       phonenumber VARCHAR(15) NOT NULL,
       address NVARCHAR(50),
       birthday DATE,
-      userrole VARCHAR(10),
+      avatar_path varchar(100),
+      role VARCHAR(10),
       gender VARCHAR(10)
     );
     `);

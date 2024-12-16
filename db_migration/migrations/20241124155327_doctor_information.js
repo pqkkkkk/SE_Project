@@ -9,7 +9,7 @@ exports.up = async function(knex) {
       experience_year INT NOT NULL,
       speciality VARCHAR(20) NOT NULL,
       consultation_price INT NOT NULL,
-      rating double precision default 0
+      rating float default 0
     );
 `);
 };

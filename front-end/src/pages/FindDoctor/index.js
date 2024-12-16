@@ -2,12 +2,13 @@ import classNames from "classnames/bind";
 import styles from "./FindDoctor.module.scss";
 import images from "../../assets/images";
 import { useNavigate } from "react-router-dom";
-
+import {getAllDoctors} from "../../services/ApiService";
+import { useEffect, useState } from "react";
 const cx = classNames.bind(styles);
 
 function FindDoctor() {
   const navigate = useNavigate();
-  const doctors = [
+  /*const doctors = [
     { id: 1, name: "Dr. John Doe 1", speciality: "Cardiologist", review: 120 },
     { id: 2, name: "Dr. Jane Doe 2", speciality: "Dentist", review: 100 },
     { id: 3, name: "Dr. John Doe 3", speciality: "Dermatologist", review: 80 },
@@ -15,6 +16,13 @@ function FindDoctor() {
     { id: 5, name: "Dr. John Doe 5", speciality: "Psychiatrist", review: 110 },
     { id: 6, name: "Dr. John Doe 6", speciality: "Cardiologist", review: 120 },
   ];
+  */
+
+  const [doctors, setDoctors] = useState([]);
+  useEffect(() =>{
+    getAllDoctors().then(data => setDoctors(data || []))
+        .catch(error => console.log(error));
+  });
   const handleDoctorClick = (id) => {
     navigate(`/doctor/${id}`);
   };
@@ -101,9 +109,9 @@ function FindDoctor() {
               onClick={() => handleDoctorClick(doctor.id)}
             >
               <img src={images.doctorDefault} alt="doctor" />
-              <h3>{doctor.name}</h3>
+              <h3>{doctor.fullName}</h3>
               <p className={cx("speciality")}>{doctor.speciality}</p>
-              <p className={cx("review")}>{doctor.reviews} reviews</p>
+              <p className={cx("review")}>{doctor.consultationPrice} reviews</p>
             </div>
           ))}
         </div>
