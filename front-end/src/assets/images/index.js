@@ -45,7 +45,7 @@ const images = {
     google: require("./google.svg").default,
     facebook: require("./facebook.svg").default,
     onlineDoctor: require("./online_doctor.svg").default,
-
+    userAvatar: require("./user-avatar.jpg"),
 };
 
 export default images;

@@ -1,0 +1,205 @@
+#user-profile .content {
+    display: flex;
+    justify-content: space-between;
+
+    max-width: calc(100% - 200px);
+    margin: 50px auto;
+}
+
+#user-profile .content .profile-sidebar {
+    width: 25%;
+    height: 100%;
+    border: 1px solid #bbb;
+
+    border-radius: 0.31rem;
+}
+
+#user-profile .profile-sidebar .user-info {
+    padding: 20px 0;
+    border-bottom: 1px solid #bbb;
+}
+
+#user-profile .user-info .user-avatar {
+    display: block;
+
+    width: 128px;
+    height: 128px;
+    margin: auto;
+
+    border-radius: 50%;
+}
+
+#user-profile .user-info .user-name {
+    margin-top: 10px;
+
+    font-size: 20px;
+    font-weight: 700;
+
+    text-align: center;
+}
+
+#user-profile .user-info .user-role {
+    margin-top: 4px;
+
+    font-size: 14px;
+
+    text-align: center;
+
+    color: #787878;
+}
+
+#user-profile .opportunity-container .opportunity-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 12px 20px;
+    border-bottom: 1px solid #bbb;
+}
+
+#user-profile .opportunity-container .opportunity-item:last-child {
+    border-bottom: none;
+}
+
+#user-profile .opportunity-container .opportunity-item p {
+    line-height: 1.5;
+}
+
+#user-profile .opportunity-container .opportunity-item .quantity {
+    font-weight: 600;
+}
+
+#user-profile .opportunity-container .appointments .quantity {
+    color: #ed9b13;
+}
+
+#user-profile .opportunity-container .completed .quantity {
+    color: #36c537;
+}
+
+#user-profile .opportunity-container .upcoming .quantity {
+    color: #8998a8;
+}
+
+#user-profile .content .profile-form {
+    width: 70%;
+
+    border: 1px solid #bbb;
+    border-radius: 0.31rem;
+}
+
+#user-profile .profile-form .form-header {
+    display: flex;
+    align-items: center;
+
+    padding-top: 20px;
+    padding-left: 20px;
+    border-bottom: 2px solid #bbb;
+}
+
+#user-profile .form-header .option {
+    padding: 12px 0;
+    margin: 0 12px;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    color: #787878;
+
+    cursor: pointer;
+}
+
+#user-profile .form-header .active {
+    color: #000;
+
+    position: relative;
+}
+
+#user-profile .form-header .active::after {
+    content: "";
+    display: block;
+
+    width: 100%;
+    height: 2px;
+
+    background-color: #1cb5bd;
+
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+}
+
+#user-profile .profile-form form {
+    width: calc(100% - 56px);
+    margin: auto;
+    margin-top: 36px;
+}
+
+#user-profile .profile-form .form-name,
+#user-profile .profile-form .form-contact,
+#user-profile .profile-form .form-address {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#user-profile .profile-form .form-contact,
+#user-profile .profile-form .form-address {
+    margin-top: 20px;
+}
+
+#user-profile .profile-form .form-group {
+    width: 48%;
+}
+
+#user-profile .form-group label {
+    display: block;
+
+    font-weight: 500;
+}
+
+#user-profile .form-group input,
+#user-profile .form-group select {
+    width: 100%;
+    height: 40px;
+
+    padding: 0 16px;
+    margin-top: 8px;
+    border: 1px solid #bbb;
+
+    outline: none;
+    border-radius: 0.31rem;
+
+    transition: 0.2s ease;
+}
+
+#user-profile .form-group input:hover,
+#user-profile .form-group select:hover {
+    border-color: #1cb5bd;
+}
+
+#user-profile form .form-button {
+    padding: 20px 0;
+    margin-top: 20px;
+}
+
+#user-profile .form-button .update-btn {
+    padding: 14px 24px;
+    border: none;
+
+    outline: none;
+    border-radius: 0.31rem;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    color: #fff;
+    background: #1cb5bd;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#user-profile .form-button .update-btn:hover {
+    background: #029ea9;
+}

@@ -7,6 +7,7 @@ import Register from "../pages/Register";
 import DetailDOctor from "../pages/DetailDoctor";
 import FormBookDoctor from "../pages/FormBookDoctor";
 import DrugList from "../pages/DrugList";
+import UserProfile from "../pages/UserProfile";
 
 const publicRoutes = [
     { path: "/", component: Home },
@@ -18,6 +19,7 @@ const publicRoutes = [
     { path: "/register", component: Register, layout: null },
     { path: "/doctor/:id", component: DetailDOctor },
     { path: "/book-appointment", component: FormBookDoctor },
+    { path: "/user-profile", component: UserProfile },
 ];
 
 const privateRoutes = [];
