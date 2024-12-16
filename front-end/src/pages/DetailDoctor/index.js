@@ -207,13 +207,10 @@ function DetailDoctor() {
                 <img
                     className={cx("image")}
                     src={images.doctorImage3}
-                    alt="doctor"
-                />
+                    alt="doctor"/>
                 <div className={cx("overlay")}></div>
             </div>
         </div>
-
-      </div>
       <div className={cx("container-review")}>
         <h2>Patient Reviews</h2>
         {reviews.length === 0 ? (
@@ -237,7 +234,6 @@ function DetailDoctor() {
         <img className={cx("image")} src={images.doctorImage3} alt="doctor" />
         <div className={cx("overlay")}></div>
       </div>
-    </div>
   );
 }
 export default DetailDoctor;
