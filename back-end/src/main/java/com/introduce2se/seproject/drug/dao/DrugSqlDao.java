@@ -64,7 +64,7 @@ public class DrugSqlDao implements IDrugDao {
 
     @Override
     public int getPriceByDrugId(int drugId) {
-        String sql = "SELECT price FROM drugs WHERE id = ?";
+        String sql = "SELECT price FROM drug WHERE id = ?";
         try {
             return jdbcTemplate.queryForObject(
                     sql,
