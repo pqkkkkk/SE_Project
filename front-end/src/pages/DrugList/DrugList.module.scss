@@ -118,57 +118,165 @@
         }
     }
 
-    .medicine-list{
-        background-color: #ccc;
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 20px;
-        justify-content: center;
-        padding: 10px;
-        
-
-        .medicine{
-            border-radius: 5px;
-            padding: 8px;
+    .list-drugs{
+        margin: 20px;
+        .prescription{
+            margin-top: 20px;
+            display: flex;
+            border-radius: 10px;
             background-color: #fff;
-            line-height: 1.5;
-            text-align: center;
-            border: 1px solid #1CB5BD;
+
+            .pre-info{
+                margin-left: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+
+                .pre-id{
+                    font-size: 28px;
+                    font-weight: 600;
+                    align-self: flex-start;
+                    color: #0f2f76;
+                }
+
+                .pre-date{
+                    font-size: 16px;
+                    font-weight: 500;
+                    color: #0f2f76;
+                }
+            }
 
             .medicine-img{
-                width: 175px;
-                height: 175px;
-            }
-
-            .desc{
-                text-align: start;
-                margin-bottom: 20px;
-            }
-
-            .price-desc{
-                .price{
-                    font-size: 20px;
-                    font-weight: 600;
-                    color: #ff0000;
-                }
-            }    
-
-            .btn-buy{
-                margin-top: 30px;
-                border: none;
-                width: 100%;
-                padding: 10px;
-                background-color: #1CB5BD;
-                color: #fff;
-                font-size: 16px;
-                font-weight: 600;
+                width: 100px;
+                height: 100px;
                 border-radius: 10px;
-                cursor: pointer;
             }
 
-            .btn-buy:hover{
-                background-color: #0e7c80;
+            .btn-detail{
+                align-self: center;
+                border: none;
+                margin-left: auto;
+                margin-right: 20px;
+                padding: 10px 20px;
+                border-radius: 40px;
+                color: #fff;
+                font-size: 20px;
+                font-weight: 600;
+                background-color: #23a09e;
+                cursor: pointer;
             }
         }
     }
+
+    .medicine-list-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    
+    .medicine-list-popup {
+        display: flex;
+        flex-direction: column;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 80%;
+        max-height: 80%;
+        overflow-y: auto;
+        position: relative;
+
+        .popup-title{
+            font-size: 30px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .btn-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .medicine-list{
+            background-color: #f1fbfb;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            justify-content: center;
+            padding: 10px;
+            
+    
+            .medicine{
+                border-radius: 5px;
+                padding: 8px;
+                background-color: #fff;
+                line-height: 1.5;
+                text-align: center;
+                border: 1px solid #1CB5BD;
+    
+                .medicine-img{
+                    width: 150px;
+                    height: 175px;
+                }
+
+                .medicine-name{
+                    font-size: 20px;
+                    font-weight: 600;
+                    margin-top: 10px;
+                }
+
+                .medicine-desc{
+                    font-size: 16px;
+                    font-weight: 500;
+                    margin-top: 10px;
+                }
+    
+                .medicine-price{
+                    font-size: 16px;
+                    font-weight: 500;
+                    margin-top: 10px;
+                }  
+            }
+        }
+
+        .note{
+            font-size: 16px;
+            font-weight: 500;
+            margin-top: 20px;
+            color: #000;
+
+            .red{
+                color: red;
+                font-size: 24px;
+                font-weight: 600;
+            }
+        }
+
+        .btn-buy{
+            align-self: center;
+            border: none;
+            margin-top: 20px;
+            padding: 10px 100px;
+            border-radius: 40px;
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+            background-color: #23a09e;
+            cursor: pointer;
+        }
+    }
+    
 }
+
