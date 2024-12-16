@@ -1,0 +1,282 @@
+
+.container{
+    margin: 50px 100px 0 100px;
+
+    .background{
+        background-color: #e9f7f8;
+        display: flex;
+        justify-content: flex-end;
+        line-height: 1.2;
+        .medicine-bg{
+            width: 700px;
+            height: 400px;
+        }
+
+        .title{
+            margin-left: 30px;
+
+            .strong-title{
+                font-size: 70px;
+                font-weight: 700;
+                margin-top: 100px;
+                margin-right: 100px;
+                color: #0A5EB0;
+            }
+    
+            .soft-title{
+                font-size: 50px;
+                font-weight: 600;
+                margin-top: 20px;
+                margin-right: 100px;
+                color: #0A5EB0;
+            }
+
+            .desc{
+                font-size: 18px;
+                font-weight: 500;
+                margin-top: 10px;
+                margin-right: 100px;
+                color: #A6AEBF;
+            }
+        }
+    }
+
+    .feature{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+        .feature-img{
+            width: 300px;
+            height: 300px;
+            border-radius: 15px;
+        }
+    }
+    
+
+    .heading{
+        background-color: #1CB5BD;
+        padding: 20px;
+        font-size: 32px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .break{
+        border: 2px solid #1CB5BD;
+    }
+
+    .filter{
+        margin-top: 20px;
+        background-color: #e9f7f8;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+
+        .label{
+            text-align: center;
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .select-options{
+            margin-top: 16px;
+            border: 1px solid #1CB5BD;
+            height: 50px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #E9F7F8;
+        }
+
+        .label-type{
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        .label-search{
+            text-align: center;
+            margin-left: 30px;
+            margin-right: 10px;
+        }
+        
+        .input{
+            border: 1px solid #1CB5BD;
+            height: 30px;
+            width: 400px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #E9F7F8;
+        }
+
+        .search-btn{
+            background-color: #1CB5BD;
+            cursor: pointer;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            padding: 18px;
+        }
+    }
+
+    .list-drugs{
+        margin: 20px;
+        .prescription{
+            margin-top: 20px;
+            display: flex;
+            border-radius: 10px;
+            background-color: #fff;
+
+            .pre-info{
+                margin-left: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+
+                .pre-id{
+                    font-size: 28px;
+                    font-weight: 600;
+                    align-self: flex-start;
+                    color: #0f2f76;
+                }
+
+                .pre-date{
+                    font-size: 16px;
+                    font-weight: 500;
+                    color: #0f2f76;
+                }
+            }
+
+            .medicine-img{
+                width: 100px;
+                height: 100px;
+                border-radius: 10px;
+            }
+
+            .btn-detail{
+                align-self: center;
+                border: none;
+                margin-left: auto;
+                margin-right: 20px;
+                padding: 10px 20px;
+                border-radius: 40px;
+                color: #fff;
+                font-size: 20px;
+                font-weight: 600;
+                background-color: #23a09e;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .medicine-list-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    
+    .medicine-list-popup {
+        display: flex;
+        flex-direction: column;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 80%;
+        max-height: 80%;
+        overflow-y: auto;
+        position: relative;
+
+        .popup-title{
+            font-size: 30px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .btn-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .medicine-list{
+            background-color: #f1fbfb;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            justify-content: center;
+            padding: 10px;
+            
+    
+            .medicine{
+                border-radius: 5px;
+                padding: 8px;
+                background-color: #fff;
+                line-height: 1.5;
+                text-align: center;
+                border: 1px solid #1CB5BD;
+    
+                .medicine-img{
+                    width: 150px;
+                    height: 175px;
+                }
+
+                .medicine-name{
+                    font-size: 20px;
+                    font-weight: 600;
+                    margin-top: 10px;
+                }
+
+                .medicine-desc{
+                    font-size: 16px;
+                    font-weight: 500;
+                    margin-top: 10px;
+                }
+    
+                .medicine-price{
+                    font-size: 16px;
+                    font-weight: 500;
+                    margin-top: 10px;
+                }  
+            }
+        }
+
+        .note{
+            font-size: 16px;
+            font-weight: 500;
+            margin-top: 20px;
+            color: #000;
+
+            .red{
+                color: red;
+                font-size: 24px;
+                font-weight: 600;
+            }
+        }
+
+        .btn-buy{
+            align-self: center;
+            border: none;
+            margin-top: 20px;
+            padding: 10px 100px;
+            border-radius: 40px;
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+            background-color: #23a09e;
+            cursor: pointer;
+        }
+    }
+    
+}
+

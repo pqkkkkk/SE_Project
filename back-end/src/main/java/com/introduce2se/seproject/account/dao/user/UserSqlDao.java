@@ -36,8 +36,8 @@ public class UserSqlDao implements  UserDao {
         }
     }
     public void createUser(User user){
-        String sql = "INSERT INTO users (username, password, email,fullname,phonenumber,address,birthday,userrole) " +
-                "VALUES (:username, :password, :email, :fullname, :phonenumber, :address, :birthday, :userrole)";
+        String sql = "INSERT INTO users (username, password, email,fullname,phonenumber,address,birthday,role) " +
+                "VALUES (:username, :password, :email, :fullname, :phonenumber, :address, :birthday, :role)";
         Map<String, Object> params = new HashMap<>();
         params.put("username", user.getUserName());
         params.put("password", user.getPassWord());
@@ -46,13 +46,13 @@ public class UserSqlDao implements  UserDao {
         params.put("phonenumber", user.getPhoneNumber());
         params.put("address", user.getAddress());
         params.put("birthday", user.getBirthDay());
-        params.put("userrole", user.getUserRole());
+        params.put("role", user.getUserRole());
         namedParameterJdbcTemplate.update(sql, params);
     }
     public ArrayList<User> getAllUsers(String role){
         try {
             String sql = "SELECT * FROM users u " +
-                    "WHERE u.userrole = :actualRole";
+                    "WHERE u.role = :actualRole";
             Map<String, Object> params = new HashMap<>();
             params.put("actualRole", role);
             ArrayList<User> users = (ArrayList<User>) namedParameterJdbcTemplate.query(sql, params, new UserRowMapper());
