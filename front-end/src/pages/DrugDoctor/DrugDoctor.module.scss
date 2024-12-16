@@ -1,0 +1,185 @@
+.container{
+    margin: 50px 100px 0 100px;
+    
+    .header{
+        font-size: 20px;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .main-content{
+        display: flex;
+        height: 70vh;
+
+        .list-drugs{
+            flex: 2;
+            border-right: 2px solid #ccc;
+            overflow-y: auto;
+            background-color: #e9f7f8;
+            display: flex;
+            flex-direction: column;
+
+            .search-input{
+                
+                align-self: center;
+                margin-bottom: 20px;
+                padding: 10px;
+                width: 50%;
+                border-radius: 10px;
+                margin-top: 20px;
+            }
+
+            .drug-item{
+                display: flex;
+                padding: 10px;
+                border: 1px solid #ccc;
+
+                .drug-img{
+                    width: 100px;
+                    height: 100px;
+                    margin-left: 10px;
+                }
+
+                .drug-info{
+                    margin-left: 10px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-around;
+
+                    .drug-name{
+                        font-size: 20px;
+                        font-weight: 600;
+                    }
+
+                    .drug-price{
+                        font-size: 16px;
+                        font-weight: 500;
+                    }
+
+                    .drug-stock{
+                        font-size: 16px;
+                        font-weight: 500;
+                        color: #778899;
+                    }
+                }
+
+                .add-btn{
+                    margin-left: auto;
+                    margin-right: 10px;
+                    padding: 5px 10px;
+                    background-color: #23a09e;
+                    color: #fff;
+                    align-self: center;
+                    border: none;
+                    cursor: pointer;
+                }
+            }
+
+            .drug-item:hover{
+                background-color: #f0f0f0;
+            }
+
+        }
+
+        .prescription-detail{
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+
+            .title-column{
+                display: flex;
+                padding: 10px;
+                text-align: center;
+
+                .h-img{
+                    flex: 1;
+                }
+
+                .h-name{
+                    flex: 2;
+                }
+
+                .h-price{
+                    flex: 1;
+                }
+
+                .h-quantity{
+                    flex: 1;
+                }
+
+                .h-remove{
+                    flex: 1;
+                }
+            }
+
+            .prescription{
+                flex: 1;
+                overflow-y: auto;
+
+                .drug-item{
+                    display: flex;
+                    border: 1px solid #ccc;
+                    padding: 10px;
+                    margin-top: 10px;
+                    text-align: center;
+                    align-items: center;
+
+                    .drug-img{
+                        flex: 1;
+                        width: 50px;
+                        height: 50px;
+                    }
+
+                    .drug-name{
+                        flex: 2;
+                        font-size: 20px;
+                        font-weight: 600;
+                    }
+
+                    .drug-price{
+                        flex: 1;
+                        font-size: 16px;
+                        font-weight: 500;
+                    }
+
+                    .drug-quantity{
+                        flex: 1;
+                        
+                    }
+
+                    .btn-remove{
+                        flex: 1;
+                        padding: 5px 0;
+                        background-color: #e74c3c;
+                        color: #fff;
+                        border: none;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            .doctor-note{
+                margin-top: 10px;
+                
+                .note-textarea{
+                    width: 100%;
+                    height: 100px;
+                    padding: 10px;
+                    border-radius: 10px;
+                }
+            }
+
+            .submit-btn{
+                padding: 10px 20px;
+                background-color: #3498db;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                align-self: center;
+            }
+        }
+    }
+}
