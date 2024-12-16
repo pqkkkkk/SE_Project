@@ -2,10 +2,20 @@ import classNames from "classnames/bind";
 import styles from "./DetailDoctor.module.scss";
 import images from "../../assets/images";
 import { useNavigate } from "react-router-dom";
+import {useParams}  from "react-router-dom";
+import {useEffect, useState} from "react";
+import {getUserById} from "../../services/ApiService";
 
 const cx = classNames.bind(styles);
 
 function DetailDoctor() {
+  const { id } = useParams();
+  const [doctor, setDoctor] = useState({});
+  useEffect(() => {
+    getUserById(id).then((data) => setDoctor(data || []))
+      .catch((error) => console.log(error));
+  }, []);
+
   const navigate = useNavigate();
   const handleBookAppointment = () => {
     navigate("/book-appointment");
@@ -17,7 +27,7 @@ function DetailDoctor() {
           <img src={images.doctorImage} alt="doctor" />
           <div className={cx("rate")}>
             <img src={images.star} alt="star" />
-            <span>5.0</span>
+            <span>{doctor.rating}</span>
           </div>
           <div className={cx("contact-options")}>
             <button className={cx("calendar")}>
@@ -31,7 +41,7 @@ function DetailDoctor() {
             </button>
           </div>
           <div className={cx("price")}>
-            <span>$100 - $350</span>
+            <span>{doctor.consultationPrice}</span>
             <p>Online / Offline</p>
           </div>
           <button className={cx("submit-btn")} onClick={handleBookAppointment}>
@@ -54,13 +64,13 @@ function DetailDoctor() {
         </div>
         <div className={cx("doctor-detail")}>
           <div className={cx("name")}>
-            <h1>Dr. Annah Ray</h1>
+            <h1>{doctor.fullName}</h1>
             <p>Specialist of implants and cosmetic dentistry</p>
           </div>
           <div className={cx("location")}>
             <div className={cx("info")}>
               <img src={images.location} alt="location" />
-              <h1>Accra, Ghana</h1>
+              <h1>{doctor.address}</h1>
             </div>
             <p className={cx("detail")}>
               Kwame Nkrumah Circle , Accra Ghana lorem ipsum dolor sit amet,
@@ -70,9 +80,7 @@ function DetailDoctor() {
           <div className={cx("specialities")}>
             <h1 className={cx("title")}>Specialities</h1>
             <div className={cx("detail")}>
-              <div className={cx("text")}>Oral Radiology</div>
-              <div className={cx("text")}>Implantology</div>
-              <div className={cx("text")}>Cosmetic Dentistry</div>
+              <div className={cx("text")}>{doctor.speciality}</div>
             </div>
           </div>
           <div className={cx("issues")}>

@@ -9,7 +9,7 @@ exports.up = async function(knex) {
       patient_id INT,
       doctor_id INT,
       content NVARCHAR(100),
-      rating DECIMAL(3,2)
+      rating float
     );
 `);
 };

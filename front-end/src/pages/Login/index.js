@@ -4,10 +4,38 @@ import images from "../../assets/images";
 import { useNavigate } from "react-router-dom";
 import InputField from "../../components/InputField";
 import SocialLogin from "../../components/Social";
+import {login} from "../../services/ApiService";
+import {useState} from "react";
+import {setUserSession} from "../../services/UserStorageService";
 
 const cx = classNames.bind(styles);
 
 function Login() {
+    const navigate = useNavigate();
+    const [response, setResponse] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+
+    const signInClick = async (e) => {
+        e.preventDefault();
+        try {
+            const data = await login(username, password);
+
+            if (data === "Login successful") {
+                alert("Login successful");
+                navigate("/");
+            } else if (data === "Login failed") {
+                alert("Login failed");
+            } else {
+                alert("Unknown error");
+            }
+        } catch (error) {
+            console.log(error);
+            alert("Error in server");
+        }
+    };
+
     return (
         <main id={cx("login")}>
             <div className={cx("content")}>
@@ -18,22 +46,26 @@ function Login() {
 
                     <form action="#!" className={cx("login-form")}>
                         <InputField
-                            type="email"
-                            placeholder="Enter email"
+                            type="username"
+                            placeholder="Enter username"
                             icon="fa-solid fa-envelope"
+                            parentValue={username}
+                            changeParentValue={setUsername}
                         />
 
                         <InputField
                             type="password"
                             placeholder="Enter password"
                             icon="fa-solid fa-lock"
+                            parentValue={password}
+                            changeParentValue={setPassword}
                         />
 
                         <a href="#!" className={cx("forgot-pass-link")}>
                             Forgot Password?
                         </a>
 
-                        <button className={cx("login-button")}>Sign In</button>
+                        <button className={cx("login-button")} onClick={signInClick}>Sign In</button>
                     </form>
 
                     <p className={cx("separator")}>

@@ -1,27 +1,27 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import classNames from "classnames/bind";
 import styles from "../pages/Login/Login.module.scss";
-import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
-const InputField = ({ type, placeholder, icon }) => {
+const InputField = ({ type, placeholder, icon, parentValue, changeParentValue}) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = () => {
         setShowPassword((prev) => !prev);
     };
-
     return (
         <div className={cx("input-wrapper")}>
             <input
+                value={parentValue}
+                onChange={e => changeParentValue(e.target.value)}
                 type={type === "password" && showPassword ? "text" : type}
                 placeholder={placeholder}
                 className={cx("input-field")}
                 required
             ></input>
 
-            <i class={icon}></i>
+            <i className={icon}></i>
             {type === "password" && (
                 <i
                     onClick={togglePasswordVisibility}
