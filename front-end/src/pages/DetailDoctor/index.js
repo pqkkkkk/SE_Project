@@ -17,6 +17,35 @@ function DetailDoctor() {
       "width=800,height=600,scrollbars=no,resizable=no"
     );
   };
+
+  const reviews = [
+    {
+      username: "NguyenVanA",
+      content: "The doctor is very enthusiastic and dedicated!",
+      rating: 5,
+    },
+    {
+      username: "TranThiB",
+      content: "A bit slow but very clear explanation.",
+      rating: 4,
+    },
+    {
+      username: "LeVanC",
+      content: "Not satisfied with the attitude.",
+      rating: 2,
+    },
+    {
+      username: "John Dae",
+      content: "Great",
+      rating: 4,
+    },
+    {
+      username: "Adam Sen",
+      content: "very good service",
+      rating: 5,
+    },
+  ];
+
   return (
     <div className={cx("content")}>
       <div className={cx("doctor")}>
@@ -139,6 +168,25 @@ function DetailDoctor() {
             <img src={images.expandless} alt="expand-less" />
           </div>
         </div>
+      </div>
+      <div className={cx("container-review")}>
+        <h2>Patient Reviews</h2>
+        {reviews.length === 0 ? (
+          <p>There are no reviews yet.</p>
+        ) : (
+          <ul>
+            {reviews.map((review, index) => (
+              <li key={index} style={{ marginBottom: "15px" }}>
+                <strong>{review.username}</strong> -
+                <span style={{ color: "gold" }}>
+                  {" "}
+                  {"★".repeat(review.rating)}
+                </span>
+                <p>{review.content}</p>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       <div className={cx("container-image")}>
         <img className={cx("image")} src={images.doctorImage3} alt="doctor" />

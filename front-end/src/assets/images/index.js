@@ -39,6 +39,20 @@ const images = {
   microphone: require("./microphone.svg").default,
   video: require("./video.svg").default,
   avatar: require("./avt-default.svg").default,
+  medicine: require("./medicine.jpg"),
+  medicineBg: require("./MedicineBg.png"),
+  feature1: require("./feature1.png"),
+  feature2: require("./feature2.png"),
+  feature3: require("./feature3.png"),
+  feature4: require("./feature4.png"),
+  telemedicine: require("./telemedicine.svg").default,
+  google: require("./google.svg").default,
+  facebook: require("./facebook.svg").default,
+  onlineDoctor: require("./online_doctor.svg").default,
+  druglist: require("./druglist.svg").default,
+  chaticon: require("./chaticon.svg").default,
+  drugimage: require("./drugimage.svg").default,
+  chatimage: require("./chatimage.svg").default,
 };
 
 export default images;

@@ -337,10 +337,31 @@
       }
     }
   }
+  .container-review {
+    position: relative;
+    top: 1450px;
+    margin-left: 85px;
+
+    h2 {
+      font-size: 40px;
+      font-weight: bold;
+      margin-bottom: 40px;
+    }
+
+    ul {
+      li {
+        strong {
+          font-size: 20px;
+          font-style: italic;
+        }
+      }
+    }
+  }
+
   .container-image {
     position: relative;
     flex: 1;
-    top: 1600px;
+    top: 1500px;
     height: 280px;
     width: 100%;
     .image {
