@@ -45,11 +45,13 @@ const images = {
     google: require("./google.svg").default,
     facebook: require("./facebook.svg").default,
     onlineDoctor: require("./online_doctor.svg").default,
+    userAvatar: require("./user-avatar.jpg"),
     user: require("./user-solid.svg").default,
     image_chat: require("./image_chat.svg").default,
     face_smile_solid: require("./face-smile-solid.svg").default,
     paper_plane: require("./paper-plane.svg").default,
     default_pre: require("./default_pre.png"),
+
 };
 
 export default images;

@@ -7,9 +7,9 @@ import Register from "../pages/Register";
 import DetailDOctor from "../pages/DetailDoctor";
 import FormBookDoctor from "../pages/FormBookDoctor";
 import DrugList from "../pages/DrugList";
+import UserProfile from "../pages/UserProfile";
 import Messages from "../pages/Message";
 import DrugDoctor from "../pages/DrugDoctor";
-
 const publicRoutes = [
     { path: "/", component: Home },
     { path: "/find-doctor", component: FindDoctor },
@@ -20,8 +20,10 @@ const publicRoutes = [
     { path: "/register", component: Register, layout: null },
     { path: "/doctor/:id", component: DetailDOctor },
     { path: "/book-appointment", component: FormBookDoctor },
+    { path: "/user-profile", component: UserProfile },
     { path: "/messages", component:  Messages},
     { path: "/doctor-drug", component: DrugDoctor },
+
 ];
 
 const privateRoutes = [];
