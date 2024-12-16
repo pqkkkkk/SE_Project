@@ -1,0 +1,47 @@
+.our-service {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  .drug-btn,
+  .chat-btn {
+    flex: 1;
+    margin: 10px;
+    padding: 15px;
+    font-weight: bold;
+    border-radius: 5px;
+    border: 1px solid #1cb5bd;
+    background-color: #e9f7f8;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+
+    .row1 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 100px;
+        height: 100px;
+        flex: 1;
+      }
+
+      h1 {
+        flex: 1;
+        font-size: 50px;
+      }
+    }
+
+    .row2 {
+      margin-top: 20px;
+      img {
+        width: 60%;
+      }
+    }
+
+    &:hover {
+      transform: scale(1.1);
+      background-color: #dbe7f4;
+    }
+  }
+}
