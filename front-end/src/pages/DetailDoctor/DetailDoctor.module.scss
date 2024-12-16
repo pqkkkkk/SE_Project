@@ -241,7 +241,7 @@
                         height: 40px;
                         gap: 0px;
                         border-radius: 5px;
-                        border: 1px 0px 0px 0px;
+                        border: 1px;
                         color: var(--text-color1);
                         font-size: 18px;
                         display: flex;
@@ -372,7 +372,6 @@
         }
       }
     }
-  }
   .container-review {
     position: relative;
     top: 1450px;

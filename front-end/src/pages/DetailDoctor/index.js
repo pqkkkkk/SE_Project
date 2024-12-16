@@ -71,24 +71,24 @@ function DetailDoctor() {
         <div className={cx("content")}>
             <div className={cx("doctor")}>
                 <div className={cx("doctor-info")}>
-                    <img src={images.doctorImage} alt="doctor" />
+                    <img src={images.doctorImage} alt="doctor"/>
                     <div className={cx("rate")}>
-                        <img src={images.star} alt="star" />
-                        <span>doctor.rating</span>
+                        <img src={images.star} alt="star"/>
+                        <span>{doctor.rating}</span>
                     </div>
                     <div className={cx("contact-options")}>
                         <button className={cx("calendar")}>
-                            <img src={images.calendar} alt="calendar" />
+                            <img src={images.calendar} alt="calendar"/>
                         </button>
                         <button className={cx("phone")}>
-                            <img src={images.phone} alt="calendar" />
+                            <img src={images.phone} alt="calendar"/>
                         </button>
                         <button className={cx("message")}>
-                            <img src={images.message} alt="calendar" />
+                            <img src={images.message} alt="calendar"/>
                         </button>
                     </div>
                     <div className={cx("price")}>
-                        <span>doctor.consultationPrice</span>
+                        <span>{doctor.consultationPrice}</span>
                         <p>Online / Offline</p>
                     </div>
                     <div className={cx("time-slots")}>
@@ -107,28 +107,28 @@ function DetailDoctor() {
 
                     <div className={cx("tags")}>
                         <div className={cx("icon-friendly")}>
-                            <img src={images.smile} alt="icon smile" />
+                            <img src={images.smile} alt="icon smile"/>
                             <span>Friendly</span>
                         </div>
                         <div className={cx("icon-listener")}>
-                            <img src={images.ear} alt="icon ear" />
+                            <img src={images.ear} alt="icon ear"/>
                             <span>Good Listener</span>
                         </div>
                     </div>
                     <div className={cx("icon-patient")}>
-                        <img src={images.smile} alt="icon smile" />
+                        <img src={images.smile} alt="icon smile"/>
                         <span>Patient</span>
                     </div>
                 </div>
                 <div className={cx("doctor-detail")}>
                     <div className={cx("name")}>
-                        <h1>doctor.fullName</h1>
+                        <h1>{doctor.fullName}</h1>
                         <p>Specialist of implants and cosmetic dentistry</p>
                     </div>
                     <div className={cx("location")}>
                         <div className={cx("info")}>
-                            <img src={images.location} alt="location" />
-                            <h1>doctor.address</h1>
+                            <img src={images.location} alt="location"/>
+                            <h1>{doctor.address}</h1>
                         </div>
                         <p className={cx("detail")}>
                             Kwame Nkrumah Circle , Accra Ghana lorem ipsum dolor
@@ -138,7 +138,8 @@ function DetailDoctor() {
                     <div className={cx("specialities")}>
                         <h1 className={cx("title")}>Specialities</h1>
                         <div className={cx("detail")}>
-                            <div className={cx("text")}>doctor.speciality</div>>
+                            <div className={cx("text")}>{doctor.speciality}</div>
+                            >
                         </div>
                     </div>
                     <div className={cx("issues")}>
@@ -178,7 +179,7 @@ function DetailDoctor() {
                         <span className={cx("t1")}> Office </span>
                         <span className={cx("t2")}>15 picture</span>
                     </div>
-                    <img src={images.doctorImage2} alt="doctor" />
+                    <img src={images.doctorImage2} alt="doctor"/>
                 </div>
                 <div className={cx("office-detail")}>
                     <h1>About</h1>
@@ -199,45 +200,39 @@ function DetailDoctor() {
                     </p>
                     <div className={cx("load-more")}>
                         <a href="/details">Load More</a>
-                        <img src={images.expandless} alt="expand-less" />
+                        <img src={images.expandless} alt="expand-less"/>
                     </div>
                 </div>
+            </div>
+
+            <div className={cx("container-review")}>
+                <h2>Patient Reviews</h2>
+                {reviews.length === 0 ? (
+                    <p>There are no reviews yet.</p>
+                ) : (
+                    <ul>
+                        {reviews.map((review, index) => (
+                            <li key={index} style={{marginBottom: "15px"}}>
+                                <strong>{review.username}</strong> -
+                                <span style={{color: "gold"}}>
+                                    {" "}
+                                    {"★".repeat(review.rating)}
+                                </span>
+                                <p>{review.content}</p>
+                            </li>
+                        ))}
+                    </ul>
+                )}
             </div>
             <div className={cx("container-image")}>
                 <img
                     className={cx("image")}
                     src={images.doctorImage3}
-                    alt="doctor"
-                />
+                    alt="doctor"/>
                 <div className={cx("overlay")}></div>
             </div>
         </div>
-
-      </div>
-      <div className={cx("container-review")}>
-        <h2>Patient Reviews</h2>
-        {reviews.length === 0 ? (
-          <p>There are no reviews yet.</p>
-        ) : (
-          <ul>
-            {reviews.map((review, index) => (
-              <li key={index} style={{ marginBottom: "15px" }}>
-                <strong>{review.username}</strong> -
-                <span style={{ color: "gold" }}>
-                  {" "}
-                  {"★".repeat(review.rating)}
-                </span>
-                <p>{review.content}</p>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-      <div className={cx("container-image")}>
-        <img className={cx("image")} src={images.doctorImage3} alt="doctor" />
-        <div className={cx("overlay")}></div>
-      </div>
-    </div>
-  );
+    );
 }
+
 export default DetailDoctor;
