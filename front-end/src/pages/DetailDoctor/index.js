@@ -74,7 +74,7 @@ function DetailDoctor() {
                     <img src={images.doctorImage} alt="doctor"/>
                     <div className={cx("rate")}>
                         <img src={images.star} alt="star"/>
-                        <span>doctor.rating</span>
+                        <span>{doctor.rating}</span>
                     </div>
                     <div className={cx("contact-options")}>
                         <button className={cx("calendar")}>
@@ -88,7 +88,7 @@ function DetailDoctor() {
                         </button>
                     </div>
                     <div className={cx("price")}>
-                        <span>doctor.consultationPrice</span>
+                        <span>{doctor.consultationPrice}</span>
                         <p>Online / Offline</p>
                     </div>
                     <div className={cx("time-slots")}>
@@ -122,13 +122,13 @@ function DetailDoctor() {
                 </div>
                 <div className={cx("doctor-detail")}>
                     <div className={cx("name")}>
-                        <h1>doctor.fullName</h1>
+                        <h1>{doctor.fullName}</h1>
                         <p>Specialist of implants and cosmetic dentistry</p>
                     </div>
                     <div className={cx("location")}>
                         <div className={cx("info")}>
                             <img src={images.location} alt="location"/>
-                            <h1>doctor.address</h1>
+                            <h1>{doctor.address}</h1>
                         </div>
                         <p className={cx("detail")}>
                             Kwame Nkrumah Circle , Accra Ghana lorem ipsum dolor
@@ -138,7 +138,7 @@ function DetailDoctor() {
                     <div className={cx("specialities")}>
                         <h1 className={cx("title")}>Specialities</h1>
                         <div className={cx("detail")}>
-                            <div className={cx("text")}>doctor.speciality</div>
+                            <div className={cx("text")}>{doctor.speciality}</div>
                             >
                         </div>
                     </div>
@@ -204,13 +204,7 @@ function DetailDoctor() {
                     </div>
                 </div>
             </div>
-            <div className={cx("container-image")}>
-                <img
-                    className={cx("image")}
-                    src={images.doctorImage3}
-                    alt="doctor"/>
-                <div className={cx("overlay")}></div>
-            </div>
+
             <div className={cx("container-review")}>
                 <h2>Patient Reviews</h2>
                 {reviews.length === 0 ? (
@@ -231,11 +225,13 @@ function DetailDoctor() {
                 )}
             </div>
             <div className={cx("container-image")}>
-                <img className={cx("image")} src={images.doctorImage3} alt="doctor"/>
+                <img
+                    className={cx("image")}
+                    src={images.doctorImage3}
+                    alt="doctor"/>
                 <div className={cx("overlay")}></div>
             </div>
         </div>
-
     );
 }
 
