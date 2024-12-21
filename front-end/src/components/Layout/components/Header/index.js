@@ -25,7 +25,7 @@ function Header() {
                         <Link to="/find-doctor">Find Doctor</Link>
                     </li>
                     <li>
-                        <Link to="/review">Reviews</Link>
+                        <Link to="/requests">Requests</Link>
                     </li>
                 </ul>
 
