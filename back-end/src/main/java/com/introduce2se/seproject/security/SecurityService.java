@@ -30,7 +30,7 @@ public class SecurityService {
         request.getSession().setAttribute("currentUser",user);
     }
 
-    public boolean login(HttpServletRequest request, String actualUsername, String actualPassword){
+    public int login(HttpServletRequest request, String actualUsername, String actualPassword){
         HttpSession httpSession = request.getSession();
 
         User user = accountService.getUserByUsername(actualUsername);
@@ -51,10 +51,10 @@ public class SecurityService {
                 Admin admin = new Admin(user);
                 setCurrentUser(request,admin);
             }
-            return true;
+            return user.getId();
         }
         else{
-            return false;
+            return -1;
         }
     }
     public boolean logout(){

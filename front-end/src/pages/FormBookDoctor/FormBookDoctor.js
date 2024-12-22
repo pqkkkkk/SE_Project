@@ -1,10 +1,41 @@
 import classNames from "classnames/bind";
 import styles from "./FormBookDoctor.module.scss";
 import images from "../../assets/images";
-
+import {GetUser} from "../../services/UserStorageService";
+import {useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
+import {CreateConsultation} from "../../services/ApiService";
 const cx = classNames.bind(styles);
 
 function FormBookDoctor() {
+  const location = useLocation();
+  const [user, setUser] = useState({});
+  const [doctor, setDoctor] = useState({});
+  const [reason, SetReason] = useState("");
+  useEffect(() => {
+    setUser(GetUser() || {});
+    setDoctor(location.state.doctor || {});
+  }, []);
+
+  const HandleSendingConsultationRequest = async () => {
+    const consultation = {
+      ConsultationDate: new Date().toISOString(),
+      startTime: "08:00:00",
+      endTime: "09:00:00",
+      form: "Online",
+      reason: reason,
+      status: "New",
+      patientId: user.id,
+      doctorId: doctor.id,
+      consultationResult: "",
+    };
+    const response = await CreateConsultation(consultation);
+    if (response === "success") {
+      alert("Consultation request sent successfully!");
+    } else {
+      alert("Failed to send consultation request!");
+    }
+  }
   return (
     <div className={cx("content")}>
       <div className={cx("doctor")}>
@@ -13,18 +44,18 @@ function FormBookDoctor() {
             <img src={images.doctorImage} alt="doctor" />
             <div className={cx("rate")}>
               <img src={images.star} alt="star" />
-              <span>5.0</span>
+              <span>{doctor.rating}</span>
             </div>
           </div>
           <div className={cx("doctor-detail")}>
             <div className={cx("name")}>
-              <h1>Dr. Annah Ray</h1>
+              <h1>{doctor.fullName}</h1>
               <p>Specialist of implants and cosmetic dentistry</p>
             </div>
             <div className={cx("location")}>
               <div className={cx("info")}>
                 <img src={images.location} alt="location" />
-                <h1>Accra, Ghana</h1>
+                <h1>{doctor.address}</h1>
               </div>
               <p className={cx("detail")}>
                 Kwame Nkrumah Circle , Accra Ghana lorem ipsum dolor sit amet,
@@ -38,7 +69,7 @@ function FormBookDoctor() {
         <div className={cx("price-booking")}>
           <label>
             <input type="radio" name="price-option" value="price" />
-            Price: $300
+            Price :{doctor.consultationPrice}
           </label>
         </div>
         <div className={cx("input-fullname")}>
@@ -47,6 +78,7 @@ function FormBookDoctor() {
             <input
               className={cx("input")}
               type="text"
+              value={user.fullName}
               placeholder="Input your full name (required)"
             />
           </div>
@@ -74,6 +106,7 @@ function FormBookDoctor() {
             <input
               className={cx("input")}
               type="text"
+              value={user.phoneNumber}
               placeholder="Input your phone number"
             />
           </div>
@@ -84,6 +117,7 @@ function FormBookDoctor() {
             <input
               className={cx("input")}
               type="text"
+              value={user.email}
               placeholder="Input your email address"
             />
           </div>
@@ -132,6 +166,7 @@ function FormBookDoctor() {
             <input
               className={cx("input")}
               type="text"
+              value={user.address}
               placeholder="Input your address"
             />
           </div>
@@ -142,6 +177,8 @@ function FormBookDoctor() {
             <input
               className={cx("input")}
               type="text"
+              value={reason}
+              onChange={(e) => SetReason(e.target.value)}
               placeholder="Reason for medical examination"
             />
           </div>
@@ -171,7 +208,7 @@ function FormBookDoctor() {
         </p>
       </div>
       <div className={cx("confirm-btn")}>
-        <button>Confirm Appointment</button>
+        <button onClick={HandleSendingConsultationRequest}>Send Request</button>
       </div>
     </div>
   );

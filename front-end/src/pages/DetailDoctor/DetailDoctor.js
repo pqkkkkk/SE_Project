@@ -26,8 +26,10 @@ function DetailDoctor() {
       .catch((error) => console.log(error));
   }, []);
   
-  const handleBookAppointment = () => {
-    navigate("/book-appointment");
+  const HandleBookAppointClick = () => {
+    navigate("/book-appointment",{
+        state: { doctor: doctor },
+    });
   };
 
   const handleCallDoctor = () => {
@@ -77,7 +79,7 @@ function DetailDoctor() {
                         <span>{doctor.rating}</span>
                     </div>
                     <div className={cx("contact-options")}>
-                        <button className={cx("calendar")}>
+                        <button className={cx("calendar")} onClick={HandleBookAppointClick}>
                             <img src={images.calendar} alt="calendar"/>
                         </button>
                         <button className={cx("phone")}>

@@ -39,7 +39,7 @@
 
         .list-doctors{
             flex: 1;
-            overflow-y: auto; // cuon doc
+            overflow-y: auto;
 
             .doctor{
                 display: flex;
@@ -58,12 +58,17 @@
                     font-weight: 600;
                 }
             }
-
             .doctor:hover{
                 background-color: #f5f5f5;
                 cursor: pointer;
             }
-
+            .new-message{
+                background-color: #1CB5BD;
+                color: white;
+                text-align: center;
+                padding: 10px;
+                cursor: pointer;
+            }
             .no-result{
                 text-align: center;
                 margin-top: 20px;

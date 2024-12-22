@@ -1,5 +1,7 @@
 package com.introduce2se.seproject.api;
 
+import com.introduce2se.seproject.account.AccountService;
+import com.introduce2se.seproject.account.model.User;
 import com.introduce2se.seproject.security.SecurityService;
 import com.introduce2se.seproject.security.dto.BasicLoginDto;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,23 +15,27 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/security")
 public class SecurityController {
     private final SecurityService securityService;
+    private final AccountService accountService;
     @Autowired
-    public SecurityController(SecurityService securityService)
+    public SecurityController(SecurityService securityService, AccountService accountService)
     {
         this.securityService = securityService;
+        this.accountService = accountService;
     }
     @PostMapping("/login")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<String> login(HttpServletRequest request, @RequestBody BasicLoginDto loginDto)
+    public ResponseEntity<User> login(HttpServletRequest request, @RequestBody BasicLoginDto loginDto)
     {
         String username = loginDto.getUsername();
         String password = loginDto.getPassword();
-        if(securityService.login(request,username,password))
+        int userId = securityService.login(request,username,password);
+        if(userId != -1)
         {
-            return ResponseEntity.ok("Login successful");
+            User user = accountService.getUserById(userId);
+            return ResponseEntity.ok(user);
         }
         else{
-            return ResponseEntity.ok("Login failed");
+            return ResponseEntity.ok(null);
         }
     }
 }

@@ -1,6 +1,8 @@
 package com.introduce2se.seproject.account;
 
+import com.introduce2se.seproject.account.dao.management.ManagementDao;
 import com.introduce2se.seproject.account.dao.user.UserDao;
+import com.introduce2se.seproject.account.dto.ManagementDto;
 import com.introduce2se.seproject.account.model.Doctor;
 import com.introduce2se.seproject.account.model.Patient;
 import com.introduce2se.seproject.account.model.User;
@@ -10,14 +12,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class AccountService {
 
     private final UserDao userDao;
+    private final ManagementDao managementDao;
     @Autowired
-    public AccountService(UserDao userDao) {
+    public AccountService(UserDao userDao, ManagementDao managementDao) {
         this.userDao = userDao;
+        this.managementDao = managementDao;
     }
     public User getUserByUsername(String username) {
         return userDao.getUserByUsername(username);
@@ -60,6 +65,9 @@ public class AccountService {
             return false;
         }
 
+    }
+    public List<ManagementDto> getConnectingUsers(int currentUserId, String currentRole) {
+        return managementDao.getConnectingUsers(currentUserId, currentRole);
     }
     public boolean createFeedback()
     {

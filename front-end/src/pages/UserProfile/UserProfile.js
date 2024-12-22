@@ -1,11 +1,15 @@
 import classNames from "classnames/bind";
 import styles from "./UserProfile.module.scss";
 import images from "../../assets/images";
-import { useNavigate } from "react-router-dom";
-
+import {useEffect, useState} from "react";
+import {GetUser} from "../../services/UserStorageService";
 const cx = classNames.bind(styles);
 
 function UserProfile() {
+    const [user, setUser] = useState({});
+    useEffect(() => {
+        setUser(GetUser());
+    }, []);
     return (
         <main id={cx("user-profile")}>
             <div className={cx("content")}>
@@ -15,8 +19,8 @@ function UserProfile() {
                             src={images.userAvatar}
                             className={cx("user-avatar")}
                         />
-                        <h2 className={cx("user-name")}>User Name</h2>
-                        <p className={cx("user-role")}>Patient</p>
+                        <h2 className={cx("user-name")}>{user.fullName}</h2>
+                        <p className={cx("user-role")}>{user.userRole}</p>
                     </div>
 
                     <div className={cx("opportunity-container")}>
@@ -49,7 +53,7 @@ function UserProfile() {
                         <div className={cx("form-name")}>
                             <div className={cx("form-group")}>
                                 <label for="firstName">First Name</label>
-                                <input type="text" id="firstName" />
+                                <input type="text" value={user.fullName} id="firstName" />
                             </div>
 
                             <div className={cx("form-group")}>
@@ -61,12 +65,12 @@ function UserProfile() {
                         <div className={cx("form-contact")}>
                             <div className={cx("form-group")}>
                                 <label for="phone">Phone Number</label>
-                                <input type="text" id="phone" />
+                                <input type="text" value={user.phoneNumber} id="phone" />
                             </div>
 
                             <div className={cx("form-group")}>
                                 <label for="email">Email Address</label>
-                                <input type="email" id="email" />
+                                <input type="email" value={user.email} id="email" />
                             </div>
                         </div>
 

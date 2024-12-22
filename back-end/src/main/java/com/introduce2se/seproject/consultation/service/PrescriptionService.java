@@ -15,32 +15,27 @@ public class PrescriptionService {
 
     private final PrescriptionDao prescriptionDao;
     private final DrugService drugService;
+
     @Autowired
-    public PrescriptionService(PrescriptionDao prescriptionDao,DrugService drugService) {
+    public PrescriptionService(PrescriptionDao prescriptionDao, DrugService drugService) {
         this.prescriptionDao = prescriptionDao;
         this.drugService = drugService;
     }
-    // calcultate total price from detail prescription
     public int calculateTotalPrice(List<PrescriptionDetail> details) {
         int totalPrice = 0;
         for (PrescriptionDetail detail : details) {
-            int drugPrice = drugService.getPriceByDrugId(detail.getDrugId()); // Lấy giá của thuốc từ DrugService
-            totalPrice += drugPrice * detail.getQuantity(); // Tổng giá = giá thuốc * số lượng
+            int drugPrice = drugService.getPriceByDrugId(detail.getDrugId());
+            totalPrice += drugPrice * detail.getQuantity();
         }
         return totalPrice;
     }
-
-    // Get prescription by consultation id
     public Prescription getPrescriptionByConsultationId(int consultation_id) {
         return prescriptionDao.getPrescriptionByConsultationId(consultation_id);
     }
-
-    // Get all prescription detail of a prescription
     public List<PrescriptionDetail> getPrescriptionDetails(int prescriptionId) {
         return prescriptionDao.getPrescriptionDetails(prescriptionId);
     }
-    // get a prescription by id
-    public Prescription getPrescriptionById(int prescriptionId){
+    public Prescription getPrescriptionById(int prescriptionId) {
         return prescriptionDao.getPrescriptionById(prescriptionId);
     }
 
@@ -48,20 +43,29 @@ public class PrescriptionService {
         int totalPrice = calculateTotalPrice(details);
         prescription.setTotalPrice(totalPrice);
         prescription.setCreatedDay(new Date());
-
-        // Lưu đơn thuốc vào cơ sở dữ liệu
         int prescriptionId = prescriptionDao.createPrescription(prescription);
 
-        // Thêm chi tiết đơn thuốc vào cơ sở dữ liệu
         for (PrescriptionDetail detail : details) {
             detail.setPrescriptionId(prescriptionId);
             prescriptionDao.addPrescriptionDetail(detail);
         }
-
         return prescriptionId;
     }
     public void addPrescriptionDetail(PrescriptionDetail prescriptionDetail) {
         prescriptionDao.addPrescriptionDetail(prescriptionDetail);
+    }
+    public List<Prescription> GetPrescriptionsByPatientId(int patientId, String consultationStatus, String prescriptionStatus) {
+        return prescriptionDao.GetPrescriptionsOfPatient(patientId, consultationStatus, prescriptionStatus);
+    }
+    public int UpdateStatus(int prescriptionId, String status) {
+        try {
+            prescriptionDao.updatePrescriptionStatus(prescriptionId, status);
+            return 1;
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return 0;
+        }
     }
 }
 
