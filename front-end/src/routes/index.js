@@ -11,8 +11,8 @@ import DrugList from "../pages/DrugList";
 import UserProfile from "../pages/UserProfile";
 import Messages from "../pages/Message";
 import DrugDoctor from "../pages/DrugDoctor";
+import ManageDrug from "../pages/ManageDrug";
 import ManageUser from "../pages/ManageUser";
-
 
 const publicRoutes = [
   { path: "/", component: Home },
@@ -26,8 +26,9 @@ const publicRoutes = [
   { path: "/book-appointment", component: FormBookDoctor },
   { path: "/video-call", component: VideoCall, layout: null },
   { path: "/user-profile", component: UserProfile },
-  { path: "/messages", component:  Messages},
+  { path: "/messages", component: Messages },
   { path: "/doctor-drug", component: DrugDoctor },
+  { path: "/manage-drug", component: ManageDrug },
   { path: "/manage-user", component: ManageUser },
 ];
 
