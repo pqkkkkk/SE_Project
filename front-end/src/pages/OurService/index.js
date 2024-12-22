@@ -24,7 +24,8 @@ function OurService() {
           <img src={images.drugimage} alt="drugimage" />
         </div>
       </button>
-      <button
+
+      <button 
         className={cx("chat-btn")}
         onClick={() => handleClick("messages")}
       >
