@@ -5,7 +5,6 @@ import styles from "./OurService.module.scss";
 
 const cx = classNames.bind(styles);
 
-
 function OurService() {
   const navigate = useNavigate();
   const handleClick = (path) => {
@@ -15,18 +14,21 @@ function OurService() {
     <div className={cx("our-service")}>
       <button
         className={cx("drug-btn")}
-        onClick={() => handleClick("drug-list")}
+        onClick={() => handleClick("manage-drug")}
       >
         <div className={cx("row1")}>
           <img src={images.druglist} alt="druglist" />
           <h1>Drug Service</h1>
-
         </div>
         <div className={cx("row2")}>
           <img src={images.drugimage} alt="drugimage" />
         </div>
       </button>
-      <button onClick={() => handleClick('messages')} className={cx("chat-btn")}>
+
+      <button 
+        className={cx("chat-btn")}
+        onClick={() => handleClick("messages")}
+      >
         <div className={cx("row1")}>
           <img src={images.chaticon} alt="chat" />
           <h1>Chat</h1>
