@@ -1,7 +1,7 @@
 import Home from "../pages/Home";
 import FindDoctor from "../pages/FindDoctor";
 import OurService from "../pages/OurService";
-import Review from "../pages/Review";
+import Requests from "../pages/Requests";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import DetailDOctor from "../pages/DetailDoctor";
@@ -11,20 +11,25 @@ import DrugList from "../pages/DrugList";
 import UserProfile from "../pages/UserProfile";
 import Messages from "../pages/Message";
 import DrugDoctor from "../pages/DrugDoctor";
+import ManageDrug from "../pages/ManageDrug";
+import ManageUser from "../pages/ManageUser";
+
 const publicRoutes = [
-  { path: "/", component: Home },
-  { path: "/find-doctor", component: FindDoctor },
-  { path: "/our-service", component: OurService },
-  { path: "/review", component: Review },
-  { path: "/drug-list", component: DrugList },
-  { path: "/login", component: Login, layout: null },
-  { path: "/register", component: Register, layout: null },
-  { path: "/doctor/:id", component: DetailDOctor },
-  { path: "/book-appointment", component: FormBookDoctor },
-  { path: "/video-call", component: VideoCall, layout: null },
-  { path: "/user-profile", component: UserProfile },
-  { path: "/messages", component:  Messages},
-  { path: "/doctor-drug", component: DrugDoctor },
+    { path: "/", component: Home },
+    { path: "/find-doctor", component: FindDoctor },
+    { path: "/our-service", component: OurService },
+    { path: "/requests", component: Requests },
+    { path: "/drug-list", component: DrugList },
+    { path: "/login", component: Login, layout: null },
+    { path: "/register", component: Register, layout: null },
+    { path: "/doctor/:id", component: DetailDOctor },
+    { path: "/book-appointment", component: FormBookDoctor },
+    { path: "/video-call", component: VideoCall, layout: null },
+    { path: "/user-profile", component: UserProfile },
+    { path: "/messages", component: Messages },
+    { path: "/doctor-drug", component: DrugDoctor },
+    { path: "/manage-drug", component: ManageDrug },
+    { path: "/manage-user", component: ManageUser },
 ];
 
 const privateRoutes = [];
