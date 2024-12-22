@@ -1,45 +1,26 @@
-package com.introduce2se
-        .seproject.consultation.model;
+package com.introduce2se.seproject.consultation.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.cglib.core.Local;
 
-import java.sql.Date;
 import java.sql.Time;
-@Setter
-@Getter
-@Entity
-@Table(name = "consultation", schema="dbo")
+import java.time.LocalDate;
+
+@Data
+@AllArgsConstructor
 public class Consultation {
-    @Id
     private int ConsultationId;
-    private Date ConsultationDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate ConsultationDate;
     private Time StartTime;
     private Time EndTime;
     private String Form;
     private String Status;
-    private String PatientId;
-    private String DoctorId;
+    private int PatientId;
+    private int DoctorId;
     private String ConsultationResult;
     private String Reason;
-
-    //Constructor
     public Consultation(){}
-    public Consultation(int consultationId, Date date ,Time start_time, Time end_time,
-                        String form, String status, String patientId,
-                        String doctorId, String consultation_Result, String reason) {
-        ConsultationId = consultationId;
-        ConsultationDate = date;
-        StartTime = start_time;
-        EndTime = end_time;
-        Form = form;
-        Status = status;
-        PatientId = patientId;
-        DoctorId = doctorId;
-        ConsultationResult = consultation_Result;
-        Reason = reason;
-    }
 }

@@ -7,7 +7,8 @@ import SocialLogin from "../../components/Social";
 import {login} from "../../services/ApiService";
 import {useState} from "react";
 import {setUserSession} from "../../services/UserStorageService";
-
+import {SubcribeCorrespondingTopic} from "../../services/SocketService";
+import {GetConnectingUsers} from "../../services/ApiService";
 const cx = classNames.bind(styles);
 
 function Login() {
@@ -22,10 +23,13 @@ function Login() {
         try {
             const data = await login(username, password);
 
-            if (data === "Login successful") {
+            if (data !== null ) {
                 alert("Login successful");
+                setUserSession(data);
+                const connectingUsers = await GetConnectingUsers(data.id, data.userRole);
+                SubcribeCorrespondingTopic(data.id);
                 navigate("/");
-            } else if (data === "Login failed") {
+            } else if (data === null) {
                 alert("Login failed");
             } else {
                 alert("Unknown error");

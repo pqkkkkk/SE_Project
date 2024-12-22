@@ -18,6 +18,7 @@ public class Prescription {
     private int TotalPrice;
     private Date CreatedDay;
     private int ConsultationId;
+    private String status;
 
     public Prescription(){}
 

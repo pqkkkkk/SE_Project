@@ -7,8 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class PrescriptionDao {
@@ -19,13 +18,10 @@ public class PrescriptionDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    // get prescription of a consultation
     public Prescription getPrescriptionByConsultationId(int consultationId) {
         String sql = "SELECT * FROM prescription WHERE consultation_id = ?";
         return jdbcTemplate.queryForObject(sql, new PrescriptionRowMapper(), consultationId);
     }
-
-    // RowMapper cho Prescription
     private static class PrescriptionRowMapper implements RowMapper<Prescription> {
         @Override
         public Prescription mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -37,44 +33,51 @@ public class PrescriptionDao {
             return prescription;
         }
     }
-    // get all prescription detail of a prescription
     public List<PrescriptionDetail> getPrescriptionDetails(int prescriptionId) {
         String sql = "SELECT * FROM prescription_detail WHERE prescription_id = ?";
         return jdbcTemplate.query(sql, new PrescriptionDetailRowMapper(), prescriptionId);
     }
-
-    // get a prescription by id
     public Prescription getPrescriptionById(int prescriptionId){
         String sql = "SELECT * FROM prescription WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, new PrescriptionRowMapper(), prescriptionId);
     }
-
-    // Create a prescription into database and get prescription id
     public int createPrescription(Prescription prescription) {
-        String sql = "INSERT INTO prescription (total_price, created_day, consultation_id) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO prescription (total_price, created_day, consultation_id, status) VALUES (?, ?, ?,?)";
         jdbcTemplate.update(sql,
                 prescription.getTotalPrice(),
                 prescription.getCreatedDay(),
-                prescription.getConsultationId());
+                prescription.getConsultationId(),
+                "unpaid");
 
-        // Lấy id của prescription vừa tạo
         String thisPrescriptionId = "SELECT @@IDENTITY";
         Optional<Integer> lastId = Optional.ofNullable(jdbcTemplate.queryForObject(thisPrescriptionId, Integer.class));
 
         return lastId.orElseThrow(() -> new RuntimeException("Failed to retrieve the last inserted ID"));
     }
-
-    // Add a prescription detail
     public void addPrescriptionDetail(PrescriptionDetail prescriptionDetail) {
-        String sql ="INSERT INTO prescription_detail (quantity, usage, prescription_id, drug_id) VALUES (?, ?, ?, ?)";
+        String sql ="INSERT INTO prescription_detail (quantity, usage, prescription_id, drug_id,total_price) VALUES (?, ?, ?, ?,?)";
         jdbcTemplate.update(sql,
                 prescriptionDetail.getQuantity(),
                 prescriptionDetail.getUsage(),
                 prescriptionDetail.getPrescriptionId(),
-                prescriptionDetail.getDrugId());
+                prescriptionDetail.getDrugId()
+                ,prescriptionDetail.getTotalPrice());
     }
-
-    // RowMapper cho PrescriptionDetail
+    public List<Prescription> GetPrescriptionsOfPatient(int userId, String consultationStatus, String prescriptionStatus) {
+        List<Prescription> prescriptions = null;
+        String sql = """
+                    select * from prescription p join consultation c on p.consultation_id = c.id
+                                                 join users u on u.id = c.patient_id
+                    Where u.id = ? and c.status = ? and p.status = ?
+    """;
+        prescriptions = jdbcTemplate.query(sql, new PrescriptionRowMapper(),
+                userId, consultationStatus, prescriptionStatus);
+        return prescriptions;
+    }
+    public void updatePrescriptionStatus(int prescriptionId, String status) {
+        String sql = "UPDATE prescription SET status = ? WHERE id = ?";
+        jdbcTemplate.update(sql, status, prescriptionId);
+    }
     private static class PrescriptionDetailRowMapper implements RowMapper<PrescriptionDetail> {
         @Override
         public PrescriptionDetail mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -84,6 +87,7 @@ public class PrescriptionDao {
             detail.setUsage(rs.getString("usage"));
             detail.setPrescriptionId(rs.getInt("prescription_id"));
             detail.setDrugId(rs.getInt("drug_id"));
+            detail.setTotalPrice(rs.getInt("total_price"));
             return detail;
         }
     }

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 
 @Repository
-@Primary
 public class MessageMockDao implements MessageDao {
     private ArrayList <Message> messages = new ArrayList<>();
     public ArrayList<Message> GetMessages(int currentUserId, int oppositeUserId){

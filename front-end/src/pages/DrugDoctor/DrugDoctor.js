@@ -1,8 +1,8 @@
 import classNames from "classnames/bind";
 import styles from "./DrugDoctor.module.scss";
 import images from "../../assets/images";
-import { useState } from "react";
-
+import {useEffect, useState} from "react";
+import {GetAllDrugs, SavePrescription} from "../../services/ApiService";
 const cx = classNames.bind(styles);
 
 
@@ -10,53 +10,62 @@ function DrugDoctor() {
 
     const [prescription, setPrescription] = useState([]);
     const [searchValue, setSearchValue] = useState("");
-
-
-    const drugs = [
-        { id: 1, name: "Panadol 1", image: images.medicine, Unit: "vỉ", Price: 100000, QuantityInStock: 10 },
-        { id: 2, name: "Panadol 2", image: images.medicine, Unit: "vỉ", Price: 100000, QuantityInStock: 10 },
-        { id: 3, name: "Panadol 3", image: images.medicine, Unit: "vỉ", Price: 100000, QuantityInStock: 10 },
-        { id: 4, name: "Panadol 4", image: images.medicine, Unit: "vỉ", Price: 100000, QuantityInStock: 10 },
-        { id: 5, name: "Panadol 5", image: images.medicine, Unit: "vỉ", Price: 100000, QuantityInStock: 10 },
-        { id: 6, name: "Panadol 6", image: images.medicine, Unit: "vỉ", Price: 100000, QuantityInStock: 10 },
-        { id: 7, name: "Panadol 7", image: images.medicine, Unit: "vỉ", Price: 100000, QuantityInStock: 10 },
-        { id: 8, name: "Panadol 8", image: images.medicine, Unit: "vỉ", Price: 100000, QuantityInStock: 10 },
-        { id: 9, name: "Panadol 9", image: images.medicine, Unit: "vỉ", Price: 100000, QuantityInStock: 10 },
-        { id: 10, name: "Panadol 10", image: images.medicine, Unit: "vỉ", Price: 100000, QuantityInStock: 10 },
-    ]
-
-
+    const [drugs, setDrugs] = useState([]);
+    useEffect(() => {
+        GetAllDrugs().then((data) =>
+        {
+            setDrugs(data || []);
+        })
+            .catch((error) =>{
+                console.log(error);
+                setDrugs([]);
+            });
+    }, []);
     const handleSearchChange = (e) => {
         setSearchValue(e.target.value);
     }
-
     const filteredDrugs = drugs.filter((drug) => 
         drug.name.toLowerCase().includes(searchValue.toLowerCase())
     );
-
-
     const handleAddDrug = (drug) => {
         setPrescription((prev) => {
-            const existingDrug = prev.find((item) => item.id === drug.id);
+            const existingDrug = prev.find((item) => item.drugId === drug.drugId);
             if(existingDrug){
                 return prev.map((item) =>
-                    item.id === drug.id ? {...item, quantity: item.quantity + 1, totalPrice: item.Price * (item.quantity+1)} : item
+                    item.drugId === drug.drugId ? {...item, quantity: item.quantity + 1, totalPrice: item.price * (item.quantity+1)} : item
                 );
             }
-            return [...prev, {...drug, quantity: 1, totalPrice: drug.Price,}];
+            return [...prev, {...drug, quantity: 1, totalPrice: drug.price,usage: ""}];
         });
     }
-
     const handleRemoveDrug = (drug) => {
-        setPrescription((prev) => prev.filter((item) => item.id !== drug.id));
+        setPrescription((prev) => prev.filter((item) => item.drugId !== drug.drugId));
     }
-
+    const HandleSavePrescription = () => {
+        const consultationId = 13;
+        SavePrescription(prescription,consultationId)
+            .then((data) =>{
+                console.log(data);
+                if(data === "Created"){
+                    alert("Prescription saved successfully");
+                }
+                else if (data === "Error in server"){
+                    alert("Error in server");
+                }
+                else if (data === "Failed"){
+                    alert("Failed to save prescription");
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
     const renderPrescription = () =>{
         if(prescription.length === 0){
             return <p></p>
         }
         return prescription.map((drug)=> (
-            <div key={drug.id} className={cx("drug-item")}>
+            <div key={drug.drugId} className={cx("drug-item")}>
                 <img src={images.medicine} className={cx("drug-img")} alt={drug.name} />
                 <p className={cx("drug-name")}>{drug.name}</p>
                 <p className={cx("drug-price")}>{drug.totalPrice}</p>
@@ -70,7 +79,6 @@ function DrugDoctor() {
             </div>
         ));
     }
-
     return (
         <div className={cx("container")}>
             <div className={cx("header")}>
@@ -87,12 +95,12 @@ function DrugDoctor() {
                         onChange={handleSearchChange} 
                     />
                     {filteredDrugs.map((drug) => (
-                        <div key={drug.id} className={cx("drug-item")}>
+                        <div key={drug.drugId} className={cx("drug-item")}>
                             <img src={images.medicine} alt={drug.name} className={cx("drug-img")} />
                             <div className={cx("drug-info")}>
                                 <h3 className={cx("drug-name")}>{drug.name}</h3>
-                                <p className={cx("drug-price")}>Price: {drug.Price}đ</p>
-                                <p className={cx("drug-stock")}>Stock: {drug.QuantityInStock}</p>
+                                <p className={cx("drug-price")}>Price: {drug.price}đ</p>
+                                <p className={cx("drug-stock")}>Stock: {drug.quantity}</p>
                             </div>
                             <button 
                                 className={cx("add-btn")}
@@ -126,7 +134,7 @@ function DrugDoctor() {
                             placeholder="Nhập ghi chú cho bệnh nhân..."
                         ></textarea>
                     </div>
-                    <button className={cx("submit-btn")}>Send</button>
+                    <button className={cx("submit-btn")} onClick={HandleSavePrescription}>Save</button>
                 </div>
             </div>
             

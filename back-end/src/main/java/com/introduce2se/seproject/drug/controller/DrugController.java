@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/drugs")
-
+@RequestMapping("/api/drugs")
 public class DrugController {
 
     private final DrugService drugService;
@@ -19,11 +18,13 @@ public class DrugController {
     }
 
     @GetMapping("")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<Drug>> getAllDrugs() {
         List<Drug> drugs = drugService.getAllDrugs();
-        return ResponseEntity.ok(drugs); // HTTP 200 OK với danh sách thuốc
+        return ResponseEntity.ok(drugs);
     }
     @GetMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Drug> getDrugById(@PathVariable int id) {
         Drug drug = drugService.getDrugById(id);
         if(drug!=null) {
@@ -36,6 +37,7 @@ public class DrugController {
 
     // oke
     @GetMapping("/find")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<Drug>> findDrugs(@RequestParam String keyword, @RequestParam String type) {
         List<Drug> drugs = drugService.findDrugs(keyword, type);
         if(drugs!=null) {
@@ -45,11 +47,8 @@ public class DrugController {
             return ResponseEntity.notFound().build();
         }
     }
-
-    // get all the drug type
-
-    //OKE
     @GetMapping("/DrugType")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<String>> findDrugsByType(){
         List<String> drugsType = drugService.getALLDrugTypes();
         if(drugsType!=null) {

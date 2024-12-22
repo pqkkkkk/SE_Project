@@ -8,14 +8,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @RestController
-@RequestMapping("/prescriptions")
+@RequestMapping("/api/prescriptions")
 public class PrescriptionController {
 
     private final PrescriptionService prescriptionService;
@@ -25,11 +24,11 @@ public class PrescriptionController {
         this.prescriptionService = prescriptionService;
     }
 
-    // create a prescription
-    @PostMapping("/create_prescription")
+    @PostMapping
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> createPrescription(
-            @RequestParam int consultationId, // Tham số từ query string (URL)
-            @RequestBody List<PrescriptionDetail> details // Tham số từ body
+            @RequestParam int consultationId,
+            @RequestBody List<PrescriptionDetail> details
     )
     {
         try {
@@ -40,21 +39,28 @@ public class PrescriptionController {
                         ", Usage: " + detail.getUsage());
             });
 
-            // Tiến hành tạo prescription và lưu vào DB
             Prescription prescription = new Prescription();
             prescription.setConsultationId(consultationId);
             int prescriptionId = prescriptionService.createPrescription(prescription, details);
-
-
-            return ResponseEntity.ok("Prescription created");
+            return ResponseEntity.ok("Created");
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed");
         }
     }
-
-    // get prescription of a consultation
+    @PutMapping("/status")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<Integer> UpdateStatus(@RequestParam int prescriptionId, @RequestParam String status)
+    {
+      int result = prescriptionService.UpdateStatus(prescriptionId, status);
+        if (result == 1) {
+            return ResponseEntity.ok().body(result);
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(0);
+        }
+    }
     @GetMapping("/{consultation_id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Prescription> getPrescriptionByConsultationId(@PathVariable int consultation_id) {
         Prescription prescription = prescriptionService.getPrescriptionByConsultationId(consultation_id);
         if (prescription == null) {
@@ -64,9 +70,9 @@ public class PrescriptionController {
         }
     }
 
-    // get all prescription detail of a prescription
-    @GetMapping("/{prescriptionId}/details")
-    public ResponseEntity<?> getPrescriptionDetails(@PathVariable int prescriptionId) {
+    @GetMapping("/details")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<?> getPrescriptionDetails(@RequestParam int prescriptionId) {
         Prescription prescription = prescriptionService.getPrescriptionById(prescriptionId);
         if (prescription == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prescription not found.");
@@ -79,5 +85,14 @@ public class PrescriptionController {
         response.put("details", details);
 
         return ResponseEntity.ok(response);
+    }
+    @GetMapping("/patient")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<List<Prescription>> GetPrescriptionsByPatientId(@RequestParam int patientId, @RequestParam String consultationStatus, @RequestParam String prescriptionStatus) {
+        List<Prescription> prescriptions = prescriptionService.GetPrescriptionsByPatientId(patientId, consultationStatus, prescriptionStatus);
+        if (prescriptions == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(prescriptions);
     }
 }

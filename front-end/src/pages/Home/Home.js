@@ -61,7 +61,6 @@ const specialists = [
         rating: "5.0",
     },
 ];
-
 const news = [
     {
         title: "Pumping Iron Improves Longevity in Older Adults",

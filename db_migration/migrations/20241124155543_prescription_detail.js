@@ -9,7 +9,8 @@ exports.up = async function(knex) {
       quantity INT NOT NULL,
       usage NVARCHAR(100) NOT NULL,
       prescription_id INT,
-      drug_id INT
+      drug_id INT,
+      total_price int NOT NULL,
     );
 `);
 };

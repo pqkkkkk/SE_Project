@@ -1,10 +1,9 @@
-export const getUser = () => {
+export const GetUser = () => {
     const userStr = sessionStorage.getItem('user');
     if (userStr) return JSON.parse(userStr);
     else return null;
 }
-export const removeUserSession = () => {
-    sessionStorage.removeItem('token');
+export const RemoveUserSession = () => {
     sessionStorage.removeItem('user');
 }
 export const setUserSession = (user) => {
