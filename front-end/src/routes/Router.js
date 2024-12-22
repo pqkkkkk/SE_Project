@@ -1,7 +1,7 @@
 import Home from "../pages/Home/Home";
 import FindDoctor from "../pages/FindDoctor/FindDoctor";
 import OurService from "../pages/OurService/OurService";
-import Review from "../pages/Review/Review";
+import Requests from "../pages/Requests/Requests";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import DetailDOctor from "../pages/DetailDoctor/DetailDoctor";
@@ -11,12 +11,13 @@ import DrugList from "../pages/DrugList/DrugList";
 import UserProfile from "../pages/UserProfile/UserProfile";
 import Messages from "../pages/Message/Message";
 import DrugDoctor from "../pages/DrugDoctor/DrugDoctor";
-
+import ManageDrug from "../pages/ManageDrug/ManageDrug";
+import ManageUser from "../pages/ManageUser/ManageUser";
 const publicRoutes = [
   { path: "/", component: Home },
   { path: "/find-doctor", component: FindDoctor },
   { path: "/our-service", component: OurService },
-  { path: "/review", component: Review },
+  { path: "/requests", component: Requests },
   { path: "/drug-list", component: DrugList},
   { path: "/login", component: Login, layout: null },
   { path: "/register", component: Register, layout: null },
@@ -26,6 +27,8 @@ const publicRoutes = [
   { path: "/user-profile", component: UserProfile},
   { path: "/messages", component:Messages},
   { path: "/doctor-drug", component: DrugDoctor},
+  { path: "/manage-drug", component: ManageDrug},
+  { path: "/manage-user", component: ManageUser},
 ];
 
 const privateRoutes = [];
