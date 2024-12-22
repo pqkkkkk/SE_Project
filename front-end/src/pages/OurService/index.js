@@ -26,7 +26,10 @@ function OurService() {
           <img src={images.drugimage} alt="drugimage" />
         </div>
       </button>
-      <button className={cx("chat-btn")}>
+      <button 
+        className={cx("chat-btn")}
+        onClick={() => handleClick("messages")}
+      >
         <div className={cx("row1")}>
           <img src={images.chaticon} alt="chat" />
           <h1>Chat</h1>
