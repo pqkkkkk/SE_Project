@@ -49,6 +49,7 @@
             width: 300px;
             height: 300px;
             border-radius: 15px;
+
         }
     }
     
@@ -65,12 +66,39 @@
         border: 2px solid #1CB5BD;
     }
 
-    .filter{
+    .filter {
         margin-top: 20px;
         background-color: #e9f7f8;
         padding: 20px;
         border-radius: 10px;
         text-align: center;
+    
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+    
+        .btn-filter {
+            background-color: #1CB5BD;
+            cursor: pointer;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            padding: 18px;
+            flex: 1 1 calc(20% - 20px);
+            min-width: 150px;
+            max-width: 200px;
+            font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+        }
+    
+        .active {
+            background-color: #0A5EB0;
+        }
 
         .label{
             text-align: center;
@@ -145,11 +173,30 @@
                     color: #0f2f76;
                 }
             }
-
+            
             .medicine-img{
                 width: 100px;
                 height: 100px;
                 border-radius: 10px;
+            }
+
+
+            .img-wrapper{
+                position: relative;
+                height: 100px;
+                .paid-overlay{
+                    position: absolute;
+                    border-radius: 10px;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100px;
+                    background: rgba(0, 0, 0, 0.5);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 1000;
+                }
             }
 
             .btn-detail{
