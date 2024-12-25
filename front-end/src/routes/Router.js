@@ -15,6 +15,8 @@ import ManageDrug from "../pages/ManageDrug/ManageDrug";
 import ManageUser from "../pages/ManageUser/ManageUser";
 import SuccessfulPayment from "../pages/SuccessfulPayment/SuccessfulPayment";
 import PaymentFailed from "../pages/PaymentFailed/PaymentFailed";
+import ManagePatient from "../pages/ManagePatient/ManagePatient";
+
 const publicRoutes = [
     { path: "/", component: Home },
     { path: "/find-doctor", component: FindDoctor },
@@ -33,6 +35,7 @@ const publicRoutes = [
     { path: "/manage-user", component: ManageUser },
     { path: "/successful-payment", component: SuccessfulPayment, layout: null },
     { path: "/payment-failed", component: PaymentFailed, layout: null },
+    { path: "/manage-patient", component: ManagePatient },
 ];
 
 const privateRoutes = [];

@@ -61,6 +61,10 @@ const images = {
     chatimage: require("./chatimage.svg").default,
     filter: require("./filter.svg").default,
     paid: require("./paid.png"),
+    avtdefault: require("./avatar-default.svg").default,
+    avt1: require("./avt1.svg").default,
+    avt2: require("./avt2.svg").default,
+    avt3: require("./avt3.svg").default,
 };
 
 export default images;
