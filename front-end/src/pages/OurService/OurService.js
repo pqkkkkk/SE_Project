@@ -14,7 +14,7 @@ function OurService() {
     <div className={cx("our-service")}>
       <button
         className={cx("drug-btn")}
-        onClick={() => handleClick("manage-drug")}
+        onClick={() => handleClick("manage-patient")}
       >
         <div className={cx("row1")}>
           <img src={images.druglist} alt="druglist" />
@@ -25,7 +25,7 @@ function OurService() {
         </div>
       </button>
 
-      <button 
+      <button
         className={cx("chat-btn")}
         onClick={() => handleClick("messages")}
       >
