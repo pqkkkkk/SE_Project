@@ -60,6 +60,7 @@ const images = {
     drugimage: require("./drugimage.svg").default,
     chatimage: require("./chatimage.svg").default,
     filter: require("./filter.svg").default,
+    paid: require("./paid.png"),
 };
 
 export default images;

@@ -18,6 +18,8 @@ function DrugList() {
     const [showPrescriptionDetail, setShowPrescriptionDetail] = useState(false);
     const [showPaymentFail, setShowPaymentFail] = useState(false);
     const [showPaymentSuccess, setShowPaymentSuccess] = useState(false);
+    const [showPaidPrescription, setShowPaidPrescription] = useState(false);
+    const [showUnpaidPrescription, setShowUnpaidPrescription] = useState(true);
     useEffect(() =>  {
         const queryParamsValue = new URLSearchParams(window.location.search);
         if(queryParamsValue.get("vnp_TxnRef")) {
@@ -82,6 +84,45 @@ function DrugList() {
     const OffPaymentFailNoti = () => {
         setShowPaymentFail(false);
     }
+
+    const unpaidPrescription = [
+        { id: 1, prescriptionId: 1, createdDay: "2022-09-01" },
+        { id: 2, prescriptionId: 2, createdDay: "2022-09-02" },
+        { id: 3, prescriptionId: 3, createdDay: "2022-09-03" },
+        { id: 4, prescriptionId: 4, createdDay: "2022-09-04" },
+        { id: 5, prescriptionId: 5, createdDay: "2022-09-05" },
+        { id: 6, prescriptionId: 6, createdDay: "2022-09-06" },
+        { id: 7, prescriptionId: 7, createdDay: "2022-09-07" },
+        { id: 8, prescriptionId: 8, createdDay: "2022-09-08" },
+        { id: 9, prescriptionId: 9, createdDay: "2022-09-09" },
+        { id: 10, prescriptionId: 10, createdDay: "2022-09-10" },
+    ]
+
+    const paidPrescription = [
+        { id: 1, prescriptionId: 1, createdDay: "2021-09-01" },
+        { id: 2, prescriptionId: 2, createdDay: "2021-09-02" },
+        { id: 3, prescriptionId: 3, createdDay: "2021-09-03" },
+        { id: 4, prescriptionId: 4, createdDay: "2021-09-04" },
+        { id: 5, prescriptionId: 5, createdDay: "2021-09-05" },
+        { id: 6, prescriptionId: 6, createdDay: "2021-09-06" },
+        { id: 7, prescriptionId: 7, createdDay: "2021-09-07" },
+        { id: 8, prescriptionId: 8, createdDay: "2021-09-08" },
+        { id: 9, prescriptionId: 9, createdDay: "2021-09-09" },
+        { id: 10, prescriptionId: 10, createdDay: "2021-09-10" },
+    ]
+
+    const handleUnpaidPrescriptionClick = () => {
+        setShowUnpaidPrescription(true);
+        setShowPaidPrescription(false);
+        setPrescriptionList(unpaidPrescription);
+    }
+
+    const handlePaidPrescriptiononClick = () => {
+        setShowUnpaidPrescription(false);
+        setShowPaidPrescription(true);
+        setPrescriptionList(paidPrescription);
+    }
+
     return(
         <div className={cx('container')}>
             <div className={cx('background')}>
@@ -94,6 +135,57 @@ function DrugList() {
                 <img src={images.medicineBg} alt="medicineBg" className={cx('medicine-bg')}/>
             </div>
 
+            
+            <div className={cx('filter')}>
+                <div className={cx("btn-group")}>
+                    <button className={cx('btn-filter', showUnpaidPrescription && 'active')} 
+                            onClick={() => handleUnpaidPrescriptionClick()}>
+                        UNPAID
+                    </button>
+                    <button className={cx('btn-filter', showPaidPrescription && 'active')} 
+                            onClick={() => handlePaidPrescriptiononClick()}>
+                        PAID
+                    </button>
+                </div>
+                {showUnpaidPrescription && (
+                    <div className={cx('list-drugs')}>
+                        {prescriptionList.map((pre) => (
+                            <div key={pre.id} className={cx('prescription')}>
+                                <img src={images.default_pre} alt="medicine" className={cx('medicine-img')}/>
+                                <div className={cx('pre-info')}>
+                                    <p className={cx('pre-id')}>ID: #{pre.prescriptionId}</p>
+                                    <p className={cx('pre-date')}>Created date: {pre.createdDay}</p>
+                                </div>
+                                <button className={cx('btn-detail')} onClick={() => handleDetailClick(pre)}>
+                                    Detail
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                )}
+                {showPaidPrescription && (
+                    <div className={cx('list-drugs')}>
+                        {prescriptionList.map((pre) => (
+                            <div key={pre.id} className={cx('prescription')}>
+                                <div className={cx('img-wrapper')} >
+                                    <img src={images.default_pre} alt="medicine" className={cx('medicine-img')}/>
+                                    <img src={images.paid} alt="" className={cx('paid-overlay')}/>
+                                </div>
+                                <div className={cx('pre-info')}>
+                                    <p className={cx('pre-id')}>ID: #{pre.prescriptionId}</p>
+                                    <p className={cx('pre-date')}>Created date: {pre.createdDay}</p>
+                                </div>
+                                <button className={cx('btn-detail')} onClick={() => handleDetailClick(pre)}>
+                                    Detail
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>  
+            
+            
+
             <div className={cx('feature')}>
                 <img src={images.feature1} alt="feature1" className={cx('feature-img')}/>
                 <img src={images.feature2} alt="feature2" className={cx('feature-img')}/>
@@ -101,23 +193,6 @@ function DrugList() {
                 <img src={images.feature4} alt="feature4" className={cx('feature-img')}/>
             </div>
 
-            <div className={cx('filter')}>
-                <h2 className={cx('label')}>Danh sách đơn thuốc cần mua</h2>
-                <div className={cx('list-drugs')}>
-                    {prescriptionList.map((pre) => (
-                        <div key={pre.id} className={cx('prescription')}>
-                            <img src={images.default_pre} alt="medicine" className={cx('medicine-img')}/>
-                            <div className={cx('pre-info')}>
-                                <p className={cx('pre-id')}>ID: #{pre.prescriptionId}</p>
-                                <p className={cx('pre-date')}>Created date: {pre.createdDay}</p>
-                            </div>
-                            <button className={cx('btn-detail')} onClick={() => handleDetailClick(pre)}>
-                                Detail
-                            </button>
-                        </div>
-                    ))}
-                </div>
-            </div>
             {showPrescriptionDetail && (
                 <div className={cx("medicine-list-overlay")}>
                     <div className={cx("medicine-list-popup")}>
