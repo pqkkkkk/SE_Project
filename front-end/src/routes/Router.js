@@ -13,24 +13,29 @@ import Messages from "../pages/Message/Message";
 import DrugDoctor from "../pages/DrugDoctor/DrugDoctor";
 import ManageDrug from "../pages/ManageDrug/ManageDrug";
 import ManageUser from "../pages/ManageUser/ManageUser";
+import SuccessfulPayment from "../pages/SuccessfulPayment/SuccessfulPayment";
+import PaymentFailed from "../pages/PaymentFailed/PaymentFailed";
 import ManagePatient from "../pages/ManagePatient/ManagePatient";
+
 const publicRoutes = [
-  { path: "/", component: Home },
-  { path: "/find-doctor", component: FindDoctor },
-  { path: "/our-service", component: OurService },
-  { path: "/requests", component: Requests },
-  { path: "/drug-list", component: DrugList },
-  { path: "/login", component: Login, layout: null },
-  { path: "/register", component: Register, layout: null },
-  { path: "/doctor/:id", component: DetailDOctor },
-  { path: "/book-appointment", component: FormBookDoctor },
-  { path: "/video-call", component: VideoCall, layout: null },
-  { path: "/user-profile", component: UserProfile },
-  { path: "/messages", component: Messages },
-  { path: "/doctor-drug", component: DrugDoctor },
-  { path: "/manage-drug", component: ManageDrug },
-  { path: "/manage-user", component: ManageUser },
-  { path: "/manage-patient", component: ManagePatient },
+    { path: "/", component: Home },
+    { path: "/find-doctor", component: FindDoctor },
+    { path: "/our-service", component: OurService },
+    { path: "/requests", component: Requests },
+    { path: "/drug-list", component: DrugList },
+    { path: "/login", component: Login, layout: null },
+    { path: "/register", component: Register, layout: null },
+    { path: "/doctor/:id", component: DetailDOctor },
+    { path: "/book-appointment", component: FormBookDoctor },
+    { path: "/video-call", component: VideoCall, layout: null },
+    { path: "/user-profile", component: UserProfile },
+    { path: "/messages", component: Messages },
+    { path: "/doctor-drug", component: DrugDoctor },
+    { path: "/manage-drug", component: ManageDrug },
+    { path: "/manage-user", component: ManageUser },
+    { path: "/successful-payment", component: SuccessfulPayment, layout: null },
+    { path: "/payment-failed", component: PaymentFailed, layout: null },
+    { path: "/manage-patient", component: ManagePatient },
 ];
 
 const privateRoutes = [];
