@@ -38,7 +38,7 @@ const images = {
     endcall: require("./endcall.svg").default,
     microphone: require("./microphone.svg").default,
     video: require("./video.svg").default,
-    avatar: require("./avt-default.svg").default,
+    avatar: require("./avatar-default.svg").default,
     medicine: require("./medicine.jpg"),
     medicineBg: require("./MedicineBg.png"),
     feature1: require("./feature1.png"),
