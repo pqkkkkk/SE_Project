@@ -8,24 +8,33 @@ const cx = classNames.bind(styles);
 
 function FindDoctor() {
   const navigate = useNavigate();
-  /*const doctors = [
-    { id: 1, name: "Dr. John Doe 1", speciality: "Cardiologist", review: 120 },
-    { id: 2, name: "Dr. Jane Doe 2", speciality: "Dentist", review: 100 },
-    { id: 3, name: "Dr. John Doe 3", speciality: "Dermatologist", review: 80 },
-    { id: 4, name: "Dr. John Doe 4", speciality: "Neurologist", review: 90 },
-    { id: 5, name: "Dr. John Doe 5", speciality: "Psychiatrist", review: 110 },
-    { id: 6, name: "Dr. John Doe 6", speciality: "Cardiologist", review: 120 },
-  ];
-  */
+
+  const [isFilterVisible, setFilterVisible] = useState(false);
+
+  // const doctors = [
+  //   { id: 1, fullName: "Dr. John Doe 1", speciality: "Cardiologist", consultationPrice: 120 },
+  //   { id: 2, fullName: "Dr. Jane Doe 2", speciality: "Dentist", consultationPrice: 100 },
+  //   { id: 3, fullName: "Dr. John Doe 3", speciality: "Dermatologist", consultationPrice: 80 },
+  //   { id: 4, fullName: "Dr. John Doe 4", speciality: "Neurologist", consultationPrice: 90 },
+  //   { id: 5, fullName: "Dr. John Doe 5", speciality: "Psychiatrist", consultationPrice: 110 },
+  //   { id: 6, fullName: "Dr. John Doe 6", speciality: "Cardiologist", consultationPrice: 120 },
+  // ];
+ 
 
   const [doctors, setDoctors] = useState([]);
   useEffect(() =>{
     getAllDoctors().then(data => setDoctors(data || []))
         .catch(error => console.log(error));
   });
+  
   const handleDoctorClick = (id) => {
     navigate(`/doctor/${id}`);
   };
+
+  const toggleFilter = () => {
+    setFilterVisible(!isFilterVisible); // Đổi trạng thái hiển thị filter
+  };
+
   return (
     <div className={cx("content")}>
       <h2 className={cx("desc")}>Search for Doctor , Make an Appointment</h2>
@@ -44,7 +53,7 @@ function FindDoctor() {
             </div>
           </div>
 
-          <form className={cx("filter", "element")} id="filter-form">
+          <form className={cx("filter", "element", { active: isFilterVisible })} id="filter-form">
             <div className={cx("gender-options")}>
               <label className={cx("field-text")}>Gender of doctor</label>
               <div className={cx("decor-gender")}>
@@ -100,6 +109,11 @@ function FindDoctor() {
               Show Doctors
             </button>
           </form>
+
+          <button type="button" className={cx("more-btn")} onClick={toggleFilter}>
+            {isFilterVisible ? "Hide Filters" : "More Filters"}
+          </button>
+
         </div>
         <div className={cx("main-content")}>
           {doctors.map((doctor) => (

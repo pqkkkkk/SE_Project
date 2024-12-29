@@ -1,7 +1,10 @@
 .content{
-    margin-top: 80px;
-    margin-left: 100px;
-    margin-right: 100px;
+    margin: 80px 100px;
+
+    @media (max-width: 768px) {
+        margin: 20px;
+    }
+
     .element {
         
         border-right: 1px solid #BBBBBB; 
@@ -17,29 +20,77 @@
         padding: 10px;
         border-radius: 5px;
         background-color: #E9F7F8;
+
+        @media (max-width: 768px) {
+            height: auto;
+        }
     }
 
     .desc{
         font-size: 50px;
         font-weight: 600;
         text-align: center;
+
+        @media (max-width: 768px) {
+            font-size: 24px;
+        }
     }
 
     .border{
         border: 1px solid #BBBBBB;
         margin-top: 40px;
+
+        @media (max-width: 768px) {
+            margin-top: 20px;
+        }
     }
 
     .page{
         display: flex;
         border: 1px solid #BBBBBB;
+
+        @media (min-width: 769px) { 
+            .more-btn {
+              display: none; /* Ẩn nút More trên màn hình lớn */
+            }
+        }
+
+        
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+
+            .more-btn {
+                padding: 10px;
+                display: block;
+                margin: 20px auto;
+                border: none;
+                background-color: #1CB5BD;
+                color: white;
+                text-align: center;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+                text-transform: uppercase;
+            }
+        }
         
         .sidebar {
+            width: 30%;
+
+            @media (max-width: 768px) {
+                width: 100%;
+            }
+            
             .field-text{
                 margin-top: 36px;
                 font-size: 24px;
                 font-weight: 600;
                 display: block;
+
+                @media (max-width: 768px) {
+                    font-size: 16px;
+                }
             }
 
             .search{
@@ -48,31 +99,54 @@
                 .decor-input{
                     display: flex;
                     margin-top: 16px;
+
+                    @media (max-width: 768px) {
+                        flex-direction: column;
+                    }
     
                     .input{
                         border: 1px solid #1CB5BD;
-                        height: 30px;
-                        width: 200px;
+                        flex: 1;
+                        margin-bottom: 10px;
                         padding: 10px;
                         border-radius: 5px;
                         background-color: #E9F7F8;
+
+                        @media (max-width: 768px) {
+                            width: 100%;
+                        }
                     }
-    
+
                     .search-btn{
                         background-color: #1CB5BD;
                         cursor: pointer;
+                        margin-bottom: 10px;
                         border: none;
                         color: white;
                         border-radius: 5px;
+
+                        @media (max-width: 768px) {
+                            width: 100%;
+                            padding: 10px;
+                        }
                     }
+
+                    
                 } 
             }
             
             .filter{
                 padding: 30px;
-                display: flex;
-                flex-direction: column;
-                height: auto;
+                
+                @media (max-width: 768px) {
+                    padding: 10px;
+                    display: none;
+
+                    &.active { /* Hiển thị khi có class active */
+                        display: block;
+                    }
+                }
+
                 .gender-options{
                     margin-top: 10px;
 
@@ -126,8 +200,8 @@
                 }
 
                 .submit-btn{
-                    margin: 50px auto 0;
-                    width: 80%;
+                    margin: 50px 0;
+                    width: 100%;
                     height: 50px;
                     color: #fff;
                     font-size: 20px;
@@ -152,17 +226,30 @@
             justify-content: center;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             place-items: center;
+            gap: 20px;
             line-height: 1.5;
 
+            @media (max-width: 768px) {
+                grid-template-columns: 1fr;
+                padding: 10px;
+            }
+
             .doctor{
-                width: 350px;
-                height: 400px;
+                width: 100%;
+                height: auto;
                 border: 1px solid #BBBBBB;
                 border-radius: 5px;
-                margin-top: 20px;
+                padding: 20px;
                 text-align: center;
                 cursor: pointer;
+
+                @media (max-width: 768px) {
+                    padding: 10px;
+                }
             }
+
+            
+
 
             .doctor:hover{
                 background-color: #7deaf0;
@@ -170,21 +257,35 @@
     
             img {
                 width: 177px; 
-                height: 177px; 
+                height: 177px;
                 object-fit: cover; 
                 border-radius: 50%;
                 margin-top: 60px;
+
+                @media (max-width: 768px) {
+                    margin-top: 20px;
+                    width: 120px;
+                    height: 120px;
+                }
             }
     
             h3{
                 margin-top: 10px;
                 font-size: 20px;
                 font-weight: 600;
+
+                @media (max-width: 768px) {
+                    font-size: 16px;
+                }
             }
     
             .speciality{
                 font-size: 20px;
                 opacity: 0.5;
+
+                @media(max-width: 768px){
+                    font-size: 16px;
+                }
             }
     
             .review{
