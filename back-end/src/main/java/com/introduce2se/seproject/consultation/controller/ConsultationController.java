@@ -41,6 +41,12 @@ public class ConsultationController {
         }
         return new ResponseEntity<>(consultations, HttpStatus.OK);
     }
+    @GetMapping("/patient-doctor")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<List<Consultation>> GetAllConsultations(@RequestParam int patientId, @RequestParam int doctorId, @RequestParam String status) {
+        List<Consultation> consultations = consultationService.GetAllConsultationsByPatientIdAndDoctorId(patientId, doctorId, status);
+        return  ResponseEntity.ok().body(consultations);
+    }
     @GetMapping("/week")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<Consultation>> GetConsultationsInAWeek(@RequestParam int userId, @RequestParam String userRole, @RequestParam String status, @RequestParam String dateString) {
@@ -75,9 +81,9 @@ public class ConsultationController {
         }
     }
 
-    @PatchMapping("/{id}/status")
+    @PutMapping("/{id}")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<String> updateConsultationStatus(@PathVariable int id, @RequestBody String status) {
+    public ResponseEntity<String> updateConsultationStatus(@PathVariable int id, @RequestParam String status) {
         int rowsAffected = consultationService.updateStatus(id, status);
         if (rowsAffected == 0) {
             return ResponseEntity.notFound().build();
@@ -86,9 +92,9 @@ public class ConsultationController {
     }
 
     // Update consultation_result receive from doctor
-    @PatchMapping("/{id}/result")
+    @PutMapping("/{id}/result")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<String> updateConsultationResult(@PathVariable int id, @RequestBody String result) {
+    public ResponseEntity<String> updateConsultationResult(@PathVariable int id, @RequestParam String result) {
         int rowsAffected = consultationService.updateConsultation_result(id, result);
         if (rowsAffected == 0) {
             return ResponseEntity.notFound().build();
