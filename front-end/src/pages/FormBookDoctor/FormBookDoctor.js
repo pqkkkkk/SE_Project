@@ -1,10 +1,10 @@
 import classNames from "classnames/bind";
 import styles from "./FormBookDoctor.module.scss";
 import images from "../../assets/images";
-import {GetUser} from "../../services/UserStorageService";
-import {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
-import {CreateConsultation} from "../../services/ApiService";
+import { GetUser } from "../../services/UserStorageService";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { CreateConsultation } from "../../services/ApiService";
 const cx = classNames.bind(styles);
 
 function FormBookDoctor() {
@@ -35,7 +35,7 @@ function FormBookDoctor() {
     } else {
       alert("Failed to send consultation request!");
     }
-  }
+  };
   return (
     <div className={cx("content")}>
       <div className={cx("doctor")}>
@@ -142,21 +142,6 @@ function FormBookDoctor() {
               <option value="hanoi">Ha Noi</option>
               <option value="hochiminh">Ho Chi Minh</option>
               <option value="danang">Da Nang</option>
-            </select>
-          </div>
-          <div className={cx("district-options")}>
-            <label htmlFor="district" className={cx("field-text")}>
-              District
-            </label>
-            <select
-              id="district"
-              className={cx("select-options")}
-              name="district"
-            >
-              <option value="">All</option>
-              <option value="thuduc">Thu Duc</option>
-              <option value="govap">Go Vap</option>
-              <option value="binhthanh">Binh Thanh</option>
             </select>
           </div>
         </div>
