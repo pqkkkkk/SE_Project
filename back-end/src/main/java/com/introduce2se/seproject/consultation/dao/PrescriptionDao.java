@@ -1,6 +1,7 @@
 package com.introduce2se.seproject.consultation.dao;
 
 import com.introduce2se.seproject.consultation.model.*;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -19,8 +20,13 @@ public class PrescriptionDao {
     }
 
     public Prescription getPrescriptionByConsultationId(int consultationId) {
-        String sql = "SELECT * FROM prescription WHERE consultation_id = ?";
-        return jdbcTemplate.queryForObject(sql, new PrescriptionRowMapper(), consultationId);
+        try {
+            String sql = "SELECT * FROM prescription WHERE consultation_id = ?";
+            return jdbcTemplate.queryForObject(sql, new PrescriptionRowMapper(), consultationId);
+        }
+        catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
     private static class PrescriptionRowMapper implements RowMapper<Prescription> {
         @Override
@@ -30,11 +36,12 @@ public class PrescriptionDao {
             prescription.setTotalPrice(rs.getInt("total_price"));
             prescription.setCreatedDay(rs.getDate("created_day"));
             prescription.setConsultationId(rs.getInt("consultation_id"));
+            prescription.setStatus(rs.getString("status"));
             return prescription;
         }
     }
     public List<PrescriptionDetail> getPrescriptionDetails(int prescriptionId) {
-        String sql = "SELECT * FROM prescription_detail WHERE prescription_id = ?";
+        String sql = "SELECT pd.*, d.name FROM prescription_detail pd JOIN drug d on pd.drug_id = d.id  WHERE pd.prescription_id = ?";
         return jdbcTemplate.query(sql, new PrescriptionDetailRowMapper(), prescriptionId);
     }
     public Prescription getPrescriptionById(int prescriptionId){
@@ -88,6 +95,7 @@ public class PrescriptionDao {
             detail.setPrescriptionId(rs.getInt("prescription_id"));
             detail.setDrugId(rs.getInt("drug_id"));
             detail.setTotalPrice(rs.getInt("total_price"));
+            detail.setName(rs.getString("name"));
             return detail;
         }
     }

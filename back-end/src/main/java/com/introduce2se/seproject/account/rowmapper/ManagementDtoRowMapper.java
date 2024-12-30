@@ -20,6 +20,10 @@ public class ManagementDtoRowMapper implements RowMapper<ManagementDto> {
         opponent.setId(rs.getInt("opponent_id"));
         opponent.setFullName(rs.getString("full_name"));
         opponent.setUserRole(rs.getString("role"));
+        opponent.setEmail(rs.getString("email"));
+        opponent.setPhoneNumber(rs.getString("phone_number"));
+        opponent.setAddress(rs.getString("address"));
+        opponent.setBirthDay(rs.getDate("birthday"));
         managementDto.setManagement(management);
         managementDto.setOpponent(opponent);
 

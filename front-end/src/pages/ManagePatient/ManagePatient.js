@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import classNames from "classnames/bind";
 import images from "../../assets/images";
 import styles from "./ManagePatient.module.scss";
-
+import {useNavigate} from "react-router-dom";
+import {GetConnectingUsers, GetAllConsultationByPatientIdAndDoctorId} from "../../services/ApiService";
+import {GetUser} from "../../services/UserStorageService";
 const cx = classNames.bind(styles);
 
 const patients = [
@@ -100,24 +102,47 @@ const appointments = {
     { date: "2025-01-07", time: "3:00 PM", notes: "Physical Therapy" },
   ],
 };
-
+const currentUser = GetUser();
 function ManagePatient() {
-  const [selectedPatient, setSelectedPatient] = useState(null);
+  const navigation = useNavigate();
+  const [selectedManagement, setSelectedManagement] = useState(null);
+  const [managementList, setManagementList] = useState([]);
+  const [selectedConsultationHistory, setSelectedConsultationHistory] = useState([]);
+  useEffect(() => {
+    GetConnectingUsers(currentUser.id,currentUser.userRole).then((data) => {
+      setManagementList(data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }, []);
 
+  const handleSelectManagement = (management) => {
+    setSelectedManagement(management);
+    GetAllConsultationByPatientIdAndDoctorId(management.opponent.id,currentUser.id,"Done").then((data) => {
+        setSelectedConsultationHistory(data);
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+  }
+  const handlePrescribe = (item) => {
+    navigation("/doctor-drug", { state: { consultation: item, patient: selectedManagement.opponent } });
+  }
   return (
     <div className={cx("container")}>
       <div className={cx("column", "patients-list")}>
         <h3 className={cx("title")}>Patient List</h3>
         <ul className={cx("list")}>
-          {patients.map((patient) => (
+          {managementList.map((management) => (
             <li
-              key={patient.id}
+              key={management.opponent.id}
               className={cx("list-item", {
-                active: selectedPatient?.id === patient.id,
+                active: selectedManagement?.opponent.id === management.opponent.id,
               })}
-              onClick={() => setSelectedPatient(patient)}
+              onClick={() => handleSelectManagement(management)}
             >
-              {patient.fullname}
+              {management.opponent.fullName}
             </li>
           ))}
         </ul>
@@ -125,31 +150,27 @@ function ManagePatient() {
 
       <div className={cx("column", "patient-details")}>
         <h3 className={cx("title")}>Information details</h3>
-        {selectedPatient ? (
+        {selectedManagement ? (
           <div>
             <img
-              src={selectedPatient.avatarpath}
-              alt={selectedPatient.fullname}
+              src={images.avt1}
+              alt={selectedManagement.opponent.fullName}
               className={cx("avatar")}
             />
             <p>
-              <strong>FullName:</strong> {selectedPatient.fullname}
+              <strong>FullName:</strong> {selectedManagement.opponent.fullName}
             </p>
             <p>
-              <strong>Email:</strong> {selectedPatient.email}
+              <strong>Email:</strong> {selectedManagement.opponent.email}
             </p>
             <p>
-              <strong>Phone Number:</strong> {selectedPatient.phonenumber}
+              <strong>Phone Number:</strong> {selectedManagement.opponent.phoneNumber}
             </p>
             <p>
-              <strong>Address:</strong> {selectedPatient.address}
+              <strong>Address:</strong> {selectedManagement.opponent.address}
             </p>
             <p>
-              <strong>BirthDay:</strong> {selectedPatient.birthday}
-            </p>
-            <p>
-              <strong>Health insurance:</strong>{" "}
-              {selectedPatient.hasHealthInsurance ? "Có" : "Không"}
+              <strong>BirthDay:</strong> {selectedManagement.opponent.birthDay}
             </p>
           </div>
         ) : (
@@ -158,21 +179,22 @@ function ManagePatient() {
       </div>
 
       <div className={cx("column", "appointments")}>
-        <h3 className={cx("title")}>Appointment</h3>
-        {selectedPatient ? (
-          appointments[selectedPatient.id]?.length ? (
+        <h3 className={cx("title")}>Consultation History</h3>
+        {selectedManagement ? (
+          selectedConsultationHistory?.length ? (
             <ul className={cx("list")}>
-              {appointments[selectedPatient.id].map((appt, index) => (
-                <li key={index} className={cx("list-item")}>
+              {selectedConsultationHistory.map((item) => (
+                <li key={item.consultationId} className={cx("list-item")}>
                   <p>
-                    <strong>Date:</strong> {appt.date}
+                    <strong>Date:</strong> {item.consultationDate}
                   </p>
                   <p>
-                    <strong>Time:</strong> {appt.time}
+                    <strong>Symptom:</strong> {item.reason === "" ? "None" : item.reason}
                   </p>
                   <p>
-                    <strong>Note:</strong> {appt.notes}
+                    <strong>Diagnosis:</strong> {item.consultationResult ==="" ? "None" : item.consultationResult}
                   </p>
+                  <button className={cx("btn")} onClick={() =>handlePrescribe(item)}>Prescribe</button>
                 </li>
               ))}
             </ul>

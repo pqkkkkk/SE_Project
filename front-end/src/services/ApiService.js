@@ -40,6 +40,38 @@ export const CreateConsultation = async (consultation) => {
         console.error(error);
     }
 }
+export const GetAllConsultations = async (userId, userRole) => {
+    try {
+        const response = await api.get(`/consultations?userId=${userId}&userRole=${userRole}&status=All`);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+export const GetAllConsultationByPatientIdAndDoctorId = async (patientId, doctorId,status) => {
+    try {
+        const response = await api.get(`/consultations/patient-doctor?patientId=${patientId}&doctorId=${doctorId}&status=${status}`);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+export  const UpdateConsultationStatus = async (consultationId, status) => {
+    try {
+        const response = await api.put(`/consultations/${consultationId}?status=${status}`);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+export const  DeleteConsultation = async (consultationId) => {
+    try {
+        const response = await api.delete(`/consultations/${consultationId}`);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
 export const GetAllDrugs = async () => {
     try {
         const response = await api.get("/drugs");
@@ -78,6 +110,15 @@ export const UpdatePrescriptionStatus = async (prescriptionId, status) => {
 export const GetPrescriptionByPatientId = async (patientId, consultationStatus, prescriptionStatus) => {
     try {
         const url = `/prescriptions/patient?patientId=${patientId}&consultationStatus=${consultationStatus}&prescriptionStatus=${prescriptionStatus}`;
+        const response = await api.get(url);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+export const GetPrescriptionByConsultationId = async (consultationId) => {
+    try {
+        const url = `/prescriptions/by_consultation/${consultationId}`;
         const response = await api.get(url);
         return response.data;
     } catch (error) {
