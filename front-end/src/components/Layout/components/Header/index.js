@@ -25,15 +25,30 @@ function Header() {
                     <li>
                         <Link to="/">Home</Link>
                     </li>
-                    <li>
-                        <Link to="/our-service">Our Service</Link>
-                    </li>
-                    <li>
-                        <Link to="/find-doctor">Find Doctor</Link>
-                    </li>
-                    <li>
-                        <Link to="/requests">Requests</Link>
-                    </li>
+                    {user !== null && user.userRole === "patient" &&
+                        (<li>
+                            <Link to="/messages">Messages</Link>
+                        </li>)}
+                    {user !== null && user.userRole === "patient" &&
+                        (<li>
+                            <Link to="/drug-list">My Prescriptions</Link>
+                        </li>)}
+                    {user !== null && user.userRole === "patient" &&
+                        (<li>
+                            <Link to="/find-doctor">Find Doctor</Link>
+                        </li>)}
+                    {user !== null && user.userRole === "doctor" &&
+                        (<li>
+                            <Link to="/requests">Requests</Link>
+                        </li>)}
+                    {user !== null && user.userRole === "doctor" &&
+                        (<li>
+                            <Link to="/manage-patient">My Patients</Link>
+                        </li>)}
+                    {user !== null && user.userRole === "doctor" &&
+                        (<li>
+                            <Link to="/messages">Chat</Link>
+                        </li>)}
                 </ul>
 
                 <div className={cx("action")}>

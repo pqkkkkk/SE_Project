@@ -22,7 +22,6 @@ const features = [
         description: "lorem ipsum dolor sit amet,connector adicipafg",
     },
 ];
-
 const services = [
     {
         image: images.customerSupport,
@@ -37,7 +36,6 @@ const services = [
         title: "Buy Medicine Online",
     },
 ];
-
 const specialists = [
     {
         name: "Dr. Annah Ray",

@@ -2,82 +2,138 @@ import classNames from "classnames/bind";
 import styles from "./Requests.module.scss";
 import images from "../../assets/images";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-
+import {useEffect, useState} from "react";
+import {GetAllConsultations, UpdateConsultationStatus, DeleteConsultation} from "../../services/ApiService";
+import { GetUser } from "../../services/UserStorageService";
+import {render} from "@testing-library/react";
 const cx = classNames.bind(styles);
 
+const requestsMockData = [
+    {
+        id: 1,
+        fullName: "David Becker",
+        requestDate: "2024-12-20",
+        startTime: "09:00",
+        endTime: "10:00",
+        status: "Done",
+    },
+    {
+        id: 2,
+        fullName: "John Doe",
+        requestDate: "2024-12-21",
+        startTime: "10:00",
+        endTime: "11:00",
+        status: "Accepted",
+    },
+    {
+        id: 3,
+        fullName: "Mary Johnson",
+        requestDate: "2024-12-20",
+        startTime: "13:00",
+        endTime: "14:00",
+        status: "Accepted",
+    },
+    {
+        id: 4,
+        fullName: "Tom Smith",
+        requestDate: "2024-12-20",
+        startTime: "15:00",
+        endTime: "16:00",
+        status: "Missed",
+    },
+    {
+        id: 5,
+        fullName: "Alice Brown",
+        requestDate: "2024-12-19",
+        startTime: "17:00",
+        endTime: "18:00",
+        status: "Done",
+    },
+    {
+        id: 6,
+        fullName: "Jane Williams",
+        requestDate: "2024-12-21",
+        startTime: "19:00",
+        endTime: "20:00",
+        status: "New",
+    },
+    ];
+const requestsData = [];
 function Requests() {
-    const [requests, setRequests] = useState([
-        {
-            id: 1,
-            fullName: "David Becker",
-            requestDate: "2024-12-20",
-            startTime: "09:00",
-            endTime: "10:00",
-            status: "Done",
-        },
-        {
-            id: 2,
-            fullName: "John Doe",
-            requestDate: "2024-12-21",
-            startTime: "10:00",
-            endTime: "11:00",
-            status: "Accepted",
-        },
-        {
-            id: 3,
-            fullName: "Mary Johnson",
-            requestDate: "2024-12-20",
-            startTime: "13:00",
-            endTime: "14:00",
-            status: "Accepted",
-        },
-        {
-            id: 4,
-            fullName: "Tom Smith",
-            requestDate: "2024-12-20",
-            startTime: "15:00",
-            endTime: "16:00",
-            status: "Missed",
-        },
-        {
-            id: 5,
-            fullName: "Alice Brown",
-            requestDate: "2024-12-19",
-            startTime: "17:00",
-            endTime: "18:00",
-            status: "Done",
-        },
-        {
-            id: 6,
-            fullName: "Jane Williams",
-            requestDate: "2024-12-21",
-            startTime: "19:00",
-            endTime: "20:00",
-            status: "New",
-        },
-    ]);
-
+    const [requests, setRequests] = useState([]);
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const currentUser = GetUser();
+    useEffect(() => {
+        GetAllConsultations(currentUser.id, currentUser.userRole).then((data) => {
+            requestsData.push(...data);
+            setRequests(data || []);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }, []);
     const handleRequestClick = (request) => {
         if (request.status.toLowerCase() === "new") {
             setSelectedRequest(request);
             setIsModalOpen(true);
         }
     };
-
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
-
     const [dropdownVisible, setDropdownVisible] = useState(null);
-
     const toggleDropdown = (field) => {
         setDropdownVisible((prev) => (prev === field ? null : field));
     };
+    const handleStatusFilter = (e) => {
+        const status = e.target.innerText.toLowerCase();
+        if (status === "all") {
+            setRequests(requestsData);
+            return;
+        }
+        if (status === "accepted") {
+            setRequests(requestsData.filter((request) => request.status === "Accepted"));
+        } else if (status === "done") {
+            setRequests(requestsData.filter((request) => request.status === "Done"));
+        } else if (status === "missed") {
+            setRequests(requestsData.filter((request) => request.status === "Missed"));
+        } else if (status === "new") {
+            setRequests(requestsData.filter((request) => request.status === "New"));
+        }
+    }
+    const handleAcceptConsultation = () => {
+        UpdateConsultationStatus(selectedRequest.consultationId, "Accepted").then(() => {
+            requestsData.find((request) => request.consultationId === selectedRequest.consultationId).status = "Accepted";
+            setRequests((prev) =>
+                prev.map((request) =>
+                    request.consultationId === selectedRequest.consultationId
+                        ? { ...request, status: "Accepted" }
+                        : request
+                )
+            );
+            alert("Consultation accepted successfully");
+            setIsModalOpen(false);
+        })
+        .catch((error) => {
+            console.error(error);
+            alert("Failed to accept consultation");
+        });
+        }
 
+    const handleRefuseConsultation = () => {
+        DeleteConsultation(selectedRequest.consultationId).then(() => {
+            setRequests((prev) =>
+                prev.filter((request) => request.consultationId !== selectedRequest.consultationId)
+            );
+            alert("Consultation refused successfully");
+            setIsModalOpen(false);
+        })
+        .catch((error) => {
+            console.error(error);
+            alert("Failed to refuse consultation");
+        });
+    }
     return (
         <main id={cx("requests")}>
             <div className={cx("content")}>
@@ -91,7 +147,7 @@ function Requests() {
                             <th>#</th>
                             <th>Full Name</th>
                             <th>
-                                <p>Request date</p>
+                                <p>Date</p>
                                 <div className={cx("filter-container")}>
                                     <img
                                         src={images.filter}
@@ -121,7 +177,8 @@ function Requests() {
                                         onClick={() => toggleDropdown("status")}
                                     />
                                     {dropdownVisible === "status" && (
-                                        <ul className={cx("dropdown")}>
+                                        <ul onClick={handleStatusFilter} className={cx("dropdown")}>
+                                            <li>All</li>
                                             <li>Accepted</li>
                                             <li>Done</li>
                                             <li>Missed</li>
@@ -136,7 +193,7 @@ function Requests() {
                     <tbody className={cx("table-body")}>
                         {requests.map((request, index) => (
                             <tr
-                                key={request.id}
+                                key={request.consultationId}
                                 onClick={() => handleRequestClick(request)}
                                 className={
                                     request.status.toLowerCase() === "new"
@@ -144,9 +201,9 @@ function Requests() {
                                         : ""
                                 }
                             >
-                                <td>{index + 1}</td>
-                                <td>{request.fullName}</td>
-                                <td>{request.requestDate}</td>
+                                <td>{request.consultationId}</td>
+                                <td>{request.patientId}</td>
+                                <td>{request.consultationDate}</td>
                                 <td>{request.startTime}</td>
                                 <td>{request.endTime}</td>
                                 <td
@@ -172,27 +229,21 @@ function Requests() {
                         <div className={cx("form-group")}>
                             <label>Patient:</label>
                             <p className={cx("patient-name")}>
-                                {selectedRequest.fullName}
+                                {selectedRequest.patientId}
                             </p>
                         </div>
 
                         <div className={cx("form-group")}>
                             <label>Reason:</label>
                             <p className="request-reason">
-                                I have been having persistent headaches for
-                                about two weeks, the pain usually starts in the
-                                morning and lasts throughout the day. The pain
-                                tends to concentrate in the forehead and
-                                temples, accompanied by symptoms of nausea and
-                                sensitivity to light. In addition, I also feel
-                                tired and cannot concentrate on daily work.
+                                {selectedRequest.reason}
                             </p>
                         </div>
 
                         <div className={cx("form-group")}>
                             <label>Date:</label>
                             <p className={cx("appointment-date")}>
-                                {selectedRequest.requestDate}
+                                {selectedRequest.consultationDate}
                             </p>
                         </div>
 
@@ -205,11 +256,11 @@ function Requests() {
                         </div>
 
                         <div className={cx("modal-actions")}>
-                            <button className={cx("btn-decline")}>
+                            <button onClick={handleRefuseConsultation} className={cx("btn-decline")}>
                                 Refuse
                             </button>
 
-                            <button className={cx("btn-accept")}>Agree</button>
+                            <button onClick={handleAcceptConsultation} className={cx("btn-accept")}>Agree</button>
                         </div>
                     </div>
                 </div>
