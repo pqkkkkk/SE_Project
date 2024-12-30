@@ -15,6 +15,7 @@ import ManageDrug from "../pages/ManageDrug/ManageDrug";
 import ManageUser from "../pages/ManageUser/ManageUser";
 import PaymentResult from "../pages/PaymentResult/PaymentResult";
 import ManagePatient from "../pages/ManagePatient/ManagePatient";
+import Statistical from "../pages/Statistical/Statistical";
 
 const publicRoutes = [
     { path: "/", component: Home },
@@ -34,6 +35,7 @@ const publicRoutes = [
     { path: "/manage-user", component: ManageUser },
     { path: "/payment-result", component: PaymentResult, layout: null },
     { path: "/manage-patient", component: ManagePatient },
+    { path: "/admin/statistical", component: Statistical, layout: null },
 ];
 
 const privateRoutes = [];
