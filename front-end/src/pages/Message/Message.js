@@ -97,7 +97,6 @@ function Messages() {
                         value={searchValue}
                         onChange={handleSearchChange}
                     />
-                    {/* <button className={cx("search-btn")}>Search</button>  */}
                 </div>
 
                 <div className={cx("list-doctors")}>
