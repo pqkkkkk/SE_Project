@@ -59,12 +59,12 @@ public class PrescriptionController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(0);
         }
     }
-    @GetMapping("/{consultation_id}")
+    @GetMapping("/by_consultation/{consultation_id}")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Prescription> getPrescriptionByConsultationId(@PathVariable int consultation_id) {
         Prescription prescription = prescriptionService.getPrescriptionByConsultationId(consultation_id);
         if (prescription == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.ok(null);
         } else {
             return ResponseEntity.ok(prescription);
         }

@@ -2,16 +2,43 @@ import classNames from "classnames/bind";
 import styles from "./DrugDoctor.module.scss";
 import images from "../../assets/images";
 import {useEffect, useState} from "react";
-import {GetAllDrugs, SavePrescription} from "../../services/ApiService";
+import {useLocation, useNavigate} from "react-router-dom";
+import {GetAllDrugs, SavePrescription, GetPrescriptionByConsultationId, GetPrescriptionDetail} from "../../services/ApiService";
 const cx = classNames.bind(styles);
 
 
 function DrugDoctor() {
-
+    const navigate = useNavigate();
+    const location = useLocation();
+    const patient = location.state.patient;
+    const consultation = location.state.consultation;
     const [prescription, setPrescription] = useState([]);
     const [searchValue, setSearchValue] = useState("");
     const [drugs, setDrugs] = useState([]);
+    const [prescribed, setPrescribed] = useState(false);
     useEffect(() => {
+        GetPrescriptionByConsultationId(consultation.consultationId)
+            .then((data) => {
+                if(data)
+                {
+                    GetPrescriptionDetail(data.prescriptionId)
+                        .then((data) => {
+                            if(data.details.length > 0)
+                            {
+                                setPrescribed(true);
+                            }
+                            setPrescription(data.details || []);
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                            setPrescription([]);
+                        });
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                setPrescription([]);
+            });
         GetAllDrugs().then((data) =>
         {
             setDrugs(data || []);
@@ -42,12 +69,13 @@ function DrugDoctor() {
         setPrescription((prev) => prev.filter((item) => item.drugId !== drug.drugId));
     }
     const HandleSavePrescription = () => {
-        const consultationId = 13;
+        const consultationId = consultation.consultationId;
         SavePrescription(prescription,consultationId)
             .then((data) =>{
                 console.log(data);
                 if(data === "Created"){
                     alert("Prescription saved successfully");
+                    navigate("/manage-patient");
                 }
                 else if (data === "Error in server"){
                     alert("Error in server");
@@ -70,7 +98,8 @@ function DrugDoctor() {
                 <p className={cx("drug-name")}>{drug.name}</p>
                 <p className={cx("drug-price")}>{drug.totalPrice}</p>
                 <p className={cx("drug-quantity")}>{drug.quantity}</p>
-                <button 
+                <button
+                    disabled={prescribed}
                     className={cx("btn-remove")}
                     onClick={() => handleRemoveDrug(drug)}
                 >
@@ -82,9 +111,9 @@ function DrugDoctor() {
     return (
         <div className={cx("container")}>
             <div className={cx("header")}>
-                <h1>Ke Don Thuoc</h1>
+                <h1>Prescribe for {patient.fullName}</h1>
             </div>
-
+            {prescribed && <p className={cx("prescribed")}>Prescription has been saved. Cannot edit</p>}
             <div className={cx("main-content")}>
                 <div className={cx("list-drugs")}>
                     <input
@@ -102,7 +131,8 @@ function DrugDoctor() {
                                 <p className={cx("drug-price")}>Price: {drug.price}đ</p>
                                 <p className={cx("drug-stock")}>Stock: {drug.quantity}</p>
                             </div>
-                            <button 
+                            <button
+                                disabled={prescribed}
                                 className={cx("add-btn")}
                                 onClick={() => handleAddDrug(drug)}
                             >
@@ -113,7 +143,7 @@ function DrugDoctor() {
                     ))}
                 </div>
                 <div className={cx("prescription-detail")}>
-                    <h3 className={cx("header")}>Chi tiet don thuoc</h3>
+                    <h3 className={cx("header")}>Prescription Of Consultation {consultation.consultationId}</h3>
 
                     <div className={cx("title-column")}>
                         <p className={cx("h-img")}></p>
@@ -134,7 +164,7 @@ function DrugDoctor() {
                             placeholder="Nhập ghi chú cho bệnh nhân..."
                         ></textarea>
                     </div>
-                    <button className={cx("submit-btn")} onClick={HandleSavePrescription}>Save</button>
+                    <button disabled={prescribed} className={cx("submit-btn")} onClick={HandleSavePrescription}>Save</button>
                 </div>
             </div>
             

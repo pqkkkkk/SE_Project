@@ -5,6 +5,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 
     .doctor-info {
       border-radius: 5px;
@@ -12,13 +13,17 @@
       background-color: var(--text-color2);
       width: 70%;
       display: flex;
+      flex-wrap: wrap;
 
       .image-doctor {
         flex: 1;
-
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
         img {
           margin-top: 20px;
-          margin-left: 50px;
         }
 
         .rate {
@@ -29,7 +34,6 @@
           width: 45px;
           align-items: center;
           justify-content: center;
-          margin-left: 160px;
           margin-top: 10px;
           margin-bottom: 10px;
 
@@ -50,6 +54,8 @@
 
       .doctor-detail {
         flex: 1;
+        max-width: 100%;
+        margin-left: 20px;
 
         .name {
           h1 {
@@ -68,6 +74,7 @@
 
         .location {
           margin-top: 50px;
+
           .info {
             display: flex;
             align-items: center;
@@ -79,6 +86,7 @@
               margin-left: 20px;
             }
           }
+
           .detail {
             max-width: 400px;
             text-wrap: wrap;
@@ -95,37 +103,37 @@
 
   .form-booking {
     margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     .price-booking {
       border-radius: 5px;
       border: 1px solid var(--text-color1);
       background-color: var(--text-color2);
-      width: 200px;
+      width: 20%;
       height: 40px;
-      margin-left: 230px;
       display: flex;
       justify-content: center;
       align-items: center;
-      /* Cải tiến kiểu cho radio button */
+
       input[type="radio"] {
-        appearance: none; /* Tắt hiển thị mặc định của radio button */
+        appearance: none;
         width: 21px;
         height: 21px;
         border-radius: 50%;
-        border: 2px solid #1cb5bd; /* Màu border radio button */
+        border: 2px solid #1cb5bd;
         outline: none;
         position: relative;
         cursor: pointer;
         margin-right: 10px;
       }
 
-      /* Đổi màu khi radio button được chọn */
       input[type="radio"]:checked {
-        background-color: #fff; /* Màu nền khi chọn */
-        border-color: #1cb5bd; /* Đổi màu viền khi chọn */
+        background-color: #fff;
+        border-color: #1cb5bd;
       }
 
-      /* Tạo vòng tròn nhỏ bên trong radio button khi được chọn */
       input[type="radio"]:checked::after {
         content: "";
         position: absolute;
@@ -134,13 +142,12 @@
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        background-color: #1cb5bd; /* Màu vòng tròn nhỏ */
+        background-color: #1cb5bd;
       }
 
-      /* Kiểu cho chữ trong label */
       label {
         display: flex;
-        font-weight: bold; /* Đặt chữ trong label đậm */
+        font-weight: bold;
         font-size: 16px;
         color: #1cb5bd;
         cursor: pointer;
@@ -148,32 +155,17 @@
       }
     }
 
-    .container {
-      display: flex;
-      width: 80%;
-
-      .city-options {
-        flex: 1;
-      }
-      .district-options {
-        flex: 1;
-      }
-    }
-
     .input-fullname,
     .input-phone,
     .input-email,
     .input-birthday,
-    .city-options,
-    .district-options,
     .input-address,
     .input-reason {
-      margin-left: 230px;
-
+      width: 70%;
       .select-options {
         margin-top: 16px;
         border: 1px solid #1cb5bd;
-        width: 80%;
+        width: 100%;
         padding: 10px;
         border-radius: 5px;
         background-color: #e9f7f8;
@@ -193,7 +185,7 @@
         .input {
           border: 1px solid #1cb5bd;
           height: 25px;
-          width: 80%;
+          width: 100%; /* Điều chỉnh lại width cho phù hợp */
           padding: 10px;
           border-radius: 5px;
           background-color: #e9f7f8;
@@ -212,8 +204,7 @@
       border-radius: 5px;
       border: 1px solid var(--text-color1);
       background-color: var(--text-color2);
-      width: 200px;
-      margin-left: 230px;
+      width: 70%;
       padding: 10px;
 
       .field-text {
@@ -226,27 +217,23 @@
       .decor-gender {
         display: flex;
         justify-content: space-between;
-
-        /* Cải tiến kiểu cho radio button */
         input[type="radio"] {
-          appearance: none; /* Tắt hiển thị mặc định của radio button */
+          appearance: none;
           width: 21px;
           height: 21px;
           border-radius: 50%;
-          border: 2px solid #1cb5bd; /* Màu border radio button */
+          border: 2px solid #1cb5bd;
           outline: none;
           position: relative;
           cursor: pointer;
           margin-right: 10px;
         }
 
-        /* Đổi màu khi radio button được chọn */
         input[type="radio"]:checked {
-          background-color: #fff; /* Màu nền khi chọn */
-          border-color: #1cb5bd; /* Đổi màu viền khi chọn */
+          background-color: #fff;
+          border-color: #1cb5bd;
         }
 
-        /* Tạo vòng tròn nhỏ bên trong radio button khi được chọn */
         input[type="radio"]:checked::after {
           content: "";
           position: absolute;
@@ -255,17 +242,53 @@
           width: 10px;
           height: 10px;
           border-radius: 50%;
-          background-color: #1cb5bd; /* Màu vòng tròn nhỏ */
+          background-color: #1cb5bd;
         }
 
-        /* Kiểu cho chữ trong label */
         label {
           display: flex;
-          font-weight: bold; /* Đặt chữ trong label đậm */
+          font-weight: bold;
           font-size: 16px;
           color: #333;
           cursor: pointer;
           align-items: center;
+        }
+      }
+    }
+  }
+
+  .total-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .total-payment {
+      background-color: #dbeaeb;
+      margin-top: 30px;
+      width: 80%;
+      padding: 20px;
+
+      .booking-fee {
+        margin-top: 5px;
+      }
+
+      .examination-price,
+      .booking-fee,
+      .total {
+        display: flex;
+        justify-content: space-between;
+
+        h1 {
+          font-size: 20px;
+          font-weight: 600;
+          margin-left: 20px;
+        }
+
+        p {
+          font-size: 20px;
+          text-align: right;
+          margin-right: 20px;
         }
       }
     }
@@ -334,5 +357,128 @@
       background-color: #fff;
       color: black;
     }
+  }
+}
+
+@media (max-width: 1200px) {
+  .doctor-info {
+    width: 90%;
+  }
+
+  .price-booking,
+  .gender-options {
+    margin-left: 10px;
+    width: 90%;
+  }
+
+  .input-fullname,
+  .input-phone,
+  .input-email,
+  .input-birthday,
+  .input-address,
+  .input-reason {
+    margin-left: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .doctor {
+    flex-direction: column;
+    max-width: 90%;
+    margin: 0 auto;
+  }
+
+  .doctor-info {
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+  }
+
+  .doctor-detail {
+    width: 100%;
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .image-doctor img {
+    width: 60%;
+    margin: 0 auto;
+  }
+
+  .name {
+    h1 {
+      font-size: 16px;
+      line-height: 1.2;
+    }
+    p {
+      font-size: 10px;
+    }
+  }
+  .location {
+    .info {
+      img {
+        width: 30px;
+      }
+      h1 {
+        font-size: 10px;
+      }
+    }
+    .detail {
+      font-size: 10px;
+      line-height: 1;
+    }
+  }
+
+  .form-booking {
+    margin-top: 20px;
+  }
+
+  .price-booking,
+  .gender-options {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .input-fullname,
+  .input-phone,
+  .input-email,
+  .input-birthday,
+  .input-address,
+  .input-reason {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .total-payment {
+    width: 100%;
+  }
+  .request {
+    p {
+      text-align: center;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .doctor-info {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .doctor-detail {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .input-fullname,
+  .input-phone,
+  .input-email,
+  .input-birthday,
+  .input-address,
+  .input-reason {
+    width: 100%;
+  }
+  .request button {
+    width: 100%;
   }
 }

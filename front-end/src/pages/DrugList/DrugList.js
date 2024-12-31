@@ -11,40 +11,51 @@ import {
 } from "../../services/ApiService";
 const cx = classNames.bind(styles);
 
-
+const mockUnpaidPrescription = [
+    { id: 1, prescriptionId: 1, createdDay: "2022-09-01" },
+    { id: 2, prescriptionId: 2, createdDay: "2022-09-02" },
+    { id: 3, prescriptionId: 3, createdDay: "2022-09-03" },
+    { id: 4, prescriptionId: 4, createdDay: "2022-09-04" },
+    { id: 5, prescriptionId: 5, createdDay: "2022-09-05" },
+    { id: 6, prescriptionId: 6, createdDay: "2022-09-06" },
+    { id: 7, prescriptionId: 7, createdDay: "2022-09-07" },
+    { id: 8, prescriptionId: 8, createdDay: "2022-09-08" },
+    { id: 9, prescriptionId: 9, createdDay: "2022-09-09" },
+    { id: 10, prescriptionId: 10, createdDay: "2022-09-10" },
+]
+const mockPaidPrescription = [
+    { id: 1, prescriptionId: 1, createdDay: "2021-09-01" },
+    { id: 2, prescriptionId: 2, createdDay: "2021-09-02" },
+    { id: 3, prescriptionId: 3, createdDay: "2021-09-03" },
+    { id: 4, prescriptionId: 4, createdDay: "2021-09-04" },
+    { id: 5, prescriptionId: 5, createdDay: "2021-09-05" },
+    { id: 6, prescriptionId: 6, createdDay: "2021-09-06" },
+    { id: 7, prescriptionId: 7, createdDay: "2021-09-07" },
+    { id: 8, prescriptionId: 8, createdDay: "2021-09-08" },
+    { id: 9, prescriptionId: 9, createdDay: "2021-09-09" },
+    { id: 10, prescriptionId: 10, createdDay: "2021-09-10" },
+]
 function DrugList() {
+    const [paidPrescription, setPaidPrescription] = useState([]);
+    const [unpaidPrescription, setUnpaidPrescription] = useState([]);
     const [prescriptionList, setPrescriptionList] = useState([]);
     const [selectedPrescription, setSelectedPrescription] = useState(null);
     const [detailOfSelectedPrescription, setDetailOfSelectedPrescription] = useState([]);
     const [showPrescriptionDetail, setShowPrescriptionDetail] = useState(false);
-    const [showPaymentFail, setShowPaymentFail] = useState(false);
-    const [showPaymentSuccess, setShowPaymentSuccess] = useState(false);
     const [showPaidPrescription, setShowPaidPrescription] = useState(false);
     const [showUnpaidPrescription, setShowUnpaidPrescription] = useState(true);
     useEffect(() =>  {
-        const queryParamsValue = new URLSearchParams(window.location.search);
-        if(queryParamsValue.get("vnp_TxnRef")) {
-            console.log(queryParamsValue.get("vnp_TxnRef"));
-            const prescriptionId = queryParamsValue.get("vnp_TxnRef");
-            UpdatePrescriptionStatus(prescriptionId, "paid")
-                .then((data) => {
-                    console.log(data);
-                    if (queryParamsValue.get('vnp_ResponseCode')) {
-                        if (queryParamsValue.get('vnp_ResponseCode') === '00') {
-                            setShowPaymentSuccess(true);
-                        } else {
-                            setShowPaymentFail(true);
-                        }
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        }
         GetPrescriptionByPatientId(1, "Done","unpaid")
             .then((data) => {
-            setPrescriptionList(data || []);
-        })
+                setUnpaidPrescription(data || []);
+                setPrescriptionList(data || []);
+            })
+            .catch((error) => {
+            });
+        GetPrescriptionByPatientId(1, "Done","paid")
+            .then((data) => {
+                setPaidPrescription(data || []);
+            })
             .catch((error) => {
             });
     }, []);
@@ -69,6 +80,10 @@ function DrugList() {
         setSelectedPrescription(null);
     };
     const HandlePayClick = async () => {
+        if(selectedPrescription.status === 'paid') {
+            alert('This prescription has been paid');
+            return;
+        }
         const paymentUrl = await CreatePaymentUrl({
             amount: selectedPrescription.totalPrice,
             orderDescription: "Thanh toan don thuoc",
@@ -79,49 +94,17 @@ function DrugList() {
         });
         window.location.href = paymentUrl;
     };
-    const OffPaymentSuccessNoti = () => {
-        setShowPaymentSuccess(false);
-    }
-    const OffPaymentFailNoti = () => {
-        setShowPaymentFail(false);
-    }
-
-    const unpaidPrescription = [
-        { id: 1, prescriptionId: 1, createdDay: "2022-09-01" },
-        { id: 2, prescriptionId: 2, createdDay: "2022-09-02" },
-        { id: 3, prescriptionId: 3, createdDay: "2022-09-03" },
-        { id: 4, prescriptionId: 4, createdDay: "2022-09-04" },
-        { id: 5, prescriptionId: 5, createdDay: "2022-09-05" },
-        { id: 6, prescriptionId: 6, createdDay: "2022-09-06" },
-        { id: 7, prescriptionId: 7, createdDay: "2022-09-07" },
-        { id: 8, prescriptionId: 8, createdDay: "2022-09-08" },
-        { id: 9, prescriptionId: 9, createdDay: "2022-09-09" },
-        { id: 10, prescriptionId: 10, createdDay: "2022-09-10" },
-    ]
-
-    const paidPrescription = [
-        { id: 1, prescriptionId: 1, createdDay: "2021-09-01" },
-        { id: 2, prescriptionId: 2, createdDay: "2021-09-02" },
-        { id: 3, prescriptionId: 3, createdDay: "2021-09-03" },
-        { id: 4, prescriptionId: 4, createdDay: "2021-09-04" },
-        { id: 5, prescriptionId: 5, createdDay: "2021-09-05" },
-        { id: 6, prescriptionId: 6, createdDay: "2021-09-06" },
-        { id: 7, prescriptionId: 7, createdDay: "2021-09-07" },
-        { id: 8, prescriptionId: 8, createdDay: "2021-09-08" },
-        { id: 9, prescriptionId: 9, createdDay: "2021-09-09" },
-        { id: 10, prescriptionId: 10, createdDay: "2021-09-10" },
-    ]
-
     const handleUnpaidPrescriptionClick = () => {
+        setPrescriptionList(unpaidPrescription);
         setShowUnpaidPrescription(true);
         setShowPaidPrescription(false);
-        setPrescriptionList(unpaidPrescription);
+
     }
 
     const handlePaidPrescriptiononClick = () => {
+        setPrescriptionList(paidPrescription);
         setShowUnpaidPrescription(false);
         setShowPaidPrescription(true);
-        setPrescriptionList(paidPrescription);
     }
 
     return(
@@ -136,7 +119,6 @@ function DrugList() {
                 <img src={images.medicineBg} alt="medicineBg" className={cx('medicine-bg')}/>
             </div>
 
-            
             <div className={cx('filter')}>
                 <div className={cx("btn-group")}>
                     <button className={cx('btn-filter', showUnpaidPrescription && 'active')} 
@@ -228,23 +210,6 @@ function DrugList() {
                     </div>
                 </div>
             )}
-            { showPaymentSuccess && (<div className="paymentSuccess">
-                    <div className={cx("success-icon")}>✔</div>
-                    <div className={cx("title")}>Transaction Successful!</div>
-                    <div className={cx("message")}>Thank you for your purchase. Your transaction has been completed
-                        successfully.
-                    </div>
-                    <button id="closeButton" className={cx("button")} onClick={OffPaymentSuccessNoti}>Close</button>
-                </div>)
-            }
-            { showPaymentFail && (<div className="paymentFail">
-                <div className={cx("error-icon")}>✖</div>
-                <div className={cx("title")}>Transaction Failed!</div>
-                <div className={cx("message")}> We’re sorry, but your transaction could not be completed. Please try again later or contact support.
-                </div>
-                <button id="closeButton" className={cx("button")} onClick={OffPaymentFailNoti}>Close</button>
-            </div>)
-            }
         </div>
     );
 }

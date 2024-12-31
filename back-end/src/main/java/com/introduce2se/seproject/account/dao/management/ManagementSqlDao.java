@@ -23,14 +23,14 @@ public class ManagementSqlDao implements ManagementDao {
         List<ManagementDto> result = null;
         if(currentRole.equals("doctor")) {
             sql = """
-                 SELECT u.id as opponent_id , u.fullname as full_name, u.role as role, m.id as id, m.doctor_id as doctor_id, m.patient_id as patient_id
+                 SELECT u.id as opponent_id , u.fullname as full_name, u.role as role, m.id as id, m.doctor_id as doctor_id, m.patient_id as patient_id, u.email as email, u.phoneNumber as phone_number, u.address as address, u.birthday as birthday
                  FROM management m join users u on m.patient_Id = u.id
                  WHERE doctor_Id = :cui
                  """;
         }
         else if (currentRole.equals("patient")) {
             sql = """
-                 SELECT u.id as opponent_id, u.fullname as full_name, u.role as role, m.id as id, m.doctor_id as doctor_id, m.patient_id as patient_id
+                 SELECT u.id as opponent_id, u.fullname as full_name, u.role as role, m.id as id, m.doctor_id as doctor_id, m.patient_id as patient_id, u.email as email, u.phoneNumber as phone_number, u.address as address, u.birthday as birthday
                  FROM management m join users u on m.doctor_Id = u.id
                  WHERE patient_Id = :cui
                  """;

@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-between;
   padding: 20px;
+  flex-wrap: wrap;
 
   .left-column {
     flex: 1;
@@ -9,6 +10,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-right: 20px;
+    min-width: 200px;
   }
 
   .title {
@@ -104,6 +107,8 @@
     width: 35%;
     display: flex;
     flex-direction: column;
+    margin-left: 10px;
+    min-width: 300px; // Đảm bảo không bị thu hẹp quá mức
 
     .title {
       font-size: 24px;
@@ -217,6 +222,63 @@
           }
         }
       }
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .right-column {
+      width: 100%;
+      margin-left: 0;
+      margin-top: 20px;
+      order: -1;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .title {
+      font-size: 28px;
+    }
+
+    .medicine-list {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    .right-column {
+      width: 100%;
+      margin-left: 0;
+      margin-top: 20px;
+      order: -1;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .manage-medicines {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .left-column,
+    .right-column {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .right-column {
+      order: -1;
+    }
+
+    .medicine-list {
+      padding: 10px;
+    }
+
+    .medicine-item {
+      padding: 10px;
+      text-align: center;
+    }
+
+    .edit-btn,
+    .remove-btn {
+      padding: 8px 15px;
     }
   }
 }

@@ -13,8 +13,7 @@ import Messages from "../pages/Message/Message";
 import DrugDoctor from "../pages/DrugDoctor/DrugDoctor";
 import ManageDrug from "../pages/ManageDrug/ManageDrug";
 import ManageUser from "../pages/ManageUser/ManageUser";
-import SuccessfulPayment from "../pages/SuccessfulPayment/SuccessfulPayment";
-import PaymentFailed from "../pages/PaymentFailed/PaymentFailed";
+import PaymentResult from "../pages/PaymentResult/PaymentResult";
 import ManagePatient from "../pages/ManagePatient/ManagePatient";
 import Schedule from "../pages/Schedule/Schedule";
 
@@ -34,8 +33,7 @@ const publicRoutes = [
     { path: "/doctor-drug", component: DrugDoctor },
     { path: "/manage-drug", component: ManageDrug },
     { path: "/manage-user", component: ManageUser },
-    { path: "/successful-payment", component: SuccessfulPayment, layout: null },
-    { path: "/payment-failed", component: PaymentFailed, layout: null },
+    { path: "/payment-result", component: PaymentResult, layout: null },
     { path: "/manage-patient", component: ManagePatient },
     { path: "/schedule", component: Schedule },
 ];

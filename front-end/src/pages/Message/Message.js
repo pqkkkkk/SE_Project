@@ -8,6 +8,7 @@ import {GetConnectingUsers, GetMessagesHistory} from "../../services/ApiService"
 import {eventEmitter} from "../../services/EventEmitterService";
 
 const cx = classNames.bind(styles);
+const mockData = [];
 function Messages() {
     const [searchValue, setSearchValue] = useState("");
     const [selectedManagement, setSelectedManagement] = useState(null);
@@ -31,6 +32,7 @@ function Messages() {
         return () => {
             eventEmitter.off('newMessage', handleNewMessage);
         };
+        setConnectingUsers(mockData);
     } , []);
 
     const filteredDoctors = connectingUsers.filter((management) =>
