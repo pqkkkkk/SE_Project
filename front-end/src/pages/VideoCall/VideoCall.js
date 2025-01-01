@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef  } from "react";
+import { useNavigate } from 'react-router-dom';
 import classNames from "classnames/bind";
 import styles from "./VideoCall.module.scss";
 import images from "../../assets/images";
@@ -6,6 +7,7 @@ import images from "../../assets/images";
 const cx = classNames.bind(styles);
 
 function VideoCall() {
+  const navigate = useNavigate();
   const [isMicMuted, setMicMuted] = useState(false); // Quản lý trạng thái mic
   const [isVideoMuted, setVideoMuted] = useState(false);
   const [isCameraOff, setCameraOff] = useState(false);
@@ -37,6 +39,10 @@ function VideoCall() {
       });
     }
     setCameraOff(!isCameraOff); // Cập nhật trạng thái camera
+  };
+
+  const handleEndCall = () => {
+    navigate(-1); // Quay lại trang trước đó
   };
 
   useEffect(() => {
@@ -128,7 +134,10 @@ function VideoCall() {
         >
           <img src={images.video} alt="video" />
         </button>
-        <button className={cx("control-btn", "end-call")}>
+        <button 
+          className={cx("control-btn", "end-call")}
+          onClick={handleEndCall}
+        >
           <img src={images.endcall} alt="end-call" />
         </button>
       </div>

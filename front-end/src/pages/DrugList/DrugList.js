@@ -130,6 +130,7 @@ function DrugList() {
                         PAID
                     </button>
                 </div>
+                
                 {showUnpaidPrescription && (
                     <div className={cx('list-drugs')}>
                         {prescriptionList.map((pre) => (
