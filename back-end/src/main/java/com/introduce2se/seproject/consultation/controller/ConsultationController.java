@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -34,8 +35,16 @@ public class ConsultationController {
     }
     @GetMapping
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<List<Consultation>> GetAllConsultations(@RequestParam int userId, @RequestParam String userRole , @RequestParam String status) {
-        List<Consultation> consultations = consultationService.getFilteredConsultations(userRole, userId, status, null, null, null);
+    public ResponseEntity<List<Consultation>> GetAllConsultations(@RequestParam (required = false) int userId,
+                                                                  @RequestParam (required = false) String userRole ,
+                                                                  @RequestParam (required = false) String status,
+                                                                  @RequestParam (required = false) String date,
+                                                                  @RequestParam (required = false) String startTimeValue,
+                                                                  @RequestParam (required = false) String endTimeValue) {
+        LocalDate consultationDate = (date == null) ? null : LocalDate.parse(date);
+        Time startTime = (startTimeValue == null) ? null : Time.valueOf(startTimeValue);
+        Time endTime = (endTimeValue == null) ? null : Time.valueOf(endTimeValue);
+        List<Consultation> consultations = consultationService.getFilteredConsultations(userRole, userId, status, consultationDate, startTime, endTime);
         if (consultations.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -88,7 +97,7 @@ public class ConsultationController {
         if (rowsAffected == 0) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok("Status updated successfully.");
+        return ResponseEntity.ok("Updated");
     }
 
     // Update consultation_result receive from doctor
@@ -112,5 +121,14 @@ public class ConsultationController {
         }
         return ResponseEntity.ok("Consultation deleted successfully.");
     }
-
+    @PutMapping("/missed")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<Integer> UpdateAllMissedConsultations(@RequestParam String userRole, @RequestParam int userId) {
+        int result = consultationService.UpdateAllMissedConsultations(userRole, userId);
+        if(result == -1)
+        {
+            return ResponseEntity.badRequest().body(-1);
+        }
+        return ResponseEntity.ok().body(result);
+    }
 }

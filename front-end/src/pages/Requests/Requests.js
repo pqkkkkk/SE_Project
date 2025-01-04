@@ -58,14 +58,14 @@ const requestsMockData = [
         status: "New",
     },
     ];
-const requestsData = [];
+let requestsData = [];
 function Requests() {
     const [requests, setRequests] = useState([]);
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const currentUser = GetUser();
     useEffect(() => {
-        GetAllConsultations(currentUser.id, currentUser.userRole).then((data) => {
+        GetAllConsultations(currentUser.id, currentUser.userRole, null, null,null,null).then((data) => {
             requestsData.push(...data);
             setRequests(data || []);
         })
@@ -102,27 +102,45 @@ function Requests() {
             setRequests(requestsData.filter((request) => request.status === "New"));
         }
     }
-    const handleAcceptConsultation = () => {
-        UpdateConsultationStatus(selectedRequest.consultationId, "Accepted").then(() => {
-            requestsData.find((request) => request.consultationId === selectedRequest.consultationId).status = "Accepted";
-            setRequests((prev) =>
-                prev.map((request) =>
-                    request.consultationId === selectedRequest.consultationId
-                        ? { ...request, status: "Accepted" }
-                        : request
-                )
-            );
-            alert("Consultation accepted successfully");
-            setIsModalOpen(false);
-        })
-        .catch((error) => {
-            console.error(error);
-            alert("Failed to accept consultation");
+    const handleAcceptConsultation = async () => {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const today = `${year}-${month}-${day}`;
+
+        const sameDayConsultationList =  await GetAllConsultations(currentUser.id, currentUser.userRole, "Accepted", today, null, null);
+        const sameTimeConsultationCount = sameDayConsultationList.filter((consultation) => {
+            return consultation.startTime === selectedRequest.startTime && consultation.endTime === selectedRequest.endTime;
         });
+        if(sameTimeConsultationCount.length > 0) {
+            alert("You have already have a consultation appointment at this time!");
+            window.location.reload();
+            return;
+        }
+
+        UpdateConsultationStatus(selectedRequest.consultationId, "Accepted")
+            .then(() => {
+                requestsData.find((request) => request.consultationId === selectedRequest.consultationId).status = "Accepted";
+                setRequests((prev) =>
+                    prev.map((request) =>
+                        request.consultationId === selectedRequest.consultationId
+                            ? { ...request, status: "Accepted" }
+                            : request
+                    )
+                );
+                alert("Consultation accepted successfully");
+                setIsModalOpen(false);
+            })
+            .catch((error) => {
+                console.error(error);
+                alert("Failed to accept consultation");
+            });
         }
 
     const handleRefuseConsultation = () => {
         DeleteConsultation(selectedRequest.consultationId).then(() => {
+            requestsData = requestsData.filter((request) => request.consultationId !== selectedRequest.consultationId);
             setRequests((prev) =>
                 prev.filter((request) => request.consultationId !== selectedRequest.consultationId)
             );
@@ -140,12 +158,15 @@ function Requests() {
                 <h1 className={cx("title")}>
                     List of medical examination requests
                 </h1>
-
+                {requests.length === 0 &&
+                    (<div className={cx("empty-request-text")}>
+                        <h2> You don't have any consultation appointment....</h2>
+                    </div>)}
                 <table className={cx("requests-table")}>
                     <thead className={cx("table-header")}>
                         <tr>
                             <th>#</th>
-                            <th>Full Name</th>
+                            <th>Patient Name</th>
                             <th>
                                 <p>Date</p>
                                 <div className={cx("filter-container")}>
@@ -202,7 +223,7 @@ function Requests() {
                                 }
                             >
                                 <td>{request.consultationId}</td>
-                                <td>{request.patientId}</td>
+                                <td>{ currentUser.userRole === "doctor" ? request.patientName : request.doctorName}</td>
                                 <td>{request.consultationDate}</td>
                                 <td>{request.startTime}</td>
                                 <td>{request.endTime}</td>

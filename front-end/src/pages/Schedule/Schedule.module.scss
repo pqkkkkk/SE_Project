@@ -36,14 +36,14 @@
                     display: flex;
                     flex-direction: column;
                     justify-content: space-around;
-    
+
                     .schedule-id{
                         font-size: 28px;
                         font-weight: 600;
                         align-self: flex-start;
                         color: #0f2f76;
                     }
-    
+
                     .schedule-date{
                         font-size: 16px;
                         font-weight: 500;
@@ -120,13 +120,13 @@
                         font-style: italic !important;
                         color: red;
                     }
-    
+
                     .text{
                         margin-top: 6px;
                         font-size: 16px;
                     }
                 }
-                
+
             }
 
             .btn-join{
@@ -145,5 +145,12 @@
                 background-color: #0f2f76;
             }
         }
+    }
+    .empty-appointment-text
+    {
+        color: #1cb5bd;
+        font-size: 30px;
+        font-weight: 600;
+        text-align: center;
     }
 }

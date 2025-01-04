@@ -3,6 +3,7 @@ import images from "../../assets/images";
 import styles from "./DrugList.module.scss";
 import {useEffect, useState} from "react";
 import {
+    GetConsultationById,
     GetPrescriptionByPatientId,
     GetDrugById,
     GetPrescriptionDetail,
@@ -41,6 +42,7 @@ function DrugList() {
     const [prescriptionList, setPrescriptionList] = useState([]);
     const [selectedPrescription, setSelectedPrescription] = useState(null);
     const [detailOfSelectedPrescription, setDetailOfSelectedPrescription] = useState([]);
+    const [consultationDetailOfSelectedPrescription, setConsultationDetailOfSelectedPrescription] = useState({});
     const [showPrescriptionDetail, setShowPrescriptionDetail] = useState(false);
     const [showPaidPrescription, setShowPaidPrescription] = useState(false);
     const [showUnpaidPrescription, setShowUnpaidPrescription] = useState(true);
@@ -72,6 +74,8 @@ function DrugList() {
             })
         );
         setDetailOfSelectedPrescription(detailsWithDrugs);
+        const consultationDetail = await GetConsultationById(prescription.consultationId);
+        setConsultationDetailOfSelectedPrescription(consultationDetail);
 
     };
 
@@ -180,10 +184,26 @@ function DrugList() {
             {showPrescriptionDetail && (
                 <div className={cx("medicine-list-overlay")}>
                     <div className={cx("medicine-list-popup")}>
-                        <h2 className={cx("popup-title")}>Chi tiết đơn thuốc</h2>
-                        <button className={cx("btn-close")} onClick={handleCloseMedicineList}>
-                            Đóng
-                        </button>
+                        <h2 className={cx("popup-title")}>Chi tiết lần khám</h2>
+                        <button className={cx("btn-close")} onClick={handleCloseMedicineList}> Đóng</button>
+                        <div className={cx("consultationDetail")}>
+                            <p className={cx("note")}>
+                                <span className={cx("red")}>Symptom: </span>
+                                {consultationDetailOfSelectedPrescription.reason}
+                            </p>
+                            <p className={cx("note")}>
+                                <span className={cx("red")}>Doctor: </span>
+                                {consultationDetailOfSelectedPrescription.doctorName}
+                            </p>
+                            <p className={cx("note")}>
+                                <span className={cx("red")}>Consultation Date: </span>
+                                {consultationDetailOfSelectedPrescription.consultationDate}
+                            </p>
+                            <p className={cx("note")}>
+                                <span className={cx("red")}>Diagnosis: </span>
+                                {consultationDetailOfSelectedPrescription.consultation_result === '' ? "None" : consultationDetailOfSelectedPrescription.consultation_result}
+                            </p>
+                        </div>
                         <div className={cx("medicine-list")}>
                             {detailOfSelectedPrescription.map((item) => {
                                 return (
@@ -201,7 +221,6 @@ function DrugList() {
                                 );
                             })}
                         </div>
-
                         <p className={cx("note")}>
                             <span className={cx("red")}>Total Price: </span>
                             {selectedPrescription.totalPrice.toLocaleString()}

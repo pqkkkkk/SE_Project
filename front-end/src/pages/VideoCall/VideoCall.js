@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef  } from "react";
-import { useNavigate } from 'react-router-dom';
 import classNames from "classnames/bind";
 import styles from "./VideoCall.module.scss";
 import images from "../../assets/images";
-
+import {useLocation, useNavigate} from "react-router-dom";
+import {UpdateConsultationStatus} from "../../services/ApiService";
 const cx = classNames.bind(styles);
 
 function VideoCall() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const appointment = location.state.appointment;
   const [isMicMuted, setMicMuted] = useState(false); // Quản lý trạng thái mic
   const [isVideoMuted, setVideoMuted] = useState(false);
   const [isCameraOff, setCameraOff] = useState(false);
@@ -27,7 +29,6 @@ function VideoCall() {
       });
     }
   };
-
   const toggleVideo = () => {
     setVideoMuted(!isVideoMuted);
     if (videoStreamRef.current) {
@@ -41,10 +42,20 @@ function VideoCall() {
     setCameraOff(!isCameraOff); // Cập nhật trạng thái camera
   };
 
-  const handleEndCall = () => {
-    navigate(-1); // Quay lại trang trước đó
+  const handleEndCall = async () => {
+    const status = "Done";
+    const updateResult = await UpdateConsultationStatus(appointment.consultationId, status);
+    if(updateResult === "Updated")
+    {
+      console.log(updateResult);
+      alert("End video call");
+    }
+    else{
+      console.log(updateResult);
+        alert("Failed to end video call");
+    }
+    navigate("/schedule");
   };
-
   useEffect(() => {
     async function startCamera() {
       try {
@@ -78,7 +89,6 @@ function VideoCall() {
       }
     };
   }, []); // Chạy một lần khi component mount
-
   useEffect(() => {
     // Cập nhật lại video stream khi bật/tắt camera
     if (isCameraOff && videoStreamRef.current) {

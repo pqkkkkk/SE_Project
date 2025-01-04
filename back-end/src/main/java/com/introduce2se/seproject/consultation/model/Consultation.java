@@ -19,7 +19,9 @@ public class Consultation {
     private String Form;
     private String Status;
     private int PatientId;
+    private String patientName;
     private int DoctorId;
+    private String doctorName;
     private String ConsultationResult;
     private String Reason;
     public Consultation(){}

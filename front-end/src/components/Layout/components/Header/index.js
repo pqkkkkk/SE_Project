@@ -25,6 +25,10 @@ function Header() {
                     <li>
                         <Link to="/">Home</Link>
                     </li>
+                    {user !== null  &&
+                        (<li>
+                            <Link to="/schedule">Appointments</Link>
+                        </li>)}
                     {user !== null && user.userRole === "patient" &&
                         (<li>
                             <Link to="/messages">Messages</Link>

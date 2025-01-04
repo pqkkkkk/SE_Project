@@ -263,7 +263,9 @@
             font-size: 20px;
             cursor: pointer;
         }
-
+        .consultationDetail{
+            margin-bottom: 20px;
+        }
         .medicine-list{
             background-color: #f1fbfb;
             display: grid;
@@ -313,8 +315,8 @@
             color: #000;
 
             .red{
-                color: red;
-                font-size: 24px;
+                color: #1CB5BD;
+                font-size: 19px;
                 font-weight: 600;
             }
         }

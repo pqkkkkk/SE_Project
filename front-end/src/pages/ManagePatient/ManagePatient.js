@@ -102,12 +102,14 @@ const appointments = {
     { date: "2025-01-07", time: "3:00 PM", notes: "Physical Therapy" },
   ],
 };
-const currentUser = GetUser();
+
 function ManagePatient() {
+  const currentUser = GetUser();
   const navigation = useNavigate();
   const [selectedManagement, setSelectedManagement] = useState(null);
   const [managementList, setManagementList] = useState([]);
   const [selectedConsultationHistory, setSelectedConsultationHistory] = useState([]);
+  const [showUpdateDiagnosis, setShowUpdateDiagnosis] = useState(false);
   useEffect(() => {
     GetConnectingUsers(currentUser.id,currentUser.userRole).then((data) => {
       setManagementList(data);
@@ -129,6 +131,12 @@ function ManagePatient() {
   const handlePrescribe = (item) => {
     navigation("/doctor-drug", { state: { consultation: item, patient: selectedManagement.opponent } });
   }
+  const handleUpdateDiagnosis = (item) => {
+    setShowUpdateDiagnosis(true);
+  }
+    const handleCloseUpdateDiagnosis = () => {
+        setShowUpdateDiagnosis(false);
+    }
   return (
     <div className={cx("container")}>
       <div className={cx("column", "patients-list")}>
@@ -158,7 +166,7 @@ function ManagePatient() {
               className={cx("avatar")}
             />
             <p>
-              <strong>FullName:</strong> {selectedManagement.opponent.fullName}
+              <strong>Full Name:</strong> {selectedManagement.opponent.fullName}
             </p>
             <p>
               <strong>Email:</strong> {selectedManagement.opponent.email}
@@ -184,27 +192,48 @@ function ManagePatient() {
           selectedConsultationHistory?.length ? (
             <ul className={cx("list")}>
               {selectedConsultationHistory.map((item) => (
-                <li key={item.consultationId} className={cx("list-item")}>
-                  <p>
-                    <strong>Date:</strong> {item.consultationDate}
-                  </p>
-                  <p>
-                    <strong>Symptom:</strong> {item.reason === "" ? "None" : item.reason}
-                  </p>
-                  <p>
-                    <strong>Diagnosis:</strong> {item.consultationResult ==="" ? "None" : item.consultationResult}
-                  </p>
-                  <button className={cx("btn")} onClick={() =>handlePrescribe(item)}>Prescribe</button>
-                </li>
+                  <li key={item.consultationId} className={cx("list-item")}>
+                    <p>
+                      <strong>Date:</strong> {item.consultationDate}
+                    </p>
+                    <p>
+                      <strong>Duration:</strong> {item.startTime} - {item.endTime}
+                    </p>
+                    <p>
+                      <strong>Symptom:</strong> {item.reason === "" ? "None" : item.reason}
+                    </p>
+                    <p>
+                      <strong>Diagnosis:</strong> {item.consultationResult === "" ? "None" : item.consultationResult}
+                    </p>
+                    <div className={cx("commands-btn")}>
+                      <button className={cx("btn")} onClick={() => handlePrescribe(item)}>Prescribe</button>
+                      <button className={cx("btn")} onClick={() => handleUpdateDiagnosis(item)}>Update Diagnosis</button>
+                    </div>
+                  </li>
               ))}
             </ul>
           ) : (
-            <p>No appointments available.</p>
+              <p>No appointments available.</p>
           )
         ) : (
-          <p>Please select a patient to view appointment schedule.</p>
+            <p>Please select a patient to view appointment schedule.</p>
         )}
       </div>
+      {showUpdateDiagnosis && (
+          <div className={cx("update-diagnosis-dialog")}>
+            <div className={cx("update-diagnosis-dialog-content")}>
+              <h2 className={cx("popup-title")}>Update Diagnosis</h2>
+              <button className={cx("btn-close")} onClick={handleCloseUpdateDiagnosis}> Close</button>
+              <div className={cx("update-diagnosis-form")}>
+                    <div className={cx("form-group")}>
+                      <label htmlFor="diagnosis">Diagnosis</label>
+                      <textarea id="diagnosis" name="diagnosis" rows="4" cols="50" placeholder="Enter diagnosis"></textarea>
+                    </div>
+                    <button className={cx("btn-submit")} onClick={handleCloseUpdateDiagnosis}>Update</button>
+              </div>
+            </div>
+          </div>
+      )}
     </div>
   );
 }

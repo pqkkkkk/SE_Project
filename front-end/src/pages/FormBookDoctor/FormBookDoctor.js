@@ -4,7 +4,7 @@ import images from "../../assets/images";
 import { GetUser } from "../../services/UserStorageService";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { CreateConsultation } from "../../services/ApiService";
+import {CreateConsultation, GetAllConsultations} from "../../services/ApiService";
 const cx = classNames.bind(styles);
 
 function FormBookDoctor() {
@@ -12,17 +12,34 @@ function FormBookDoctor() {
   const [user, setUser] = useState({});
   const [doctor, setDoctor] = useState({});
   const [reason, SetReason] = useState("");
+  const [startTime, setStartTime] = useState("15:00:00");
+  const [endTime, setEndTime] = useState("16:00:00");
   useEffect(() => {
     setUser(GetUser() || {});
     setDoctor(location.state.doctor || {});
   }, []);
 
   const HandleSendingConsultationRequest = async () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const today = `${year}-${month}-${day}`;
+
+    const sameDayConsultationList =  await GetAllConsultations(user.id, user.userRole, "Accepted", today, null, null);
+    const sameTimeConsultationCount = sameDayConsultationList.filter((consultation) => {
+        return consultation.startTime === startTime && consultation.endTime === endTime;
+    });
+    if(sameTimeConsultationCount.length > 0) {
+        alert("You have already have a consultation appointment at this time!");
+        window.location.reload();
+        return;
+    }
     const consultation = {
       ConsultationDate: new Date().toISOString(),
-      startTime: "08:00:00",
-      endTime: "09:00:00",
-      form: "Online",
+      startTime: startTime,
+      endTime: endTime,
+      form: "online",
       reason: reason,
       status: "New",
       patientId: user.id,
@@ -126,23 +143,11 @@ function FormBookDoctor() {
           <label className={cx("field-text")}>BirthDay</label>
           <div className={cx("decor-input")}>
             <input
+                value={user.birthDay}
               className={cx("input")}
               type="text"
               placeholder="Date of birth (required)"
             />
-          </div>
-        </div>
-        <div className={cx("container")}>
-          <div className={cx("city-options")}>
-            <label htmlFor="city" className={cx("field-text")}>
-              City
-            </label>
-            <select id="city" className={cx("select-options")} name="city">
-              <option value="">All</option>
-              <option value="hanoi">Ha Noi</option>
-              <option value="hochiminh">Ho Chi Minh</option>
-              <option value="danang">Da Nang</option>
-            </select>
           </div>
         </div>
         <div className={cx("input-address")}>
