@@ -35,7 +35,7 @@ public class ConsultationService {
     public int deleteConsultation(int id) {
         return consultationDao.deleteConsultation(id);
     }
-    public List<Consultation> getFilteredConsultations(String userRole, int userId, String status, Date consultationDate, Time startTime, Time endTime) {
+    public List<Consultation> getFilteredConsultations(String userRole, int userId, String status, LocalDate consultationDate, Time startTime, Time endTime) {
         return consultationDao.GetFilteredConsultations(userRole, userId, status, consultationDate, startTime, endTime);
     }
     public List<Consultation> GetConsultationsInAWeek(String userRole, int userId, String status, LocalDate date) {
@@ -44,5 +44,8 @@ public class ConsultationService {
     public Consultation GetNextConsultationToday(String userRole, int userId) {
         return consultationDao.GetNextConsultationToday(userRole, userId);
     }
-
+    public int UpdateAllMissedConsultations(String userRole, int userId) {
+        int result = consultationDao.UpdateAllMissedConsultation(userRole, userId);
+        return result;
+    }
 }

@@ -22,17 +22,13 @@ function Login() {
         e.preventDefault();
         try {
             const data = await login(username, password);
-
-            if (data !== null ) {
+            if (data.id) {
                 alert("Login successful");
                 setUserSession(data);
-                const connectingUsers = await GetConnectingUsers(data.id, data.userRole);
                 SubcribeCorrespondingTopic(data.id);
                 navigate("/");
-            } else if (data === null) {
-                alert("Login failed");
-            } else {
-                alert("Unknown error");
+            } else  {
+                alert("Wrong username or password");
             }
         } catch (error) {
             console.log(error);

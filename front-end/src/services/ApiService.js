@@ -40,9 +40,30 @@ export const CreateConsultation = async (consultation) => {
         console.error(error);
     }
 }
-export const GetAllConsultations = async (userId, userRole) => {
+export const GetConsultationById = async (id) => {
     try {
-        const response = await api.get(`/consultations?userId=${userId}&userRole=${userRole}&status=All`);
+        const response = await api.get(`/consultations/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+export const GetAllConsultations = async (userId, userRole, status, date, startTimeValue, endTimeValue) => {
+    let url = `/consultations?userId=${userId}&userRole=${userRole}`;
+    if (status !== null) {
+        url += `&status=${status}`;
+    }
+    if(date !== null) {
+        url += `&date=${date}`;
+    }
+    if(startTimeValue !== null) {
+        url += `&startTimeValue=${startTimeValue}`;
+    }
+    if(endTimeValue !== null) {
+        url += `&endTimeValue=${endTimeValue}`;
+    }
+    try {
+        const response = await api.get(url);
         return response.data;
     } catch (error) {
         console.error(error);
@@ -156,6 +177,15 @@ export const CreatePaymentUrl = async (paymentInfo) => {
     try {
         const url = `/payment/create_payment_url`;
         const response = await api.post(url,paymentInfo);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+export const UpdateAllMissedConsultations = async (userId,userRole) => {
+    try {
+        const url = `/consultations/missed?userRole=${userRole}&userId=${userId}`;
+        const response = await api.put(url);
         return response.data;
     } catch (error) {
         console.error(error);
