@@ -26,7 +26,10 @@ function Login() {
                 alert("Login successful");
                 setUserSession(data);
                 SubcribeCorrespondingTopic(data.id);
-                navigate("/");
+                if(data.userRole !== "admin")
+                    navigate("/");
+                else
+                    navigate("/admin");
             } else  {
                 alert("Wrong username or password");
             }

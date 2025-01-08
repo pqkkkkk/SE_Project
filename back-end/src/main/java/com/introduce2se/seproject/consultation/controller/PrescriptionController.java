@@ -16,7 +16,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/prescriptions")
 public class PrescriptionController {
-
     private final PrescriptionService prescriptionService;
 
     @Autowired
