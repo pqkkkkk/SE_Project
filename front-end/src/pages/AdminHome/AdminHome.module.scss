@@ -25,6 +25,16 @@
     align-items: center;
 }
 
+#adminHome .sidebar li.active {
+    background: #1cb5bd;
+    border-radius: 6px;
+}
+
+#adminHome .sidebar li.active .icon,
+#adminHome .sidebar li.active .text {
+    color: #fff;
+}
+
 #adminHome .sidebar li .icon {
     display: flex;
     align-items: center;
