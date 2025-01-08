@@ -32,6 +32,7 @@ public class UserSqlDao implements  UserDao {
             User user = namedParameterJdbcTemplate.queryForObject(sql, params, new UserRowMapper());
             return user;
         } catch (EmptyResultDataAccessException e) {
+            System.out.println("Empty result");
             return null;
         }
     }
@@ -112,6 +113,9 @@ public class UserSqlDao implements  UserDao {
                 Map<String, Object> doctorInfor = namedParameterJdbcTemplate.queryForMap(doctorSql, doctorParams);
                 Doctor doctor = new Doctor(user, Integer.parseInt(doctorInfor.get("experience_year").toString()), Integer.parseInt(doctorInfor.get("consultation_price").toString()), doctorInfor.get("speciality").toString(),Double.parseDouble(doctorInfor.get("rating").toString()));
                 result = doctor;
+            }
+            else{
+                result = user;
             }
             return result;
         } catch (EmptyResultDataAccessException e) {

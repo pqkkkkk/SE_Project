@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import Statistical from "../Statistical/Statistical";
 import ManageUser from "../ManageUser/ManageUser";
 import ManageDrug from "../ManageDrug/ManageDrug";
-
+import {RemoveUserSession} from "../../services/UserStorageService";
 const cx = classNames.bind(styles);
 
 const menuLinks = [
@@ -26,13 +26,16 @@ const menuLinks = [
 ];
 
 function AdminHome() {
+    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState(menuLinks[0].key);
-
     const renderContent = () => {
         const activeLink = menuLinks.find((link) => link.key === activeTab);
         return activeLink ? activeLink.component : null;
     };
-
+    const handleLogOut = () => {
+        RemoveUserSession();
+        navigate("/");
+    }
     return (
         <main id={cx("adminHome")}>
             <nav className={cx("sidebar")}>
@@ -152,7 +155,7 @@ function AdminHome() {
 
                     <div className={cx("bottom-content")}>
                         <li>
-                            <a href="/login" className={cx("link")}>
+                            <button onClick={handleLogOut}  className={cx("link")}>
                                 <i
                                     className={cx(
                                         "fa-solid",
@@ -163,7 +166,7 @@ function AdminHome() {
                                 <span className={cx("text", "nav-text")}>
                                     Logout
                                 </span>
-                            </a>
+                            </button>
                         </li>
                     </div>
                 </div>
