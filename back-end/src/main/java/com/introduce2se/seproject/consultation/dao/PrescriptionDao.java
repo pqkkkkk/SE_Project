@@ -85,6 +85,53 @@ public class PrescriptionDao {
         String sql = "UPDATE prescription SET status = ? WHERE id = ?";
         jdbcTemplate.update(sql, status, prescriptionId);
     }
+
+    public Map<Integer,Integer> calculateRevenueByYear(int year){
+        Map<Integer,Integer> revenueByYear = new HashMap<>();
+        String sql = "select month(created_day) as month, sum(total_price) as total " +
+                "from prescription " +
+                "where year(created_day) = ? and status = 'Paid' " +
+                "group by month(created_day) ";
+        jdbcTemplate.query(sql, new Object[]{year}, (rs) -> {
+            int month = rs.getInt("month");
+            int total = rs.getInt("total");
+            revenueByYear.put(month, total);
+        });
+        return revenueByYear;
+    }
+
+
+    public Map<Integer,Integer> calculateRevenueByMonth(int year,int month){
+        Map<Integer,Integer> revenueByMonth = new HashMap<>();
+        String sql = "SELECT DATEPART(WEEK, created_day) - DATEPART(WEEK, DATEADD(DAY, 1 - DAY(created_day), created_day)) + 1 AS week,SUM(total_price) AS total " +
+                "FROM prescription " +
+                "WHERE YEAR(created_day) = ? AND MONTH(created_day) = ? AND status = 'Paid' " +
+                "GROUP BY DATEPART(WEEK, created_day) - DATEPART(WEEK, DATEADD(DAY, 1 - DAY(created_day), created_day)) + 1 " +
+                "ORDER BY week";
+        jdbcTemplate.query(sql, new Object[]{year,month},(rs)-> {
+            int week = rs.getInt("week");
+            int total = rs.getInt("total");
+            revenueByMonth.put(week, total);
+        });
+        return revenueByMonth;
+    }
+
+
+    public Map<Integer,Integer> calculateRevenueByWeek(int year,int month, int week){
+        Map<Integer,Integer> revenueByWeek = new HashMap<>();
+        String sql = "SELECT DATEPART(WEEKDAY, created_day) AS day, SUM(total_price) AS total " +
+                "FROM prescription " +
+                "WHERE YEAR(created_day) = ? AND MONTH(created_day) = ? AND DATEPART(WEEK, created_day) - DATEPART(WEEK, DATEADD(DAY, 1 - DAY(created_day), created_day)) + 1 = ? AND status = 'Paid' " +
+                "GROUP BY DATEPART(WEEKDAY, created_day) " +
+                "ORDER BY day";
+        jdbcTemplate.query(sql, new Object[]{year,month,week},(rs)-> {
+            int day = rs.getInt("day");
+            int total = rs.getInt("total");
+            revenueByWeek.put(day, total);
+        });
+        return revenueByWeek;
+    }
+
     private static class PrescriptionDetailRowMapper implements RowMapper<PrescriptionDetail> {
         @Override
         public PrescriptionDetail mapRow(ResultSet rs, int rowNum) throws SQLException {

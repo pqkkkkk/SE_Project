@@ -10,9 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Repository
 public class ConsultationDao {
@@ -200,6 +198,124 @@ public class ConsultationDao {
             return -1;
         }
     }
+
+    public Map<String, Integer> getPathologyCountByYear(int year){
+        Map<String, Integer> pathologyCount = new HashMap<>();
+        String sql = "SELECT p.name, COUNT(c.id) AS Count " +
+                "FROM pathology p " +
+                "LEFT JOIN consultation c ON p.name = c.pathology " +
+                "AND YEAR(c.date) = ? GROUP BY p.name";
+
+
+        jdbcTemplate.query(sql, new Object[]{year}, (rs) -> {
+            String pathology = rs.getString("name");
+            int count = rs.getInt("Count");
+            pathologyCount.put(pathology, count);
+        });
+
+
+        return pathologyCount;
+    }
+
+
+    public Map<String, Integer> getPathologyCountByMonth(int year,int month){
+        Map<String, Integer> pathologyCount = new HashMap<>();
+        String sql = "SELECT p.name, COUNT(c.id) AS Count " +
+                "FROM pathology p LEFT JOIN consultation c " +
+                "ON p.name = c.pathology AND YEAR(c.date) = ? AND MONTH(c.date) = ? " +
+                "GROUP BY p.name ";
+
+
+        jdbcTemplate.query(sql, new Object[]{year, month}, (rs) -> {
+            String pathology = rs.getString("name");
+            int count = rs.getInt("Count");
+            pathologyCount.put(pathology, count);
+        });
+
+
+        return pathologyCount;
+    }
+
+
+    public Map<String, Integer> getPathologyCountByWeek(int year, int month,int week){
+        Map<String, Integer> pathologyCount = new HashMap<>();
+        String sql = "SELECT p.name AS pathology_name, COUNT(c.id) AS consultation_count " +
+                "FROM pathology p " +
+                "LEFT JOIN consultation c ON p.name = c.pathology " +
+                "AND YEAR(c.date) = ? AND MONTH(c.date) = ? AND DATEPART(WEEK, c.date) - DATEPART(WEEK, DATEFROMPARTS(YEAR(c.date), MONTH(c.date), 1)) + 1 = ? " +
+                "GROUP BY p.name ";
+
+
+        jdbcTemplate.query(sql, new Object[]{year,month,week}, (rs) -> {
+            String pathology = rs.getString("pathology_name");
+            int count = rs.getInt("consultation_count");
+            pathologyCount.put(pathology, count);
+        });
+        return pathologyCount;
+    }
+
+
+    public Map<Integer, Integer>countOnlineConsultationByYear(int year){
+        Map<Integer, Integer> onlineConsultationCount = new HashMap<>();
+        String sql = "SELECT m.month as month, COUNT(c.id) AS count " +
+                "FROM (VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9), (10), (11), (12)) AS m(month) " +
+                "LEFT JOIN consultation c " +
+                "ON MONTH(c.date) = m.month " +
+                "AND YEAR(c.date) = ? " +
+                "AND c.type = 'online' " +
+                "GROUP BY m.month " +
+                "ORDER BY m.month ";
+        jdbcTemplate.query(sql, new Object[]{year}, (rs) -> {
+            int month = rs.getInt("month");
+            int count = rs.getInt("count");
+            onlineConsultationCount.put(month, count);
+        });
+        return onlineConsultationCount;
+    }
+
+
+    public Map<Integer, Integer>countOnlineConsultationByMonth(int year, int month){
+        Map<Integer, Integer> onlineConsultationCount = new HashMap<>();
+        String sql = "SELECT DATEPART(WEEK, c.date) - DATEPART(WEEK, DATEADD(MONTH, DATEDIFF(MONTH, 0, c.date), 0)) + 1 AS WeekOfMonth, COUNT(c.id) AS count " +
+                "FROM consultation c " +
+                "WHERE YEAR(c.date) = ? AND MONTH(c.date) = ? AND c.type = 'online' " +
+                "GROUP BY " +
+                "DATEPART(WEEK, c.date) - DATEPART(WEEK, DATEADD(MONTH, DATEDIFF(MONTH, 0, c.date), 0)) + 1 " +
+                "ORDER BY WeekOfMonth ";
+
+
+        jdbcTemplate.query(sql, new Object[]{year,month}, (rs) -> {
+            int week = rs.getInt("WeekOfMonth");
+            int count = rs.getInt("count");
+            onlineConsultationCount.put(week, count);
+        });
+        return onlineConsultationCount;
+    }
+
+
+    public Map<Integer, Integer>countOnlineConsultationByWeek(int year, int month, int week){
+        Map<Integer, Integer> onlineConsultationCount = new HashMap<>();
+        String sql = "SELECT DATEPART(WEEKDAY, c.date) AS day_of_week, COUNT(c.id) AS count " +
+                "FROM " +
+                "consultation c " +
+                "WHERE YEAR(c.date) = ? " +
+                "AND MONTH(c.date) = ? " +
+                "AND ((DAY(c.date) - 1) / 7 + 1) = ? " +
+                "AND c.type = 'online' " +
+                "GROUP BY " +
+                "DATEPART(WEEKDAY, c.date) " +
+                "ORDER BY " +
+                "DATEPART(WEEKDAY, c.date) ";
+
+
+        jdbcTemplate.query(sql, new Object[]{year,month,week}, (rs) -> {
+            int day = rs.getInt("day_of_week");
+            int count = rs.getInt("count");
+            onlineConsultationCount.put(day, count);
+        });
+        return onlineConsultationCount;
+    }
+
     private static class ConsultationRowMapper implements RowMapper<Consultation> {
         @Override
         public Consultation mapRow(ResultSet rs, int rowNum) throws SQLException {
