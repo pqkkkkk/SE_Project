@@ -80,7 +80,29 @@ public class DrugSqlDao implements IDrugDao {
         return jdbcTemplate.queryForList(sql, String.class);
     }
 
-    // row mapper cho Drug
+    @Override
+    public boolean createDrug(Drug drug) {
+        String checkExistSql = "SELECT COUNT(*) FROM drug WHERE name = ?";
+        Integer count = jdbcTemplate.queryForObject(checkExistSql, Integer.class, drug.getName());
+        if (count != null && count > 0) {
+            return false;
+        }
+        try {
+            String sql = "INSERT INTO drug (name, unit, price, quantity, manufacturing_date, expiry_date, drug_type) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            return jdbcTemplate.update(sql, drug.getName(), drug.getUnit(),
+                    drug.getPrice(), drug.getQuantity(), drug.getManufactoring_date(), drug.getExpiry_date(), drug.getDrugTypeName()) > 0;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updateDrug(Drug drug) {
+        String sql = "UPDATE drug SET name = ?, unit = ?, price = ?, quantity = ?, manufacturing_date = ?, expiry_date = ?, drug_type = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, drug.getName(), drug.getUnit(), drug.getPrice(), drug.getQuantity(), drug.getManufactoring_date(), drug.getExpiry_date(), drug.getDrugTypeName(), drug.getDrugId()) > 0;
+    }
+
     public static class DrugRowMapper implements RowMapper<Drug> {
         @Override
         public Drug mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -90,8 +112,8 @@ public class DrugSqlDao implements IDrugDao {
             drug.setUnit(rs.getString("unit"));
             drug.setPrice(rs.getInt("price"));
             drug.setQuantity(rs.getInt("quantity"));
-            drug.setManufactoring_date(rs.getDate("manufacturing_date"));
-            drug.setExpiry_date(rs.getDate("expiry_date"));
+            drug.setManufactoring_date(rs.getDate("manufacturing_date").toLocalDate());
+            drug.setExpiry_date(rs.getDate("expiry_date").toLocalDate());
             drug.setDrugTypeName(rs.getString("drug_type"));
             return drug;
         }

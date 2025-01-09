@@ -9,8 +9,9 @@ import java.util.List;
 
 @Service
 public class DrugService {
-    @Autowired
+
     private final IDrugDao drugdao;
+    @Autowired
     public DrugService(IDrugDao drugDao){
         this.drugdao = drugDao;
     }
@@ -33,5 +34,11 @@ public class DrugService {
 
     public List<String> getALLDrugTypes(){
         return drugdao.getAllDrugtypes();
+    }
+    public boolean createDrug(Drug drug){
+        return drugdao.createDrug(drug);
+    }
+    public boolean updateDrug(Drug drug){
+        return drugdao.updateDrug(drug);
     }
 }

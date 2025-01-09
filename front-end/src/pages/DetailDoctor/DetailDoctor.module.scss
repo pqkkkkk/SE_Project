@@ -99,33 +99,6 @@
           margin-top: 7px;
         }
       }
-
-      .time-slots {
-        margin-top: 20px;
-        .slots-list {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 5px;
-          padding: 0;
-          list-style: none;
-
-          .slot-item {
-            padding: 10px 15px;
-            color: #fff;
-            background-color: #1cb5bd;
-            border-radius: 5px;
-            font-size: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-
-            &:hover {
-              background: #029ea9;
-            }
-          }
-        }
-      }
-
       .tags {
         display: flex;
         margin-top: 50px;

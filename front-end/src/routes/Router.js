@@ -18,7 +18,7 @@ import ManagePatient from "../pages/ManagePatient/ManagePatient";
 import Schedule from "../pages/Schedule/Schedule";
 import Statistical from "../pages/Statistical/Statistical";
 import AdminHome from "../pages/AdminHome/AdminHome";
-
+import WorkCalendar from "../pages/WorkCalendar/WorkCalendar";
 const publicRoutes = [
     { path: "/", component: Home },
     { path: "/find-doctor", component: FindDoctor },
@@ -33,6 +33,7 @@ const publicRoutes = [
     { path: "/user-profile", component: UserProfile },
     { path: "/messages", component: Messages },
     { path: "/doctor-drug", component: DrugDoctor },
+    { path: "/work-calendar", component: WorkCalendar },
     { path: "/manage-drug", component: ManageDrug },
     { path: "/manage-user", component: ManageUser },
     { path: "/payment-result", component: PaymentResult, layout: null },

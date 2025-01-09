@@ -3,7 +3,7 @@ import classNames from "classnames/bind";
 import images from "../../assets/images";
 import styles from "./ManagePatient.module.scss";
 import {useNavigate} from "react-router-dom";
-import {GetConnectingUsers, GetAllConsultationByPatientIdAndDoctorId} from "../../services/ApiService";
+import {GetConnectingUsers, GetAllConsultationByPatientIdAndDoctorId, UpdateConsultationResult} from "../../services/ApiService";
 import {GetUser} from "../../services/UserStorageService";
 const cx = classNames.bind(styles);
 
@@ -109,7 +109,9 @@ function ManagePatient() {
   const [selectedManagement, setSelectedManagement] = useState(null);
   const [managementList, setManagementList] = useState([]);
   const [selectedConsultationHistory, setSelectedConsultationHistory] = useState([]);
+  const [selectedConsultation, setSelectedConsultation] = useState(null);
   const [showUpdateDiagnosis, setShowUpdateDiagnosis] = useState(false);
+  const [diagnosis, setDiagnosis] = useState("");
   useEffect(() => {
     GetConnectingUsers(currentUser.id,currentUser.userRole).then((data) => {
       setManagementList(data);
@@ -132,11 +134,31 @@ function ManagePatient() {
     navigation("/doctor-drug", { state: { consultation: item, patient: selectedManagement.opponent } });
   }
   const handleUpdateDiagnosis = (item) => {
+    setSelectedConsultation(item);
     setShowUpdateDiagnosis(true);
   }
-    const handleCloseUpdateDiagnosis = () => {
-        setShowUpdateDiagnosis(false);
+  const handleCloseUpdateDiagnosis = () => {
+      setShowUpdateDiagnosis(false);
+  }
+  const SaveDiagnosis = async () => {
+    const response = await UpdateConsultationResult(selectedConsultation.consultationId, diagnosis);
+    if(response === "updated")
+    {
+      setShowUpdateDiagnosis(false);
+      alert("Update diagnosis successfully");
+      setSelectedConsultationHistory(selectedConsultationHistory.filter((item) =>{
+        if(item.consultationId !== selectedConsultation.consultationId){
+          return item;
+        }
+        else{
+          item.consultationResult = diagnosis;
+            return item;
+        }
+      }));
+      setSelectedConsultation(null);
+      setDiagnosis("");
     }
+  }
   return (
     <div className={cx("container")}>
       <div className={cx("column", "patients-list")}>
@@ -216,7 +238,7 @@ function ManagePatient() {
               <p>No appointments available.</p>
           )
         ) : (
-            <p>Please select a patient to view appointment schedule.</p>
+            <p>Please select a patient to view consultation history.</p>
         )}
       </div>
       {showUpdateDiagnosis && (
@@ -227,9 +249,9 @@ function ManagePatient() {
               <div className={cx("update-diagnosis-form")}>
                     <div className={cx("form-group")}>
                       <label htmlFor="diagnosis">Diagnosis</label>
-                      <textarea id="diagnosis" name="diagnosis" rows="4" cols="50" placeholder="Enter diagnosis"></textarea>
+                      <textarea id="diagnosis" name="diagnosis" onChange={(e) => setDiagnosis(e.target.value)} rows="4" cols="50" placeholder="Enter diagnosis"></textarea>
                     </div>
-                    <button className={cx("btn-submit")} onClick={handleCloseUpdateDiagnosis}>Update</button>
+                    <button className={cx("btn-submit")} onClick={SaveDiagnosis}>Update</button>
               </div>
             </div>
           </div>

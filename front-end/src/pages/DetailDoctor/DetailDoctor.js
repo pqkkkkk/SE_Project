@@ -90,23 +90,9 @@ function DetailDoctor() {
                         </button>
                     </div>
                     <div className={cx("price")}>
-                        <span>{doctor.consultationPrice}</span>
+                        <span>Price : {doctor.consultationPrice}</span>
                         <p>Online / Offline</p>
                     </div>
-                    <div className={cx("time-slots")}>
-                        <ul className={cx("slots-list")}>
-                            {availableSlots.map((slot, index) => (
-                                <li
-                                    key={index}
-                                    className={cx("slot-item")}
-                                    onClick={() => handleSlotSelection(slot)}
-                                >
-                                    {slot}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
                     <div className={cx("tags")}>
                         <div className={cx("icon-friendly")}>
                             <img src={images.smile} alt="icon smile"/>
@@ -116,10 +102,6 @@ function DetailDoctor() {
                             <img src={images.ear} alt="icon ear"/>
                             <span>Good Listener</span>
                         </div>
-                    </div>
-                    <div className={cx("icon-patient")}>
-                        <img src={images.smile} alt="icon smile"/>
-                        <span>Patient</span>
                     </div>
                 </div>
                 <div className={cx("doctor-detail")}>

@@ -54,9 +54,9 @@ const Statistical = () => {
             revenueChart.destroy();
         }
         revenueChart = new Chart(ctx2, {
-            type: "bar",
-            data: {
-                labels: ["January", "February", "March", "April", "May"],
+                    type: "bar",
+                    data: {
+                        labels: ["January", "February", "March", "April", "May"],
                 datasets: [
                     {
                         label: "Revenue",

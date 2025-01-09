@@ -108,7 +108,7 @@ public class ConsultationController {
         if (rowsAffected == 0) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok("Result updated successfully.");
+        return ResponseEntity.ok("updated");
     }
 
     //Delete a consultation

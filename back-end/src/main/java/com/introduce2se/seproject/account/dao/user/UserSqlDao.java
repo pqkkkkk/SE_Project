@@ -37,8 +37,8 @@ public class UserSqlDao implements  UserDao {
         }
     }
     public void createUser(User user){
-        String sql = "INSERT INTO users (username, password, email,fullname,phonenumber,address,birthday,role) " +
-                "VALUES (:username, :password, :email, :fullname, :phonenumber, :address, :birthday, :role)";
+        String sql = "INSERT INTO users (username, password, email,fullname,phonenumber,address,birthday,role,gender) " +
+                "VALUES (:username, :password, :email, :fullname, :phonenumber, :address, :birthday, :role, :gender)";
         Map<String, Object> params = new HashMap<>();
         params.put("username", user.getUserName());
         params.put("password", user.getPassWord());
@@ -48,37 +48,43 @@ public class UserSqlDao implements  UserDao {
         params.put("address", user.getAddress());
         params.put("birthday", user.getBirthDay());
         params.put("role", user.getUserRole());
+        params.put("gender", user.getGender());
         namedParameterJdbcTemplate.update(sql, params);
     }
     public ArrayList<User> getAllUsers(String role){
         try {
             String sql = "SELECT * FROM users u " +
-                    "WHERE u.role = :actualRole";
+                    "WHERE 1=1 ";
             Map<String, Object> params = new HashMap<>();
-            params.put("actualRole", role);
+            if(role != null)
+            {
+                sql += " AND u.role = :actualRole";
+                params.put("actualRole", role);
+            }
             ArrayList<User> users = (ArrayList<User>) namedParameterJdbcTemplate.query(sql, params, new UserRowMapper());
             ArrayList<User> result = new ArrayList<User>();
-            if(role.equals("patient"))
+
+            for(User user : users)
             {
-                for(User user : users)
-                {
-                    Patient patient = new Patient(user,true);
-                    result.add(patient);
-                }
-            }
-            else if (role.equals("doctor"))
-            {
-                for(User user : users)
-                {
+                if(user.getUserRole().equals("doctor")) {
                     String doctorSql = "SELECT * FROM doctor_information d " +
                             "WHERE d.id = :actualDoctorId";
                     Map<String, Object> doctorParams = new HashMap<>();
                     doctorParams.put("actualDoctorId", user.getId());
                     Map<String, Object> doctorInfor = namedParameterJdbcTemplate.queryForMap(doctorSql, doctorParams);
-                    Doctor doctor = new Doctor(user, Integer.parseInt(doctorInfor.get("experience_year").toString()), Integer.parseInt(doctorInfor.get("consultation_price").toString()), doctorInfor.get("speciality").toString(),Double.parseDouble(doctorInfor.get("rating").toString()));
+                    Doctor doctor = new Doctor(user, Integer.parseInt(doctorInfor.get("experience_year").toString()), Integer.parseInt(doctorInfor.get("consultation_price").toString()), doctorInfor.get("speciality").toString(), Double.parseDouble(doctorInfor.get("rating").toString()));
                     result.add(doctor);
                 }
+                else if (user.getUserRole().equals("patient"))
+                {
+                    Patient patient = new Patient(user, true);
+                    result.add(patient);
+                }
+                else{
+                    result.add(user);
+                }
             }
+
             return result;
         }
         catch (EmptyResultDataAccessException e) {
@@ -140,6 +146,66 @@ public class UserSqlDao implements  UserDao {
         params.put("id", patient.getId());
         params.put("health_insurance", patient.isHealthInsurance());
         namedParameterJdbcTemplate.update(sql, params);
+    }
+
+    @Override
+    public boolean updateUser(User user) {
+        try {
+            String sql = "UPDATE users " +
+                    "SET username = :username, password = :password, email = :email, fullname = :fullname, " +
+                    "phonenumber = :phonenumber, address = :address, birthday = :birthday, role = :role " +
+                    "WHERE id = :id";
+            Map<String, Object> params = new HashMap<>();
+            params.put("username", user.getUserName());
+            params.put("password", user.getPassWord());
+            params.put("email", user.getEmail());
+            params.put("fullname", user.getFullName());
+            params.put("phonenumber", user.getPhoneNumber());
+            params.put("address", user.getAddress());
+            params.put("birthday", user.getBirthDay());
+            params.put("role", user.getUserRole());
+            params.put("id", user.getId());
+            return namedParameterJdbcTemplate.update(sql, params) > 0;
+        }
+        catch (EmptyResultDataAccessException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updateDoctorInformation(Doctor doctor) {
+        try {
+            String sql = "UPDATE doctor_information " +
+                    "SET experience_year = :experience_year, consultation_price = :consultation_price, speciality = :speciality, " +
+                    "rating = :rating " +
+                    "WHERE id = :id";
+            Map<String, Object> params = new HashMap<>();
+            params.put("experience_year", doctor.getExperienceYear());
+            params.put("consultation_price", doctor.getConsultationPrice());
+            params.put("speciality", doctor.getSpeciality());
+            params.put("rating", doctor.getRating());
+            params.put("id", doctor.getId());
+            return namedParameterJdbcTemplate.update(sql, params) > 0;
+        }
+        catch (EmptyResultDataAccessException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updatePatientInformation(Patient patient) {
+        try {
+            String sql = "UPDATE patient_information " +
+                    "SET health_insurance = :health_insurance " +
+                    "WHERE id = :id";
+            Map<String, Object> params = new HashMap<>();
+            params.put("health_insurance", patient.isHealthInsurance());
+            params.put("id", patient.getId());
+            return namedParameterJdbcTemplate.update(sql, params) > 0;
+        }
+        catch (EmptyResultDataAccessException e) {
+            return false;
+        }
     }
 
 

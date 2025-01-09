@@ -12,4 +12,6 @@ public interface IDrugDao {
     public List<Drug> findDrugs(String keyword, String drugTypeName);
     public int getPriceByDrugId(int drugId); // Lấy giá thuốc theo ID
     public List<String> getAllDrugtypes();
+    public boolean createDrug(Drug drug);
+    public boolean updateDrug(Drug drug);
 }

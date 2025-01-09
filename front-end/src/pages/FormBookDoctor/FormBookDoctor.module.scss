@@ -117,6 +117,7 @@
       justify-content: center;
       align-items: center;
 
+
       input[type="radio"] {
         appearance: none;
         width: 21px;
@@ -160,7 +161,9 @@
     .input-email,
     .input-birthday,
     .input-address,
-    .input-reason {
+    .input-reason,
+    .input-start-time,
+    .input-end-time {
       width: 70%;
       .select-options {
         margin-top: 16px;
