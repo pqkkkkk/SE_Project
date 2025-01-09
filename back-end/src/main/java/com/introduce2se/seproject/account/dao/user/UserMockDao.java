@@ -80,4 +80,19 @@ public class UserMockDao implements UserDao {
     public void addPatientInformation(Patient patient){
 
     }
+
+    @Override
+    public boolean updateUser(User user) {
+        return false;
+    }
+
+    @Override
+    public boolean updateDoctorInformation(Doctor doctor) {
+        return false;
+    }
+
+    @Override
+    public boolean updatePatientInformation(Patient patient) {
+        return false;
+    }
 }

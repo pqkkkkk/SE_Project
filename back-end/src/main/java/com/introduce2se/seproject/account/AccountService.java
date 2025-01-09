@@ -66,6 +66,59 @@ public class AccountService {
         }
 
     }
+    public boolean createAdmin(User user)
+    {
+        try{
+            userDao.createUser(user);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateDoctor(Doctor doctor)
+    {
+        try {
+            if(!userDao.updateUser((User) doctor)) {
+                return false;
+            }
+            if(!userDao.updateDoctorInformation(doctor)) {
+                return false;
+            }
+            return true;
+        }
+        catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return false;
+        }
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updatePatient(Patient patient)
+    {
+        try {
+            if(!userDao.updateUser((User)patient)) {
+                return false;
+            }
+            if(!userDao.updatePatientInformation(patient)) {
+                return false;
+            }
+            return true;
+        }
+        catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return false;
+        }
+    }
+    public boolean updateAdmin(User user)
+    {
+        try {
+            return userDao.updateUser(user);
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
     public List<ManagementDto> getConnectingUsers(int currentUserId, String currentRole) {
         return managementDao.getConnectingUsers(currentUserId, currentRole);
     }

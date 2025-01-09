@@ -48,8 +48,7 @@ function Header() {
                     )}
                     {user !== null && user.userRole === "patient" && (
                         <li
-                            className={cx({ active: isActive("/find-doctor") })}
-                        >
+                            className={cx({ active: isActive("/find-doctor") })}>
                             <Link to="/find-doctor">Find Doctor</Link>
                         </li>
                     )}
@@ -62,14 +61,18 @@ function Header() {
                         <li
                             className={cx({
                                 active: isActive("/manage-patient"),
-                            })}
-                        >
+                            })}>
                             <Link to="/manage-patient">My Patients</Link>
                         </li>
                     )}
                     {user !== null && user.userRole === "doctor" && (
                         <li className={cx({ active: isActive("/messages") })}>
                             <Link to="/messages">Chat</Link>
+                        </li>
+                    )}
+                    {user !== null && user.userRole === "doctor" && (
+                        <li className={cx({ active: isActive("/work-calendar") })}>
+                            <Link to="/work-calendar">Calendar</Link>
                         </li>
                     )}
                 </ul>

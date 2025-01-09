@@ -13,5 +13,7 @@ public interface UserDao {
     public User getUserById(int id);
     public void addDoctorInformation(Doctor doctor);
     public void addPatientInformation(Patient patient);
-
+    public boolean updateUser(User user);
+    public boolean updateDoctorInformation(Doctor doctor);
+    public boolean updatePatientInformation(Patient patient);
 }

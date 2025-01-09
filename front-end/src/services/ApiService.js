@@ -7,6 +7,62 @@ const api = axios.create({
     Application: "application/json",
 });
 
+export const GetAllUsers = async () => {
+    try {
+        const response = await api.get("/account");
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+export const CreatePatient = async (patient) => {
+    try {
+        const response = await api.post("/account/patient", patient);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+export const UpdatePatient = async (patient) => {
+    try {
+        const response = await api.put("/account/patient", patient);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+export const CreateDoctor = async (doctor) => {
+    try {
+        const response = await api.post("/account/doctor", doctor);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+export const UpdateDoctor = async (doctor) => {
+    try {
+        const response = await api.put("/account/doctor", doctor);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+export const CreateAdmin = async (admin) => {
+    try {
+        const response = await api.post("/account/admin", admin);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+export const UpdateAdmin = async (admin) => {
+    try {
+        const response = await api.put("/account/admin", admin);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
 export const getAllDoctors = async () => {
     try {
         const response = await api.get("/account/allDoctors");
@@ -85,6 +141,14 @@ export  const UpdateConsultationStatus = async (consultationId, status) => {
         console.error(error);
     }
 }
+export const UpdateConsultationResult = async (consultationId, result) => {
+    try {
+        const response = await api.put(`/consultations/${consultationId}/result?consultationId=${consultationId}&result=${result}`);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
 export const  DeleteConsultation = async (consultationId) => {
     try {
         const response = await api.delete(`/consultations/${consultationId}`);
@@ -96,6 +160,22 @@ export const  DeleteConsultation = async (consultationId) => {
 export const GetAllDrugs = async () => {
     try {
         const response = await api.get("/drugs");
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+export const  CreateDrug = async (drug) => {
+    try {
+        const response = await api.post("/drugs", drug);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+export const UpdateDrug = async (drug) => {
+    try {
+        const response = await api.put("/drugs", drug);
         return response.data;
     } catch (error) {
         console.error(error);

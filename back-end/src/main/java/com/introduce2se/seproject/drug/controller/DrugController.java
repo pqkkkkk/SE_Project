@@ -16,7 +16,28 @@ public class DrugController {
     public DrugController(DrugService drugService) {
         this.drugService = drugService;
     }
-
+    @PostMapping
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<Integer> createDrug(@RequestBody Drug drug) {
+        boolean result = drugService.createDrug(drug);
+        if(result) {
+            return ResponseEntity.ok().body(1);
+        }
+        else {
+            return ResponseEntity.badRequest().body(0);
+        }
+    }
+    @PutMapping
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<Integer> updateDrug(@RequestBody Drug drug) {
+        boolean result = drugService.updateDrug(drug);
+        if(result) {
+            return ResponseEntity.ok().body(1);
+        }
+        else {
+            return ResponseEntity.badRequest().body(0);
+        }
+    }
     @GetMapping("")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<Drug>> getAllDrugs() {

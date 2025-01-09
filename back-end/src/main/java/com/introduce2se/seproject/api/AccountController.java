@@ -23,6 +23,12 @@ public class AccountController {
         this.accountService = accountService;
     }
     @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping
+    public ResponseEntity<ArrayList<User>> GetAllUsers()
+    {
+        return ResponseEntity.ok().body(accountService.getAllUsers(null));
+    }
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/allDoctors")
     public ResponseEntity<ArrayList<User>> GetAllDoctors()
     {
@@ -47,6 +53,19 @@ public class AccountController {
             return ResponseEntity.badRequest().body(0);
         }
     }
+    @PutMapping("/doctor")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<Integer> UpdateDoctor(@RequestBody Doctor doctor)
+    {
+        if(accountService.updateDoctor(doctor))
+        {
+            return ResponseEntity.ok().body(1);
+        }
+        else
+        {
+            return ResponseEntity.badRequest().body(0);
+        }
+    }
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/patient")
     public ResponseEntity<Integer> CreatPatient(@RequestBody Patient patient)
@@ -60,8 +79,47 @@ public class AccountController {
             return ResponseEntity.badRequest().body(0);
         }
     }
+    @PutMapping("/patient")
     @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<Integer> UpdatePatient(@RequestBody Patient patient)
+    {
+        if(accountService.updatePatient(patient))
+        {
+            return ResponseEntity.ok().body(1);
+        }
+        else
+        {
+            return ResponseEntity.badRequest().body(0);
+        }
+    }
+    @PostMapping("/admin")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<Integer> CreatAdmin(@RequestBody User user)
+    {
+        if(accountService.createAdmin(user))
+        {
+            return ResponseEntity.ok().body(1);
+        }
+        else
+        {
+            return ResponseEntity.badRequest().body(0);
+        }
+    }
+    @PutMapping("/admin")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<Integer> UpdateAdmin(@RequestBody User user)
+    {
+        if(accountService.updateAdmin(user))
+        {
+            return ResponseEntity.ok().body(1);
+        }
+        else
+        {
+            return ResponseEntity.badRequest().body(0);
+        }
+    }
     @GetMapping("/connectingUsers")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<ManagementDto>> GetConnectingUsers(@RequestParam int currentUserId, @RequestParam String currentRole)
     {
         System.out.println(currentUserId);

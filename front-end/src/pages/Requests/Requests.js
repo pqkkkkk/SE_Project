@@ -110,13 +110,15 @@ function Requests() {
         const today = `${year}-${month}-${day}`;
 
         const sameDayConsultationList =  await GetAllConsultations(currentUser.id, currentUser.userRole, "Accepted", today, null, null);
-        const sameTimeConsultationCount = sameDayConsultationList.filter((consultation) => {
-            return consultation.startTime === selectedRequest.startTime && consultation.endTime === selectedRequest.endTime;
-        });
-        if(sameTimeConsultationCount.length > 0) {
-            alert("You have already have a consultation appointment at this time!");
-            window.location.reload();
-            return;
+        if(sameDayConsultationList.length !== 0) {
+            const sameTimeConsultationCount = sameDayConsultationList.filter((consultation) => {
+                return consultation.startTime === selectedRequest.startTime && consultation.endTime === selectedRequest.endTime;
+            });
+            if (sameTimeConsultationCount.length > 0) {
+                alert("You have already have a consultation appointment at this time!");
+                window.location.reload();
+                return;
+            }
         }
 
         UpdateConsultationStatus(selectedRequest.consultationId, "Accepted")
