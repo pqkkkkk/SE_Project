@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PrescriptionService {
@@ -67,5 +69,35 @@ public class PrescriptionService {
             return 0;
         }
     }
+    public Map<Integer,Integer> calculateRevenue(int year,int month,int week) {
+        Map<Integer, Integer> revenue = new HashMap<>();
+        if (week == -1 && month == -1)
+        {
+            revenue = prescriptionDao.calculateRevenueByYear(year);
+            for (int i = 1; i <= 12; i++) {
+                if (!revenue.containsKey(i)) {
+                    revenue.put(i, 0);
+                }
+            }
+        } else if (week == -1)
+        {
+            revenue = prescriptionDao.calculateRevenueByMonth(year, month);
+            for (int i = 1; i <= 5; i++)
+            {
+                if (!revenue.containsKey(i)) {
+                    revenue.put(i, 0);
+                }
+            }
+        } else
+        {
+            revenue = prescriptionDao.calculateRevenueByWeek(year, month, week);
+            for (int i = 1; i <= 7; i++) {
+                if (!revenue.containsKey(i)) {
+                    revenue.put(i, 0);
+                }
+            }
+        }
+        return revenue;
+    };
 }
 

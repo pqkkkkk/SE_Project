@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ConsultationService {
@@ -48,4 +50,48 @@ public class ConsultationService {
         int result = consultationDao.UpdateAllMissedConsultation(userRole, userId);
         return result;
     }
+
+    public Map<String, Integer> getPathologyCount(int year,int month, int week) {
+        if (week == -1 && month == -1) {
+            return consultationDao.getPathologyCountByYear(year);
+        } else {
+            if (week == -1) {
+                return consultationDao.getPathologyCountByMonth(year, month);
+            } else {
+                return consultationDao.getPathologyCountByWeek(year, month, week);
+            }
+        }
+    }
+
+    public Map<Integer, Integer> countOnlineConsultation(int year, int month, int week)
+    {
+        Map<Integer, Integer> map = new HashMap<>();
+            if(week == -1 && month == -1){
+                map = consultationDao.countOnlineConsultationByYear(year);
+                for(int i = 1;i<=12;i++){
+                    if(!map.containsKey(i)){
+                        map.put(i,0);
+                    }
+                }
+                return map;
+            }
+            else if(week == -1) {
+                map = consultationDao.countOnlineConsultationByMonth(year, month);
+                for(int i = 1;i<=5;i++){
+                    if(!map.containsKey(i)){
+                        map.put(i,0);
+                    }
+                }
+                return map;
+            }
+            else {
+                map = consultationDao.countOnlineConsultationByWeek(year, month, week);
+                for(int i = 1;i<=7;i++){
+                    if(!map.containsKey(i)){
+                        map.put(i,0);
+                    }
+                }
+                return map;
+            }
+    };
 }

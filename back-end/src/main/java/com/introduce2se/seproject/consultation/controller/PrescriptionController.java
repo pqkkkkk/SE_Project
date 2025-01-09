@@ -94,4 +94,17 @@ public class PrescriptionController {
         }
         return ResponseEntity.ok(prescriptions);
     }
+    @GetMapping("revenue")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<Map<Integer,Integer>> calculateRevenue(
+            @RequestParam int year, @RequestParam int month, @RequestParam int week) {
+        try{
+            Map<Integer,Integer> revenueByWeek = prescriptionService.calculateRevenue(year, month, week);
+            return ResponseEntity.ok(revenueByWeek);
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
 }

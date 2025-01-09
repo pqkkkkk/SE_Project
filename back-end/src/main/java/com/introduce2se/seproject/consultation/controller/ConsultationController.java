@@ -11,6 +11,7 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/consultations")
@@ -131,4 +132,38 @@ public class ConsultationController {
         }
         return ResponseEntity.ok().body(result);
     }
+
+    @GetMapping("/pathology")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<Map<String,Integer>> getPathologyCount(
+            @RequestParam int year,
+            @RequestParam int month,
+            @RequestParam int week)
+    {
+        try {
+            Map<String, Integer> pathologyCount = consultationService.getPathologyCount(year, month, week);
+            return ResponseEntity.ok(pathologyCount);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    };
+
+    @GetMapping("/online-consultation")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<Map<Integer,Integer>> getConsultationCount(
+            @RequestParam int year,
+            @RequestParam int month,
+            @RequestParam int week) {
+        try{
+            Map<Integer,Integer> onlineConsultationCount = consultationService.countOnlineConsultation(year, month, week);
+            return ResponseEntity.ok(onlineConsultationCount);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
 }
