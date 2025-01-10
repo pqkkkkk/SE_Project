@@ -3,6 +3,7 @@ package com.introduce2se.seproject.api;
 import com.introduce2se.seproject.account.AccountService;
 import com.introduce2se.seproject.account.dto.ManagementDto;
 import com.introduce2se.seproject.account.model.Doctor;
+import com.introduce2se.seproject.account.model.Feedback;
 import com.introduce2se.seproject.account.model.Patient;
 import com.introduce2se.seproject.account.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,6 +125,25 @@ public class AccountController {
     {
         System.out.println(currentUserId);
         return ResponseEntity.ok().body(accountService.getConnectingUsers(currentUserId, currentRole));
+    }
+    @GetMapping("/feedback")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<List<Feedback>> GetFeedbackByDoctorId(@RequestParam int doctorId)
+    {
+        return ResponseEntity.ok().body(accountService.GetFeedbackByDoctorId(doctorId));
+    }
+    @PostMapping("/feedback")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<Integer> AddFeedback(@RequestBody Feedback feedback)
+    {
+        if(accountService.AddFeedback(feedback))
+        {
+            return ResponseEntity.ok().body(1);
+        }
+        else
+        {
+            return ResponseEntity.badRequest().body(0);
+        }
     }
 
 }

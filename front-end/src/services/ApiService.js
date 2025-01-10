@@ -271,3 +271,53 @@ export const UpdateAllMissedConsultations = async (userId,userRole) => {
         console.error(error);
     }
 }
+export const CalculateRevenue = async (year,month, week) => {
+    try {
+        const url = `/prescriptions/revenue?year=${year}&month=${month}&week=${week}`;
+        const response = await api.get(url);
+        return response.data;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+export const CountOnlineConsultations = async (year,month, week) => {
+    try {
+        const url = `/consultations/online-consultation?year=${year}&month=${month}&week=${week}`;
+        const response = await api.get(url);
+        return response.data;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+export const CountPathology = async (year,month, week) => {
+    try {
+        const url = `/consultations/pathology?year=${year}&month=${month}&week=${week}`;
+        const response = await api.get(url);
+        return response.data;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+export const GetFeedbacksByDoctorId = async (doctorId) => {
+    try {
+        const url = `/account/feedback?doctorId=${doctorId}`;
+        const response = await api.get(url);
+        return response.data;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+export const CreateFeedback = async (feedback) => {
+    try {
+        const url = `/account/feedback`;
+        const response = await api.post(url, feedback);
+        return response.data;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}

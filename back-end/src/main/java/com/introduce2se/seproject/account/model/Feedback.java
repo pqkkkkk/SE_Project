@@ -6,6 +6,8 @@ import lombok.Data;
 public class Feedback {
     private int id;
     private int patientId;
+    private String patientName;
+    private String doctorName;
     private int doctorId;
     private String content;
     private double rating;

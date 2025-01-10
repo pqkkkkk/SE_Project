@@ -4,7 +4,8 @@ import images from "../../assets/images";
 import { useNavigate } from "react-router-dom";
 import {useParams}  from "react-router-dom";
 import {useEffect, useState} from "react";
-import {getUserById} from "../../services/ApiService";
+import {getUserById, CreateFeedback, GetFeedbacksByDoctorId} from "../../services/ApiService";
+import {GetUser} from "../../services/UserStorageService";
 
 const cx = classNames.bind(styles);
 
@@ -18,12 +19,23 @@ const availableSlots = [
 ];
 
 function DetailDoctor() {
-  const navigate = useNavigate();
-  const { id } = useParams();
-  const [doctor, setDoctor] = useState({});
+    const currentUser = GetUser();
+    const navigate = useNavigate();
+    const { id } = useParams();
+    const [doctor, setDoctor] = useState({});
+    const [feedbacks, setFeedbacks] = useState([]);
+    const [ratingInput, setRatingInput] = useState(0);
+    const [contentInput, setContentInput] = useState("");
   useEffect(() => {
-    getUserById(id).then((data) => setDoctor(data || []))
-      .catch((error) => console.log(error));
+      const fetchData = async () => {
+           const [doctorData, feedbackData] = await Promise.all([
+                getUserById(id),
+                GetFeedbacksByDoctorId(id),
+              ]);
+           setDoctor(doctorData);
+           setFeedbacks(feedbackData);
+      }
+        fetchData();
   }, []);
   
   const HandleBookAppointClick = () => {
@@ -31,18 +43,29 @@ function DetailDoctor() {
         state: { doctor: doctor },
     });
   };
-
-  const handleCallDoctor = () => {
-    window.open(
-      "/video-call",
-      "VideoCallWindow",
-      "width=800,height=600,scrollbars=no,resizable=no"
-    );
-  };
-  const handleSlotSelection = (slot) => {
-        navigate("/book-appointment", { state: { selectedSlot: slot } });
-  };
-  const reviews = [
+  const handleSendFeedback = async () => {
+      if(contentInput === "" || ratingInput === 0){
+            alert("Please fill in all fields");
+            return;
+      }
+    const feedback = {
+        patientId: currentUser.id,
+        doctorId: doctor.id,
+        rating: ratingInput,
+        content: contentInput,
+    };
+    const response = await CreateFeedback(feedback);
+    if(response === 1) {
+        const newFeedback = {... feedback, patientName: currentUser.fullName};
+        setFeedbacks([...feedbacks, newFeedback]);
+        setContentInput("");
+        setRatingInput(0);
+    }
+    else{
+        alert("Failed to send feedback");
+    }
+  }
+  const mockFeedbackData = [
     {
       username: "NguyenVanA",
       content: "The doctor is very enthusiastic and dedicated!",
@@ -157,56 +180,60 @@ function DetailDoctor() {
                     </div>
                 </div>
             </div>
-            <div className={cx("office")}>
-                <div className={cx("office-info")}>
-                    <div className={cx("title")}>
-                        <span className={cx("t1")}> Office </span>
-                        <span className={cx("t2")}>15 picture</span>
-                    </div>
-                    <img src={images.doctorImage2} alt="doctor"/>
-                </div>
-                <div className={cx("office-detail")}>
-                    <h1>About</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        In enim lorem sit rhoncus ullamcorper. Dui lorem duis
-                        amet vulputate. Nunc lobortis adipiscing faucibus diam
-                        amet sed. Scelerisque mattis tincidunt mattis a. Risus
-                        varius nunc sed ut amet in. Ut tristique vulputate ac
-                        volutpat purus scelerisque ac id. Quis quam tellus,
-                        adipiscing sit diam. Nibh ipsum nibh vitae, lacus arcu
-                        metus mi at ultricies. Volutpat habitasse nunc aenean
-                        risus. At suscipit suscipit magna est neque aliquam
-                        facilisis eu. Nisi, nullam et in ipsum, mi dignissim
-                        nec. Nibh nullam libero nibh suscipit montes, fringilla
-                        donec quis. Feugiat amet amet tristique mauris hendrerit
-                        dui integer.
-                    </p>
-                    <div className={cx("load-more")}>
-                        <a href="/details">Load More</a>
-                        <img src={images.expandless} alt="expand-less"/>
-                    </div>
-                </div>
-            </div>
 
             <div className={cx("container-review")}>
                 <h2>Patient Reviews</h2>
-                {reviews.length === 0 ? (
-                    <p>There are no reviews yet.</p>
-                ) : (
-                    <ul>
-                        {reviews.map((review, index) => (
-                            <li key={index} style={{marginBottom: "15px"}}>
-                                <strong>{review.username}</strong> -
-                                <span style={{color: "gold"}}>
-                                    {" "}
-                                    {"★".repeat(review.rating)}
-                                </span>
-                                <p>{review.content}</p>
-                            </li>
-                        ))}
-                    </ul>
-                )}
+                <div className={cx("feedback-list")}>
+                    {feedbacks.length === 0 ? (
+                        <p>There are no reviews yet.</p>
+                    ) : (
+                        <ul>
+                            {feedbacks.map((review, index) => (
+                                <li key={index} style={{marginBottom: "15px"}}>
+                                    <strong>{review.patientName}</strong> -
+                                    <span style={{color: "gold"}}>
+                                        {" "}
+                                        {"★".repeat(review.rating)}
+                                    </span>
+                                    <p>{review.content}</p>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+                <div className={cx("write-feedback")}>
+                        <textarea
+                            value={contentInput}
+                            onChange={(e) => setContentInput(e.target.value)}
+                            placeholder="Your feedback"
+                            required
+                        ></textarea>
+                    <div className={cx("rating-and-submit")}>
+                        <div className={cx("rating")}>
+                            <input
+                                onChange={(e) => setRatingInput(e.target.value)}
+                                type="radio" id="star5" name="rating" value="5"/>
+                            <label htmlFor="star5" title="5 stars">★</label>
+                            <input
+                                onChange={(e) => setRatingInput(e.target.value)}
+                                type="radio" id="star4" name="rating" value="4"/>
+                            <label htmlFor="star4" title="4 stars">★</label>
+                            <input
+                                onChange={(e) => setRatingInput(e.target.value)}
+                                type="radio" id="star3" name="rating" value="3"/>
+                            <label htmlFor="star3" title="3 stars">★</label>
+                            <input
+                                onChange={(e) => setRatingInput(e.target.value)}
+                                type="radio" id="star2" name="rating" value="2"/>
+                            <label htmlFor="star2" title="2 stars">★</label>
+                            <input
+                                onChange={(e) => setRatingInput(e.target.value)}
+                                type="radio" id="star1" name="rating" value="1"/>
+                            <label htmlFor="star1" title="1 star">★</label>
+                        </div>
+                        <button onClick={handleSendFeedback} >Send</button>
+                    </div>
+                </div>
             </div>
             <div className={cx("container-image")}>
                 <img

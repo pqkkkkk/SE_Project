@@ -1,9 +1,12 @@
 package com.introduce2se.seproject.account;
 
+import com.introduce2se.seproject.account.dao.feedback.FeedbackDao;
+import com.introduce2se.seproject.account.dao.feedback.FeedbackSqlDao;
 import com.introduce2se.seproject.account.dao.management.ManagementDao;
 import com.introduce2se.seproject.account.dao.user.UserDao;
 import com.introduce2se.seproject.account.dto.ManagementDto;
 import com.introduce2se.seproject.account.model.Doctor;
+import com.introduce2se.seproject.account.model.Feedback;
 import com.introduce2se.seproject.account.model.Patient;
 import com.introduce2se.seproject.account.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +22,12 @@ public class AccountService {
 
     private final UserDao userDao;
     private final ManagementDao managementDao;
+    private final FeedbackDao feedbackDao;
     @Autowired
-    public AccountService(UserDao userDao, ManagementDao managementDao) {
+    public AccountService(UserDao userDao, ManagementDao managementDao, FeedbackDao feedbackDao) {
         this.userDao = userDao;
         this.managementDao = managementDao;
+        this.feedbackDao = feedbackDao;
     }
     public User getUserByUsername(String username) {
         return userDao.getUserByUsername(username);
@@ -122,8 +127,10 @@ public class AccountService {
     public List<ManagementDto> getConnectingUsers(int currentUserId, String currentRole) {
         return managementDao.getConnectingUsers(currentUserId, currentRole);
     }
-    public boolean createFeedback()
-    {
-        return false;
+    public boolean AddFeedback(Feedback feedback) {
+        return feedbackDao.AddFeedback(feedback);
+    }
+    public List<Feedback> GetFeedbackByDoctorId(int doctorId) {
+        return feedbackDao.GetFeedbackByDoctorId(doctorId);
     }
 }
