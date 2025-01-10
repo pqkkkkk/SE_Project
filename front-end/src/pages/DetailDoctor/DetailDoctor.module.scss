@@ -334,7 +334,58 @@
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-
+    .write-feedback{
+        gap: 10px;
+        display: grid;
+        grid-template-columns: 5fr 1fr;
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            resize: none;
+            margin-right: 10px;
+        }
+        .rating-and-submit{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          .rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: left;
+          }
+          .rating input {
+            display: none;
+          }
+          .rating label {
+            font-size: 2rem;
+            color: #ccc;
+            cursor: pointer;
+            transition: color 0.2s;
+          }
+          .rating input:checked ~ label {
+            color: #ffca28;
+          }
+          .rating label:hover,
+          .rating label:hover ~ label {
+            color: #ffca28;
+          }
+        }
+        button {
+            background-color: var(--text-color1);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            &:hover {
+            background-color: #1a9aa0;
+            }
+        }
+    }
     h2 {
       font-size: 24px;
       font-weight: bold;

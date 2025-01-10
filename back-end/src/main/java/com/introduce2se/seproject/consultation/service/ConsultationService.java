@@ -6,13 +6,43 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Time;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ConsultationService {
+    private  static final Map<Integer, String> monthMap = new HashMap<>();
+    {
+        monthMap.put(1, "January");
+        monthMap.put(2, "February");
+        monthMap.put(3, "March");
+        monthMap.put(4, "April");
+        monthMap.put(5, "May");
+        monthMap.put(6, "June");
+        monthMap.put(7, "July");
+        monthMap.put(8, "August");
+        monthMap.put(9, "September");
+        monthMap.put(10, "October");
+        monthMap.put(11, "November");
+        monthMap.put(12, "December");
+    }
+    private static final Map<Integer, String> weekMap = new HashMap<>();
+    {
+        weekMap.put(1, "First Week");
+        weekMap.put(2, "Second Week");
+        weekMap.put(3, "Third Week");
+        weekMap.put(4, "Fourth Week");
+        weekMap.put(5, "Fifth Week");
+    }
+    private static final Map<Integer, String> dayMap = new HashMap<>();
+    {
+        dayMap.put(1, "Monday");
+        dayMap.put(2, "Tuesday");
+        dayMap.put(3, "Wednesday");
+        dayMap.put(4, "Thursday");
+        dayMap.put(5, "Friday");
+        dayMap.put(6, "Saturday");
+        dayMap.put(7, "Sunday");
+    }
     private final ConsultationDao consultationDao;
 
     public ConsultationService(ConsultationDao consultationDao) {
@@ -63,32 +93,42 @@ public class ConsultationService {
         }
     }
 
-    public Map<Integer, Integer> countOnlineConsultation(int year, int month, int week)
+    public Map<String, Integer> countOnlineConsultation(int year, int month, int week)
     {
-        Map<Integer, Integer> map = new HashMap<>();
+        Map<String, Integer> map = new HashMap<>();
             if(week == -1 && month == -1){
-                map = consultationDao.countOnlineConsultationByYear(year);
+                Map<Integer, Integer> rawData = consultationDao.countOnlineConsultationByYear(year);
                 for(int i = 1;i<=12;i++){
-                    if(!map.containsKey(i)){
-                        map.put(i,0);
+                    if(!rawData.containsKey(i)){
+                        map.put(monthMap.get(i),0);
+                    }
+                    else{
+                        map.put(monthMap.get(i),rawData.get(i));
                     }
                 }
                 return map;
             }
             else if(week == -1) {
-                map = consultationDao.countOnlineConsultationByMonth(year, month);
+                Map<Integer, Integer> rawData = consultationDao.countOnlineConsultationByMonth(year, month);
                 for(int i = 1;i<=5;i++){
-                    if(!map.containsKey(i)){
-                        map.put(i,0);
+                    if(!rawData.containsKey(i)){
+                        map.put(weekMap.get(i),0);
+                    }
+                    else{
+                        map.put(weekMap.get(i),rawData.get(i));
                     }
                 }
                 return map;
             }
             else {
-                map = consultationDao.countOnlineConsultationByWeek(year, month, week);
+                Map<Integer, Integer> rawData = consultationDao.countOnlineConsultationByWeek(year, month, week);
+
                 for(int i = 1;i<=7;i++){
-                    if(!map.containsKey(i)){
-                        map.put(i,0);
+                    if(!rawData.containsKey(i)){
+                        map.put(dayMap.get(i),0);
+                    }
+                    else {
+                        map.put(dayMap.get(i),rawData.get(i));
                     }
                 }
                 return map;

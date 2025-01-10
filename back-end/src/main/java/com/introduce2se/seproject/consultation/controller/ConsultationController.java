@@ -152,12 +152,12 @@ public class ConsultationController {
 
     @GetMapping("/online-consultation")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<Map<Integer,Integer>> getConsultationCount(
+    public ResponseEntity<Map<String,Integer>> getConsultationCount(
             @RequestParam int year,
             @RequestParam int month,
             @RequestParam int week) {
         try{
-            Map<Integer,Integer> onlineConsultationCount = consultationService.countOnlineConsultation(year, month, week);
+            Map<String,Integer> onlineConsultationCount = consultationService.countOnlineConsultation(year, month, week);
             return ResponseEntity.ok(onlineConsultationCount);
         }
         catch (Exception e) {
