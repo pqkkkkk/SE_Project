@@ -40,7 +40,7 @@ function FindDoctor() {
     setFilteredDoctors(doctors.filter(doctor => {
         return (doctor.fullName.toLowerCase().includes(searchName.toLowerCase()) || searchName === "")
             && (doctor.speciality === speciality || speciality === "")
-            && (doctor.experienceYear === experience || experience === "")
+            && (doctor.experienceYear >= Number(experience) || experience === "")
             && (doctor.gender === gender || gender === "");
     }));
   }
@@ -115,12 +115,12 @@ function FindDoctor() {
                   name="experience"
                   onChange={(e) =>{ setExperience(e.target.value)}}>
                 <option value="">All</option>
-                <option value="1">1 year</option>
-                <option value="2">2 years</option>
-                <option value="3">3 years</option>
-                <option value="4">4 years</option>
-                <option value="5">5 years</option>
-                <option value="6+">6+ years</option>
+                <option value="1">1+ years</option>
+                <option value="2">2+ years</option>
+                <option value="3">3+ years</option>
+                <option value="4">4+ years</option>
+                <option value="5">5+ years</option>
+                <option value="6">6+ years</option>
               </select>
             </div>
             <div className={cx("command-options")}>
