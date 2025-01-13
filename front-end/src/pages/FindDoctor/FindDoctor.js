@@ -36,11 +36,13 @@ function FindDoctor() {
   };
 
   const handleFilterDoctorList = (e) => {
+    console.log(typeof experience);
+    console.log(typeof doctors[0].experienceYear);
     e.preventDefault();
     setFilteredDoctors(doctors.filter(doctor => {
         return (doctor.fullName.toLowerCase().includes(searchName.toLowerCase()) || searchName === "")
             && (doctor.speciality === speciality || speciality === "")
-            && (doctor.experienceYear === experience || experience === "")
+            && (doctor.experienceYear === Number(experience) || experience === "")
             && (doctor.gender === gender || gender === "");
     }));
   }

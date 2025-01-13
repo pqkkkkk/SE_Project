@@ -179,7 +179,7 @@ function DetailDoctor() {
                     </div>
                 </div>
             </div>
-
+            
             <div className={cx("container-review")}>
                 <h2>Patient Reviews</h2>
                 <div className={cx("feedback-list")}>
