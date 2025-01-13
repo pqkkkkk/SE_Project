@@ -138,7 +138,7 @@ function FindDoctor() {
               className={cx("doctor")}
               onClick={() => handleDoctorClick(doctor.id)}
             >
-              <img src={images.doctorDefault} alt="doctor" />
+              <img src={doctor.gender === 'Female' ? images.doctorImage: images.doctorDefault} alt="doctor" />
               <h3>{doctor.fullName}</h3>
               <p className={cx("speciality")}>{doctor.speciality}</p>
               <p className={cx("review")}>Fee: {doctor.consultationPrice}</p>

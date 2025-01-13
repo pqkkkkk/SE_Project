@@ -78,7 +78,7 @@ public class ConsultationDao {
                 sql += (" AND c.end_time <= CAST (? as TIME) ");
                 params.add(endTime);
             }
-
+            sql += (" ORDER BY c.date DESC, c.start_time DESC");
             return jdbcTemplate.query(sql, new ConsultationRowMapper(), params.toArray());
         }
         catch (Exception e)

@@ -96,7 +96,7 @@ function DetailDoctor() {
         <div className={cx("content")}>
             <div className={cx("doctor")}>
                 <div className={cx("doctor-info")}>
-                    <img src={images.doctorImage} alt="doctor"/>
+                    <img src={doctor.gender === 'Female' ? images.doctorImage : images.doctorDefault} alt="doctor"/>
                     <div className={cx("rate")}>
                         <img src={images.star} alt="star"/>
                         <span>{doctor.rating}</span>
@@ -146,7 +146,6 @@ function DetailDoctor() {
                         <h1 className={cx("title")}>Specialities</h1>
                         <div className={cx("detail")}>
                             <div className={cx("text")}>{doctor.speciality}</div>
-                            >
                         </div>
                     </div>
                     <div className={cx("issues")}>

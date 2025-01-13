@@ -58,15 +58,15 @@ const requestsMockData = [
         status: "New",
     },
     ];
-let requestsData = [];
 function Requests() {
+    const [requestsData, setRequestsData] = useState([]);
     const [requests, setRequests] = useState([]);
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const currentUser = GetUser();
     useEffect(() => {
         GetAllConsultations(currentUser.id, currentUser.userRole, null, null,null,null).then((data) => {
-            requestsData.push(...data);
+            setRequestsData(data || []);
             setRequests(data || []);
         })
         .catch((error) => {
@@ -142,7 +142,9 @@ function Requests() {
 
     const handleRefuseConsultation = () => {
         DeleteConsultation(selectedRequest.consultationId).then(() => {
-            requestsData = requestsData.filter((request) => request.consultationId !== selectedRequest.consultationId);
+            setRequestsData((prev) =>
+                prev.filter((request) => request.consultationId !== selectedRequest.consultationId)
+            );
             setRequests((prev) =>
                 prev.filter((request) => request.consultationId !== selectedRequest.consultationId)
             );
@@ -160,10 +162,6 @@ function Requests() {
                 <h1 className={cx("title")}>
                     List of medical examination requests
                 </h1>
-                {requests.length === 0 &&
-                    (<div className={cx("empty-request-text")}>
-                        <h2> You don't have any consultation appointment....</h2>
-                    </div>)}
                 <table className={cx("requests-table")}>
                     <thead className={cx("table-header")}>
                         <tr>
@@ -171,22 +169,6 @@ function Requests() {
                             <th>Patient Name</th>
                             <th>
                                 <p>Date</p>
-                                <div className={cx("filter-container")}>
-                                    <img
-                                        src={images.filter}
-                                        alt="Filter"
-                                        className={cx("filter-icon")}
-                                        onClick={() =>
-                                            toggleDropdown("requestDate")
-                                        }
-                                    />
-                                    {dropdownVisible === "requestDate" && (
-                                        <ul className={cx("dropdown")}>
-                                            <li>Ascending</li>
-                                            <li>Descending</li>
-                                        </ul>
-                                    )}
-                                </div>
                             </th>
                             <th>Start time</th>
                             <th>End time</th>
@@ -200,7 +182,7 @@ function Requests() {
                                         onClick={() => toggleDropdown("status")}
                                     />
                                     {dropdownVisible === "status" && (
-                                        <ul onClick={handleStatusFilter} className={cx("dropdown")}>
+                                        <ul onClick={handleStatusFilter}  className={cx("dropdown")}>
                                             <li>All</li>
                                             <li>Accepted</li>
                                             <li>Done</li>

@@ -11,15 +11,17 @@ const cx = classNames.bind(styles);
 const mockData = [];
 function Messages() {
     const [searchValue, setSearchValue] = useState("");
-    const [selectedManagement, setSelectedManagement] = useState(null);
+    const [selectedManagement, setSelectedManagement] = useState([]);
     const [currentUser, setCurrentUser] = useState({});
     const [connectingUsers, setConnectingUsers] = useState([]);
     const [messagesHistory, setMessagesHistory] = useState([]);
     const [messageValue, setMessageValue] = useState("");
     useEffect(() => {
         setCurrentUser(GetUser());
+
         GetConnectingUsers(GetUser().id, GetUser().userRole)
             .then((data) => {
+                console.log(data);
                 data = data.map((item) => {
                     return {...item, haveNewMessage: false};
                 });
@@ -28,13 +30,14 @@ function Messages() {
             .catch((error) => {
                 console.error(error);
             });
+    } , []);
+    useEffect(() => {
+        //setSelectedManagement(connectingUsers[0]);
         eventEmitter.on('newMessage', handleNewMessage);
         return () => {
             eventEmitter.off('newMessage', handleNewMessage);
         };
-        setConnectingUsers(mockData);
-    } , []);
-
+    }, [connectingUsers]);
     const filteredDoctors = connectingUsers.filter((management) =>
         management.opponent.fullName.toLowerCase().includes(searchValue.toLowerCase())
     );
@@ -57,6 +60,7 @@ function Messages() {
     const handleNewMessage = (message) => {
         console.log('New message:', message);
         const senderId = message.senderId;
+        console.log(connectingUsers);
         const correspondingManagement = connectingUsers.find((management) => management.opponent.id === senderId);
 
         if (!correspondingManagement) {
@@ -95,7 +99,7 @@ function Messages() {
                     <input
                         className={cx("search-input")}
                         type="text"
-                        placeholder="Search doctor"
+                        placeholder= {currentUser.userRole === "doctor" ? "Search for patients" : "Search for doctors" }
                         value={searchValue}
                         onChange={handleSearchChange}
                     />
@@ -105,7 +109,7 @@ function Messages() {
                     {filteredDoctors.map((management) => (
                         <div
                             key={management.opponent.id}
-                            className={cx('doctor', management.haveNewMessage && 'new-message')}
+                            className={cx('doctor', management.haveNewMessage && 'new-message', selectedManagement.opponent && selectedManagement?.opponent.id === management.opponent.id && 'selected')}
                             onClick={() => handleSelectManagement(management)}
                         >
                             <img src={images.doctorHomeSpecialist1} alt={management.opponent.fullName} className={cx('doctor-img')} />
@@ -120,7 +124,7 @@ function Messages() {
             </div>
 
             {/* Hiển thị content-chat nếu đã chọn bác sĩ */}
-            {selectedManagement && (
+            {selectedManagement.opponent && (
                 <div className={cx('chat')}>
                     <div className={cx('header')}>
                         <img src={images.doctorHomeSpecialist1} alt={selectedManagement.opponent.fullName} className={cx('doctor-img')} />
@@ -149,7 +153,7 @@ function Messages() {
                 </div>
             )}
 
-            {selectedManagement && (
+            {selectedManagement.opponent && (
                 <div className={cx('more-info')}>
                     <img src={images.doctorHomeSpecialist1} alt={selectedManagement.name} className={cx('doctor-img')} />
                     <p className={cx('doctor-name')}>{selectedManagement.opponent.fullName}</p>
