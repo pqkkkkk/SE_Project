@@ -147,9 +147,9 @@ function DrugDoctor() {
 
                     <div className={cx("title-column")}>
                         <p className={cx("h-img")}></p>
-                        <p className={cx("h-name")}>Tên thuốc</p>
-                        <p className={cx("h-price")}>Giá</p>
-                        <p className={cx("h-quantity")}>Số lượng</p>
+                        <p className={cx("h-name")}>Drug name</p>
+                        <p className={cx("h-price")}>Price</p>
+                        <p className={cx("h-quantity")}>Quantity</p>
                         <p className={cx("h-remove")}></p>
                     </div>
 

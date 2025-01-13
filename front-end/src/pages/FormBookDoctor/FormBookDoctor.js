@@ -3,17 +3,21 @@ import styles from "./FormBookDoctor.module.scss";
 import images from "../../assets/images";
 import { GetUser } from "../../services/UserStorageService";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {CreateConsultation, GetAllConsultations} from "../../services/ApiService";
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from "@mui/material";
 const cx = classNames.bind(styles);
 
 function FormBookDoctor() {
+  const navigate = useNavigate();
   const location = useLocation();
   const [user, setUser] = useState({});
   const [doctor, setDoctor] = useState({});
   const [reason, SetReason] = useState("");
-  const [startTime, setStartTime] = useState("00:00:00");
-  const [endTime, setEndTime] = useState("00:00:00");
+  const [startTime, setStartTime] = useState("-1:00:00");
+  const [endTime, setEndTime] = useState("-1:00:00");
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const [dialogResolve, setDialogResolve] = useState(null);
   useEffect(() => {
     setUser(GetUser() || {});
     setDoctor(location.state.doctor || {});
@@ -28,12 +32,34 @@ function FormBookDoctor() {
     const newTime = `${String(newHour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:00`;
     setEndTime(newTime);
   }
-  const HandleSendingConsultationRequest = async () => {
+  const showConfirmDialog = () => {
+    setOpenConfirmDialog(true);
+    return new Promise((resolve) => {
+      setDialogResolve(() => resolve);
+    });
+  }
+  const handleConfirm = () =>{
+    setOpenConfirmDialog(false);
+    if(dialogResolve) {
+      dialogResolve(true);
+    }
+  }
+  const handleCancel = () => {
+    setOpenConfirmDialog(false);
+    if(dialogResolve) {
+      dialogResolve(false);
+    }
+  }
+  const CheckBeforeSendingConsultationRequest = async () => {
     const now = new Date();
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, '0');
     const day = String(now.getDate()).padStart(2, '0');
     const today = `${year}-${month}-${day}`;
+
+    if(startTime === "-1:00:00" && endTime === "-1:00:00") {
+      return "Select valid start time!";
+    }
 
     const sameDayConsultationList =  await GetAllConsultations(user.id, user.userRole, "Accepted", today, null, null);
     if(sameDayConsultationList.length !== 0) {
@@ -41,26 +67,56 @@ function FormBookDoctor() {
           return consultation.startTime === startTime && consultation.endTime === endTime;
       });
       if(sameTimeConsultationCountList.length > 0) {
-          alert("You have already have a consultation appointment at this time!");
-          window.location.reload();
-          return;
+          return "You have already have a consultation appointment at this time!";
     }}
-    const consultation = {
-      ConsultationDate: today,
-      startTime: startTime,
-      endTime: endTime,
-      form: "online",
-      reason: reason,
-      status: "New",
-      patientId: user.id,
-      doctorId: doctor.id,
-      consultationResult: "",
-    };
-    const response = await CreateConsultation(consultation);
-    if (response === "success") {
-      alert("Consultation request sent successfully!");
-    } else {
-      alert("Failed to send consultation request!");
+
+    const sameDayNewConsultationList =  await GetAllConsultations(user.id, user.userRole, "New", today, null, null);
+    if(sameDayNewConsultationList.length !== 0) {
+      const sameTimeNewConsultationCountList = sameDayNewConsultationList.filter((consultation) => {
+          return consultation.startTime === startTime && consultation.endTime === endTime;
+      });
+      if(sameTimeNewConsultationCountList.length > 0) {
+          const userConfirm = await showConfirmDialog();
+          if(userConfirm === false) {
+            return "You canceled sending consultation request!";
+          }
+          else{
+            return "ok";
+          }
+      }
+    }
+    return "ok";
+  };
+  const SendConsultationRequest = async () => {
+    const checkResult = await CheckBeforeSendingConsultationRequest();
+    if(checkResult === "ok") {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const today = `${year}-${month}-${day}`;
+
+      const consultation = {
+        ConsultationDate: today,
+        startTime: startTime,
+        endTime: endTime,
+        form: "online",
+        reason: reason,
+        status: "New",
+        patientId: user.id,
+        doctorId: doctor.id,
+        consultationResult: "",
+      };
+      const response = await CreateConsultation(consultation);
+      if (response === "success") {
+        alert("Consultation request sent successfully. Waiting for doctor accept this!");
+        navigate("/find-doctor");
+      } else {
+        alert("Failed to send consultation request!");
+      }
+    }
+    else{
+      alert(checkResult);
     }
   };
   return (
@@ -68,7 +124,7 @@ function FormBookDoctor() {
       <div className={cx("doctor")}>
         <div className={cx("doctor-info")}>
           <div className={cx("image-doctor")}>
-            <img src={images.doctorImage} alt="doctor" />
+            <img src={doctor.gender === 'Female' ? images.doctorImage : images.doctorDefault} alt="doctor" />
             <div className={cx("rate")}>
               <img src={images.star} alt="star" />
               <span>{doctor.rating}</span>
@@ -109,21 +165,13 @@ function FormBookDoctor() {
                 placeholder="Input your full name (required)"
             />
           </div>
-          <h1 className={cx("note")}>
-            Please write your Full Name clearly, capitalizing the first letters,
-            for example: Duong Tuan Khanh
-          </h1>
         </div>
         <div className={cx("gender-options")}>
           <label className={cx("field-text")}>Gender</label>
           <div className={cx("decor-gender")}>
             <label>
-              <input type="radio" name="gender" value="male"/>
+              <input type="radio" name="gender" value={doctor.gender}/>
               Male
-            </label>
-            <label>
-              <input type="radio" name="gender" value="female"/>
-              Female
             </label>
           </div>
         </div>
@@ -179,7 +227,7 @@ function FormBookDoctor() {
                 type="text"
                 value={reason}
                 onChange={(e) => SetReason(e.target.value)}
-                placeholder="Reason for medical examination"
+                placeholder="Reason for medical examination.Can be left blank"
             />
           </div>
         </div>
@@ -187,6 +235,7 @@ function FormBookDoctor() {
           <label className={cx("field-text")}>Start Time</label>
           <div className={cx("decor-input")}>
             <select className={cx("select-options")} value={startTime} onChange={(e) => handleSelectStartTime(e)}>
+              <option value="-1:00:00">Select start Time</option>
               <option value="00:00:00">00:00:00</option>
               <option value="01:00:00">01:00:00</option>
               <option value="02:00:00">02:00:00</option>
@@ -223,23 +272,6 @@ function FormBookDoctor() {
           </div>
         </div>
       </div>
-      <div className={cx("total-container")}>
-        <div className={cx("total-payment")}>
-          <div className={cx("examination-price")}>
-            <h1>Examination Price</h1>
-            <p>$300</p>
-          </div>
-          <div className={cx("booking-fee")}>
-            <h1>Booking Fee</h1>
-            <p>Free</p>
-          </div>
-          <hr></hr>
-          <div className={cx("total")}>
-            <h1>Total</h1>
-            <p>$300</p>
-          </div>
-        </div>
-      </div>
       <div className={cx("request")}>
         <p>
           Please fill in all information to save time in medical examination
@@ -247,8 +279,18 @@ function FormBookDoctor() {
         </p>
       </div>
       <div className={cx("confirm-btn")}>
-        <button onClick={HandleSendingConsultationRequest}>Send Request</button>
+        <button onClick={SendConsultationRequest}>Send Request</button>
       </div>
+      <Dialog open={openConfirmDialog} >
+            <DialogTitle>Reminder</DialogTitle>
+            <DialogContent>
+                <DialogContentText>You have already have a consultation request which is waiting for doctor accept in this time. Do you want to continue?</DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleCancel}>Cancel</Button>
+                <Button onClick={handleConfirm} color="primary">Still send request</Button>
+            </DialogActions>
+        </Dialog>
     </div>
   );
 }

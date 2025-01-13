@@ -97,7 +97,7 @@ function Home() {
                             the care you need and deserve.
                         </p>
 
-                        <a href="#!" className={cx("btn", "hero-btn")}>
+                        <a href="/find-doctor" className={cx("btn", "hero-btn")}>
                             Book Appointment
                         </a>
                     </div>

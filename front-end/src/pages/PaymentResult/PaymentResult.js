@@ -51,6 +51,7 @@ function PaymentResult() {
                     </p>
 
                     <p className={cx("host")}>@Medicare</p>
+                    <button className={cx("go-back-btn")} onClick={handleGoBack}> Go back</button>
                 </div>
             </div>)}
             { showPaymentFail && (<div id={cx("payment_failed")}>
@@ -66,9 +67,9 @@ function PaymentResult() {
                     </p>
 
                     <p className={cx("host")}>@Medicare</p>
+                    <button className={cx("go-back-btn")} onClick={handleGoBack}> Go back</button>
                 </div>
             </div>)}
-            <button onClick={handleGoBack}> Go back</button>
         </div>
     );
 }
