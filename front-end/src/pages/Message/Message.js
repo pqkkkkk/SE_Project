@@ -11,14 +11,15 @@ const cx = classNames.bind(styles);
 const mockData = [];
 function Messages() {
     const [searchValue, setSearchValue] = useState("");
-    const [selectedManagement, setSelectedManagement] = useState([]);
+    const [selectedManagement, setSelectedManagement] = useState(null);
     const [currentUser, setCurrentUser] = useState({});
+    const [firstTime, setFirstTime] = useState(false);
     const [connectingUsers, setConnectingUsers] = useState([]);
     const [messagesHistory, setMessagesHistory] = useState([]);
     const [messageValue, setMessageValue] = useState("");
     useEffect(() => {
+        console.log("first use effect");
         setCurrentUser(GetUser());
-
         GetConnectingUsers(GetUser().id, GetUser().userRole)
             .then((data) => {
                 console.log(data);
@@ -26,18 +27,39 @@ function Messages() {
                     return {...item, haveNewMessage: false};
                 });
                 setConnectingUsers(data);
+                setFirstTime(true);
             })
             .catch((error) => {
                 console.error(error);
             });
     } , []);
     useEffect(() => {
-        //setSelectedManagement(connectingUsers[0]);
+        console.log(connectingUsers);
+        console.log("use effect for connecting users");
+        if(connectingUsers.length !== 0 && selectedManagement === null) {
+            setSelectedManagement(connectingUsers[0]);
+        }
+    }, [connectingUsers, firstTime]);
+    useEffect(() => {
+        console.log("use effect for selected management");
+        console.log(selectedManagement);
+        if(selectedManagement) {
+            GetMessagesHistory(currentUser.id, selectedManagement.opponent.id)
+            .then((data) => {
+                setMessagesHistory(data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        }
+    }, [selectedManagement]);
+    useEffect(() => {
+        console.log("use effect for messages history");
         eventEmitter.on('newMessage', handleNewMessage);
         return () => {
             eventEmitter.off('newMessage', handleNewMessage);
         };
-    }, [connectingUsers]);
+    }, [messagesHistory]);
     const filteredDoctors = connectingUsers.filter((management) =>
         management.opponent.fullName.toLowerCase().includes(searchValue.toLowerCase())
     );
@@ -60,7 +82,6 @@ function Messages() {
     const handleNewMessage = (message) => {
         console.log('New message:', message);
         const senderId = message.senderId;
-        console.log(connectingUsers);
         const correspondingManagement = connectingUsers.find((management) => management.opponent.id === senderId);
 
         if (!correspondingManagement) {
@@ -71,7 +92,7 @@ function Messages() {
             correspondingManagement.haveNewMessage = true;
         }
         setConnectingUsers((prevState) => [correspondingManagement, ...prevState.filter((management) => management.opponent.id !== senderId)]);
-
+        console.log(selectedManagement.opponent.id, senderId);
         if(selectedManagement && selectedManagement.opponent.id === senderId) {
             setMessagesHistory((prevState) => [...prevState, message]);
         }
@@ -109,7 +130,7 @@ function Messages() {
                     {filteredDoctors.map((management) => (
                         <div
                             key={management.opponent.id}
-                            className={cx('doctor', management.haveNewMessage && 'new-message', selectedManagement.opponent && selectedManagement?.opponent.id === management.opponent.id && 'selected')}
+                            className={cx('doctor', management.haveNewMessage && 'new-message')}
                             onClick={() => handleSelectManagement(management)}
                         >
                             <img src={images.doctorHomeSpecialist1} alt={management.opponent.fullName} className={cx('doctor-img')} />
@@ -124,7 +145,7 @@ function Messages() {
             </div>
 
             {/* Hiển thị content-chat nếu đã chọn bác sĩ */}
-            {selectedManagement.opponent && (
+            {selectedManagement && (
                 <div className={cx('chat')}>
                     <div className={cx('header')}>
                         <img src={images.doctorHomeSpecialist1} alt={selectedManagement.opponent.fullName} className={cx('doctor-img')} />
@@ -153,7 +174,7 @@ function Messages() {
                 </div>
             )}
 
-            {selectedManagement.opponent && (
+            {selectedManagement && (
                 <div className={cx('more-info')}>
                     <img src={images.doctorHomeSpecialist1} alt={selectedManagement.name} className={cx('doctor-img')} />
                     <p className={cx('doctor-name')}>{selectedManagement.opponent.fullName}</p>
