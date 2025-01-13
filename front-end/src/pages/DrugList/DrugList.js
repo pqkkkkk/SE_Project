@@ -184,7 +184,7 @@ function DrugList() {
             {showPrescriptionDetail && (
                 <div className={cx("medicine-list-overlay")}>
                     <div className={cx("medicine-list-popup")}>
-                        <h2 className={cx("popup-title")}>Chi tiết lần khám</h2>
+                        <h2 className={cx("popup-title")}>Prescription Detail</h2>
                         <button className={cx("btn-close")} onClick={handleCloseMedicineList}> Đóng</button>
                         <div className={cx("consultationDetail")}>
                             <p className={cx("note")}>
