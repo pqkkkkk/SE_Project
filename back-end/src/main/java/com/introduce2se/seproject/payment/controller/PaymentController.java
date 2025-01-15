@@ -1,4 +1,4 @@
-package com.introduce2se.seproject.api;
+package com.introduce2se.seproject.payment.controller;
 
 import com.introduce2se.seproject.payment.Config;
 import com.introduce2se.seproject.payment.dto.PaymentInfoDto;
