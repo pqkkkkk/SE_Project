@@ -1,4 +1,4 @@
-package com.introduce2se.seproject.api;
+package com.introduce2se.seproject.account.controller;
 
 import com.introduce2se.seproject.account.AccountService;
 import com.introduce2se.seproject.account.dto.ManagementDto;
