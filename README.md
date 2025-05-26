@@ -1,8 +1,8 @@
-# SE_Project - project of **Introduction to Software Engineering** course
+# Medical-System - project of **Introduction to Software Engineering** course
 
 ## Introduction
 
-SE_Project is a hospital management system consisting of three main components:
+Medical-System is a hospital management system consisting of three main components:
 
 - **Back-end**: RESTful API built with Java Spring Boot.
 - **Front-end**: ReactJS web application for end users.
